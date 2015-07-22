@@ -19,7 +19,7 @@ run-cosmohome:
    			   $(CMD)
 
 rm-cosmohome:
-	docker rm -f cosmohome   			  
+	-docker rm -f cosmohome   			  
 
 create-cosmohomedata:
 	docker create -v /root/projects -v /etc/apache2/sites-enabled \
@@ -28,7 +28,7 @@ create-cosmohomedata:
 			      marius311/cosmohome
 
 rm-cosmohomedata:
-	docker rm -f $(ARGS) cosmohomedata
+	-docker rm -f $(ARGS) cosmohomedata
 
 #--- apache ---
 
