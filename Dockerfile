@@ -5,7 +5,7 @@ RUN apt-get install -y wget unzip vim
 COPY .bashrc /root/
 
 RUN ./make_project --url_base http://www.cosmologyathome.org \
-                   # --html_user_url http://www.cosmologyathome.org \
+                   --html_user_url http://www.cosmologyathome.org \
                    --project_host cosmohome \
                    --db_host mysql \
                    --db_passwd passwd \
@@ -30,7 +30,7 @@ COPY boinc2docker_camb/boinc/bin               $PROJHOME/bin
 
 
 # config files
-COPY project.xml config.xml boinc2docker/plan_class_spec.xml $PROJHOME/
+COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
 
 
 # repare for running cosmohome_init

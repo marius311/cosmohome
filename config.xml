@@ -15,7 +15,7 @@
     <app_dir>/root/projects/cosmohome/apps</app_dir>
     <download_dir>/root/projects/cosmohome/download</download_dir>
     <fuh_debug_level>3</fuh_debug_level>
-    <master_url>http://www.cosmologyathome.org/cosmohome/</master_url>
+    <master_url>http://www.cosmologyathome.org/</master_url>
     <host>cosmohome</host>
     <db_name>cosmohome</db_name>
     <shmem_key>0x1111394d</shmem_key>
