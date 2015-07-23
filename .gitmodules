@@ -1,6 +1,8 @@
 [submodule "boinc2docker_camb"]
-	path = boinc2docker_camb
-	url = https://marius311@bitbucket.org/marius311/boinc2docker_camb.git
+    path = boinc2docker_camb
+    url = https://marius311@bitbucket.org/marius311/boinc2docker_camb.git
+    ignore = dirty
 [submodule "boinc2docker"]
-	path = boinc2docker
-	url = https://github.com/marius311/boinc2docker.git
+    path = boinc2docker
+    url = https://github.com/marius311/boinc2docker.git
+    ignore = dirty
