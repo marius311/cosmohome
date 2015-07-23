@@ -30,6 +30,8 @@ create-cosmohomedata:
 rm-cosmohomedata:
 	-docker rm -f $(ARGS) cosmohomedata
 
+reset-cosmohome: rm-cosmohomedata create-cosmohomedata run-cosmohome
+
 #--- apache ---
 
 run-apache:
@@ -66,9 +68,13 @@ run-mysql:
 			   --env-file db_passwd.env \
 			   -d \
 			   mysql:5.6.25
-
+	# TODO: make work:
+	# docker logs -f cosmohome_mysql 2>&1 | grep -m 1 "port: 3306  MySQL"
+ 
 rm-mysql:
 	-docker rm -f cosmohome_mysql
+
+reset-mysql: rm-mysql rm-mysqldata create-mysqldata run-mysql
 
 
 rm: rm-mysql rm-mysqldata rm-apache rm-cosmohomedata rm-cosmohome
