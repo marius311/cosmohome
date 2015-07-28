@@ -4,3 +4,5 @@ boinc/.git
 
 boinc2docker/make_iso*
 boinc2docker/cp2boinc.sh
+
+test/

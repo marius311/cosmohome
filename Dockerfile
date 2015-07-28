@@ -29,10 +29,10 @@ COPY boinc2docker_camb/boinc/apps_boinc2docker $PROJHOME/apps_boinc2docker
 COPY boinc2docker_camb/boinc/bin               $PROJHOME/bin
 
 
-# config files
+# project files
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
-
+COPY html $PROJHOME/html
 
 # repare for running cosmohome_init
-RUN mv /root/projects /root/projects.build            
+RUN mv /root/projects /root/projects.build
 COPY cosmohome_init.py /root/
