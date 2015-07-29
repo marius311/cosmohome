@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+from os import system as sh
 import os.path as osp
 import sys
 import _mysql_exceptions
@@ -12,9 +13,9 @@ from Boinc import database, configxml
 
 
 print "Copying project files to data volume..."
-os.system('cp -r /root/projects.build/cosmohome /root/projects')
-os.system('chmod -R g+w /root/projects/cosmohome/html/cache') 
-os.system('chmod -R g+w /root/projects/cosmohome/log_cosmohome') 
+sh('cp -r /root/projects.build/cosmohome /root/projects')
+sh('chmod -R g+w /root/projects/cosmohome/html/cache') 
+sh('chmod -R g+w /root/projects/cosmohome/log_cosmohome') 
 
 
 print "Linking httpd.conf..."
@@ -33,10 +34,12 @@ try:
 except _mysql_exceptions.ProgrammingError as e:
     if e[0]==1007: print "Database exists, not overwriting."
     else: raise
+else:
+    sh('cd /root/projects/cosmohome/html/ops; ./db_schemaversion.php > /root/projects/cosmohome/db_revision')
+
 
 
 print "Running BOINC update scripts..."
 os.chdir('/root/projects/cosmohome')
-os.system('bin/xadd')
-os.system('(echo y; echo y; echo y; echo y) | bin/update_versions')
-
+sh('bin/xadd')
+sh('(echo y; echo y; echo y; echo y) | bin/update_versions')

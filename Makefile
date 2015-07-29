@@ -30,7 +30,7 @@ create-cosmohomedata:
 			      marius311/cosmohome
 
 rm-cosmohomedata:
-	-docker rm -f $(ARGS) cosmohomedata
+	-docker rm -vf $(ARGS) cosmohomedata
 
 reset-cosmohome: rm-cosmohomedata create-cosmohomedata run-cosmohome
 
@@ -62,12 +62,13 @@ create-mysqldata:
 
 
 rm-mysqldata:
-	-docker rm cosmohome_mysqldata
+	-docker rm -vf $(ARGS) cosmohome_mysqldata
 
 run-mysql:
 	docker run --volumes-from cosmohome_mysqldata \
 			   --name cosmohome_mysql \
 			   --env-file db_passwd.env \
+			   -v $(PWD)/mysql:/etc/mysql/conf.d \
 			   -d \
 			   mysql:5.6.25
 	# TODO: make work:
