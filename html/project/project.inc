@@ -1,11 +1,11 @@
 <?php
 
 require_once("../inc/util.inc");
+require_once("../inc/phpmailer/class.phpmailer.php");
+
 $master_url = parse_config(get_config(), "<master_url>");
 define("PROJECT", "Cosmology@Home");
-//define("MASTER_URL", "http://www.cosmologyathome.org/");
 define("URL_BASE", $master_url);
-//define("URL_BASE", "http://www.cosmologyathome.org/");
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
@@ -17,7 +17,6 @@ define("COPYRIGHT_HOLDER", "Department of Astronomy at the <a href=\"http://www.
 define("SYS_ADMIN_EMAIL", "kpointer@illinois.edu");
 define("UOTD_ADMIN_EMAIL", "bwandelt@illinois.edu"); # who gets user of the day pool running low e-mails?
 
-//define("INVITE_CODES", "/rapscallion/");
 
 // Email addresses separated by pipe ( | ) that will receive user reported 
 // offensive forum posts.
@@ -282,6 +281,32 @@ function project_team_credit($team) {
 function project_forum_post_rules() {
     // additional forum post rules
     return "";
+}
+
+
+function make_php_mailer() {
+
+    #from example:
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = "tls";
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = 587;
+    $mail->Username = "john.doe@gmail.com";
+    $mail->Password = "xxx";
+    $mail->SetFrom('admin@boincproject.com', 'John Doe');
+    $mail->AddReplyTo("admin@boincproject.com", "John Doe");
+
+    #original cosmohome:
+    global $PHPMAILER_HOST;
+    global $PHPMAILER_MAILER;
+    $mail->From = EMAIL_FROM;
+    $mail->FromName = EMAIL_FROM_NAME;
+    $mail->Host = $PHPMAILER_HOST;
+    $mail->Mailer = $PHPMAILER_MAILER;
+    
+    return $mail;
 }
 
 ?>

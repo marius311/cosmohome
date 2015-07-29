@@ -6,3 +6,6 @@
     path = boinc2docker
     url = https://github.com/marius311/boinc2docker.git
     ignore = dirty
+[submodule "html/inc/phpmailer"]
+	path = html/inc/phpmailer
+	url = https://github.com/PHPMailer/PHPMailer.git
