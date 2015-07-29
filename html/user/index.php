@@ -11,7 +11,6 @@ require_once("../inc/translation.inc");
 require_once("../inc/text_transform.inc");
 //require_once("../inc/replacePngTags.inc");
 require_once("../project/project.inc");
-require_once("../project/project_news.inc");
 
 function show_nav() {
     $config = get_config();
@@ -95,22 +94,21 @@ if (!$stopped) {
     }
 }
 
-echo <<<END
-	<div id="news">
-      <img src="img/news_icon.png" alt="news" /><span class="h2">NEWS </span><br/><br/>
+echo "
+    <tr><td class=news>
+    <h2 class=headline>News</h2>
       <p>
-END;
+";
+include("motd.php");
 
-show_news($project_news, 5);
-if (count($project_news) > 5) {
-    echo "<a href=\"old_news.php\">...more</a>";
-}
+show_news(0, 5);
+echo "
+    </td>
+    </tr></table>
+";
+
 echo <<<END
-      <p class="smalltext">
-      News is available as an
-      <a href="rss_main.php">RSS feed</a> <img src="xml.gif" alt="XML">.</p>
-    </div> <!--END NEWS-->
-	<!--</td>-->
+
 	 </div>  <!--END RIGHT COLUMN-->
   <!--</tr>-->
   <!--</div>--> <!--END MAINROW-->
@@ -123,13 +121,7 @@ echo <<<END
 END;
 
 
-include 'schedulers.txt';
 
-if ($caching) {
-    page_tail_main(true);
-    end_cache(INDEX_PAGE_TTL);
-} else {
     page_tail_main();
-}
 
 ?>
