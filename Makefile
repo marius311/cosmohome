@@ -37,11 +37,12 @@ reset-cosmohome: rm-cosmohomedata create-cosmohomedata run-cosmohome
 #--- apache ---
 
 run-apache:
-	docker run -p "80:80" -d \
+	docker run -p "80:80" -d -t \
 			   --link cosmohome_mysql:mysql \
    			   --volumes-from=cosmohomedata \
 			   --hostname=cosmohome \
 			   --name=cosmohome_apache \
+			   -w /root/projects/cosmohome \
 			   marius311/boincserver_apache
 
 rm-apache:
