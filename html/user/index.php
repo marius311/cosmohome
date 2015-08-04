@@ -120,7 +120,7 @@ echo <<<END
   
 END;
 
-
+    include "schedulers.txt";
 
     page_tail_main();
 
