@@ -9,7 +9,7 @@
     <upload_url>http://www.cosmologyathome.org/cosmohome_cgi/file_upload_handler</upload_url>
     <disable_account_creation>0</disable_account_creation>
     <uldl_dir_fanout>1024</uldl_dir_fanout>
-    <download_url>http://www.cosmologyathome.org/cosmohome/download</download_url>
+    <download_url>http://www.cosmologyathome.org/download</download_url>
     <db_user>root</db_user>
     <log_dir>/root/projects/cosmohome/log_cosmohome</log_dir>
     <app_dir>/root/projects/cosmohome/apps</app_dir>
