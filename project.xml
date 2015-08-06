@@ -52,7 +52,7 @@
         <user_friendly_name>anonymous</user_friendly_name>
     </platform>
     <app>
-        <name>boinc2docker</name>
-        <user_friendly_name>boinc2docker</user_friendly_name>
+        <name>camb_boinc2docker</name>
+        <user_friendly_name>camb_boinc2docker</user_friendly_name>
     </app>
 </boinc>

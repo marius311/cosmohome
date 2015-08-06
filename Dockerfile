@@ -14,20 +14,16 @@ RUN ./make_project --url_base http://www.cosmologyathome.org \
                    cosmohome
 
 ENV PROJHOME=/root/projects/cosmohome
+ENV TMP=/tmp
 
-# install boinc2docker
-COPY boinc2docker/apps/boinc2docker/1.0/example $PROJHOME/apps/boinc2docker/1.0/example
-COPY boinc2docker/templates                     $PROJHOME/templates
-COPY boinc2docker/setup_versions.sh             $PROJHOME/
-RUN cd $PROJHOME && \
-    ./setup_versions.sh 26169 && \
-    rm -r setup_versions.sh $PROJHOME/apps/boinc2docker/1.0/example
+# setup boinc2docker
+COPY boinc2docker $TMP/boinc2docker
+RUN cd $TMP/boinc2docker && ./setup_versions 26169
 
 
 # install boinc2docker_camb
-COPY boinc2docker_camb/boinc/apps_boinc2docker $PROJHOME/apps_boinc2docker
-COPY boinc2docker_camb/boinc/bin               $PROJHOME/bin
-
+RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.0
+COPY boinc2docker_camb/boinc/ $PROJHOME
 
 # project files
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
