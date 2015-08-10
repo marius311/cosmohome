@@ -97,10 +97,13 @@
       <cmd>file_deleter -d 3 </cmd>
     </daemon>
     <daemon>
-        <cmd>script_validator --app camb_boinc2docker --init_script ../apps_boinc2docker/camb/validator</cmd>
+        <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator</cmd>
     </daemon>
     <daemon>
-        <cmd>script_assimilator --app camb_boinc2docker --script "../apps_boinc2docker/camb/assimilator files"</cmd>
+        <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
+    </daemon>
+    <daemon>
+        <cmd>camb_boinc2docker_work_generator</cmd>
     </daemon>
   </daemons>
 </boinc>

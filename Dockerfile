@@ -23,7 +23,7 @@ RUN cd $TMP/boinc2docker && ./setup_versions 26169
 
 # install boinc2docker_camb
 RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.0
-COPY boinc2docker_camb/boinc/ $PROJHOME
+COPY camb_boinc2docker/boinc/ $PROJHOME
 
 # project files
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
