@@ -14,8 +14,8 @@ from Boinc import database, configxml
 
 print "Copying project files to data volume..."
 sh('cp -r /root/projects.build/cosmohome /root/projects')
-sh('chmod -R g+w /root/projects/cosmohome/html/cache') 
-sh('chmod -R g+w /root/projects/cosmohome/log_cosmohome') 
+for x in ['html', 'html/cache', 'upload']: 
+    sh('chmod -R g+w /root/projects/cosmohome/'+x)
 
 
 print "Linking httpd.conf..."

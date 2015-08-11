@@ -103,7 +103,7 @@
         <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
     </daemon>
     <daemon>
-        <cmd>camb_boinc2docker_work_generator</cmd>
+        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 100 --create_work_args "--target_nresults 2 --min_quorum 1"</cmd>
     </daemon>
   </daemons>
 </boinc>

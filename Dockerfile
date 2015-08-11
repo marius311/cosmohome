@@ -18,14 +18,14 @@ ENV TMP=/tmp
 COPY boinc2docker $TMP/boinc2docker
 RUN cd $TMP/boinc2docker && ./setup_versions 26169
 
-
 # install boinc2docker_camb
-RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.0
 COPY camb_boinc2docker/boinc/ $PROJHOME
+RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.0 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # project files
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
 COPY html $PROJHOME/html
+
 
 # repare for running cosmohome_init
 RUN mv /root/projects /root/projects.build

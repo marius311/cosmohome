@@ -2,8 +2,6 @@
 default:
 
 
-
-
 # -- cosmohome ---
 
 build-cosmohome: 
@@ -36,6 +34,9 @@ reset-cosmohome: rm-cosmohomedata create-cosmohomedata run-cosmohome
 
 #--- apache ---
 
+build-apache:
+	docker build -t cosmohome_apache apache
+
 run-apache:
 	docker run -p "80:80" -d -t \
 			   --link cosmohome_mysql:mysql \
@@ -43,7 +44,7 @@ run-apache:
 			   --hostname=cosmohome \
 			   --name=cosmohome_apache \
 			   -w /root/projects/cosmohome \
-			   marius311/boincserver_apache
+			   cosmohome_apache
 
 rm-apache:
 	-docker rm -f cosmohome_apache	
