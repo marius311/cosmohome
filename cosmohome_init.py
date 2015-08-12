@@ -14,7 +14,7 @@ from Boinc import database, configxml
 
 print "Copying project files to data volume..."
 sh('cp -r /root/projects.build/cosmohome /root/projects')
-for x in ['html', 'html/cache', 'upload']: 
+for x in ['html', 'html/cache', 'upload', 'log_cosmohome']: 
     sh('chmod -R g+w /root/projects/cosmohome/'+x)
 
 
