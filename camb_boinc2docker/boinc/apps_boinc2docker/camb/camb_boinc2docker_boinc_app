@@ -1,0 +1,5 @@
+#!/bin/sh
+
+tar zxvf /root/shared/params -C /root/shared && 
+docker pull marius311/camb_boinc2docker &&
+docker run -v /root/shared:/root/shared marius311/camb_boinc2docker /root/shared/params.ini

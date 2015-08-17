@@ -1,0 +1,7 @@
+#!/bin/sh
+
+TAG=marius311/camb_boinc2docker
+
+docker build -t $TAG:dev_latest develop
+docker run -v `readlink -f release`:/release --rm -t $TAG:dev_latest
+docker build -t $TAG:latest release

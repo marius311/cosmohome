@@ -1,0 +1,3 @@
+#!/bin/bash
+
+git archive --remote=ssh://git@bitbucket.org/marius311/camb_boinc2docker_validator.git --format=tar master | tar xf -

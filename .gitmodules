@@ -5,7 +5,7 @@
 [submodule "html/inc/phpmailer"]
 	path = html/inc/phpmailer
 	url = https://github.com/PHPMailer/PHPMailer.git
-[submodule "camb_boinc2docker"]
-	path = camb_boinc2docker
-	url = https://github.com/marius311/camb_boinc2docker.git
-    ignore = dirty
+[submodule "camb_boinc2docker/docker/develop/camb"]
+	path = camb_boinc2docker/docker/develop/camb
+	url = https://github.com/marius311/CAMB.git
+	branch = progress
