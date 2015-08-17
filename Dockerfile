@@ -4,8 +4,8 @@ RUN apt-get install -y wget unzip vim
 
 COPY .bashrc /root/
 
-RUN ./make_project --url_base http://www.cosmologyathome.org \
-                   --html_user_url http://www.cosmologyathome.org \
+RUN ./make_project --url_base http://beta.cosmologyathome.org \
+                   --html_user_url http://beta.cosmologyathome.org \
                    --project_host cosmohome \
                    --no_db \
                    --no_query \
