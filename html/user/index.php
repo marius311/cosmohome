@@ -85,11 +85,7 @@ if (!$stopped) {
         echo "
             <div id='uotd'>
             <img src='img/user_icon.png' alt='user' /><span class='h2'>USER OF THE DAY</span><br/><br/>";
-			
-        $user = lookup_user_id($profile->userid);
-        echo uotd_thumbnail($profile, $user);
-        echo user_links($user)."<br>";
-        echo sub_sentence(output_transform(strip_tags($profile->response1)), ' ', 150, true);
+        show_uotd($profile);
         echo "</div>"; /*END USER OF THE DAY*/
     }
 }
