@@ -1,36 +1,52 @@
-
 default:
 
 
 # -- cosmohome ---
 
 build-cosmohome: 
-	docker build -t marius311/cosmohome .
+	docker build -t cosmohome .
 
 run-cosmohome:
 	docker run --link cosmohome_mysql:mysql \
    			   --env-file=db_passwd.env \
-   			   --volumes-from=cosmohomedata \
+   			   --volumes-from=cosmohome_projectdata \
+   			   --volumes-from=cosmohome_resultdata \
    			   --hostname=cosmohome \
    			   --name cosmohome \
    			   --rm \
    			   -it \
-   			   marius311/cosmohome \
+   			   cosmohome \
    			   $(CMD)
 
 rm-cosmohome:
-	-docker rm -f cosmohome   			  
+	-docker rm -f cosmohome
 
-create-cosmohomedata:
+# --- cosmohome data-only containers ---
+
+create-projectdata:
 	docker create -v /root/projects -v /etc/apache2/sites-enabled \
-			      --name=cosmohomedata \
+			      --name=cosmohome_projectdata \
 			      --entrypoint true \
-			      marius311/cosmohome
+			      cosmohome
 
-rm-cosmohomedata:
-	-docker rm -vf $(ARGS) cosmohomedata
+rm-projectdata:	
+	-docker rm -vf $(ARGS) cosmohome_projectdata
 
-reset-cosmohome: rm-cosmohomedata create-cosmohomedata run-cosmohome
+create-resultdata:
+	docker create -v /root/results \
+			      --name=cosmohome_resultdata \
+			      --entrypoint true \
+			      cosmohome
+
+rm-resultdata:	
+	-docker rm -vf $(ARGS) cosmohome_resultdata
+
+create-data: create-projectdata create-resultdata
+rm-data: rm-projectdata rm-resultdata
+
+backup-projectdata:
+	docker run --rm --volumes-from=cosmohome_projectdata cosmohome tar cv /root/projects/cosmohome -O > projectdata.tar
+
 
 #--- apache ---
 
@@ -40,7 +56,8 @@ build-apache:
 run-apache:
 	docker run -p "80:80" -d -t \
 			   --link cosmohome_mysql:mysql \
-   			   --volumes-from=cosmohomedata \
+   			   --volumes-from=cosmohome_projectdata \
+   			   --volumes-from=cosmohome_resultdata \
 			   --hostname=cosmohome \
 			   --name=cosmohome_apache \
 			   -w /root/projects/cosmohome \
@@ -82,4 +99,4 @@ rm-mysql:
 reset-mysql: rm-mysql rm-mysqldata create-mysqldata run-mysql
 
 
-rm: rm-mysql rm-mysqldata rm-apache rm-cosmohomedata rm-cosmohome
+rm: rm-mysql rm-mysqldata rm-apache rm-projectdata rm-resultdata rm-cosmohome
