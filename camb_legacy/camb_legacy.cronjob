@@ -1,0 +1,1 @@
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * cd /root/projects/cosmohome/html/ops/ && php camb_legacy_work_generator.php

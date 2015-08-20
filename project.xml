@@ -55,4 +55,9 @@
         <name>camb_boinc2docker</name>
         <user_friendly_name>camb_boinc2docker</user_friendly_name>
     </app>
+    <app>
+        <name>camb</name>
+        <user_friendly_name>camb_legacy</user_friendly_name>
+    </app>
+
 </boinc>

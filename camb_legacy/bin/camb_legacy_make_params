@@ -1,0 +1,60 @@
+#! /bin/bash
+
+NUM_WUS=2
+
+cd /root/projects/cosmohome
+
+if [[ $# = 0 ]]
+then
+    NUM=1
+else
+    NUM=$1
+fi
+
+WU_TEMPLATE="templates/new_camb_wu"
+RS_TEMPLATE="templates/new_camb_rs"
+
+S=0
+j=0
+for ((i = 0; i < NUM; i++))
+do
+    NEW_S=`date +%S`
+    DAY=`date +%m%d%y`
+    TIME=`date +%H%M%S`
+    DATE="${DAY}_${TIME}"
+    OUTPUT_NAME="params_$DATE"
+    WU_NAME="wu_$DATE"
+
+    if [[ $NEW_S = $S ]]
+    then
+        let "j += 1"
+    else
+        j=0
+        S=$NEW_S
+    fi
+
+    OUTPUT_NAME+="_$j.ini"
+    WU_NAME+="_$j"
+
+    (cd bin && ./camb_legacy_gen) > $OUTPUT_NAME
+
+    echo "$i - Creating parameter file: $OUTPUT_NAME"
+   
+    OUTPUT_PATH=`bin/dir_hier_path $OUTPUT_NAME`
+
+    P_DIR="/root/results/camb_legacy/params/params_$DAY"
+    if [ ! -d $P_DIR ]
+    then
+      mkdir -p $P_DIR
+    fi
+    
+    cp $OUTPUT_NAME $P_DIR
+    mv $OUTPUT_NAME $OUTPUT_PATH
+    for ((k = 0; k < $NUM_WUS; k++))
+    do
+      WU_NAME_2="${WU_NAME}_$k"
+      bin/create_work -appname camb -wu_name $WU_NAME_2 -wu_template $WU_TEMPLATE -result_template $RS_TEMPLATE $OUTPUT_NAME
+    done
+done
+
+exit 0

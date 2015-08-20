@@ -1,0 +1,4 @@
+#!/bin/sh
+
+git archive --remote=ssh://git@bitbucket.org/marius311/camb_legacy_validator.git --format=tar master | tar xf -
+

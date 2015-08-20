@@ -22,6 +22,9 @@ RUN cd $TMP/boinc2docker && ./setup_versions 26169
 COPY camb_boinc2docker/boinc/ $PROJHOME
 RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.0 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
+# install camb_legacy
+COPY camb_legacy/ $PROJHOME
+
 # project files
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
 COPY html $PROJHOME/html

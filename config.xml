@@ -96,6 +96,8 @@
     <daemon>
       <cmd>file_deleter -d 3 </cmd>
     </daemon>
+
+    <!-- camb_boinc2docker -->
     <daemon>
         <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator</cmd>
     </daemon>
@@ -103,8 +105,18 @@
         <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
     </daemon>
     <daemon>
-        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 100 --create_work_args "--target_nresults 2 --min_quorum 1"</cmd>
+        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 100 --create_work_args "--target_nresults 1 --min_quorum 1 --priority 1"</cmd>
     </daemon>
+
+    <!-- camb_legacy -->
+    <daemon>
+        <cmd>script_validator --app camb --init_script camb_legacy_validator</cmd>
+    </daemon>
+    <daemon>
+        <cmd>script_assimilator --app camb --script "camb_legacy_assimilator files"</cmd>
+    </daemon>
+
+
   </daemons>
 </boinc>
 

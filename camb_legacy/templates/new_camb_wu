@@ -1,0 +1,22 @@
+<file_info>
+	<number>0</number>
+</file_info>
+<workunit>
+	<file_ref>
+		<file_number>0</file_number>
+		<open_name>params.ini</open_name>
+		<copy_file/>
+	</file_ref>
+    <command_line>params.ini</command_line>
+    <min_quorum>1</min_quorum>
+    <target_nresults>1</target_nresults>
+    <max_error_results>3</max_error_results>
+    <max_success_results>1</max_success_results>
+    <max_total_results>4</max_total_results>
+    <delay_bound>1296000</delay_bound>
+    <rsc_fpops_bound>4000000000000000</rsc_fpops_bound>
+    <rsc_fpops_est>48000000000000</rsc_fpops_est>
+    <rsc_disk_bound>629145600</rsc_disk_bound>
+    <rsc_bandwidth_bound>0</rsc_bandwidth_bound>
+    <credit>420</credit>
+</workunit>	

@@ -43,4 +43,4 @@ if not '--copy-only' in sys.argv:
     print "Running BOINC update scripts..."
     os.chdir('/root/projects/cosmohome')
     sh('bin/xadd')
-    sh('(echo y; echo y; echo y; echo y) | bin/update_versions')
+    sh('(%s) | bin/update_versions'%('; '.join(['echo y']*10)))
