@@ -287,17 +287,24 @@ function project_forum_post_rules() {
 
 function make_php_mailer() {
 
-    #from example:
     $mail = new PHPMailer();
     $mail->IsSMTP();
-    $mail->SMTPAuth = true;
-    $mail->SMTPSecure = "tls";
+    $mail->SMTPAuth = false;
+    $mail->SMTPSecure = "";
     $mail->Host = "darkenergy.astro.illinois.edu";
     $mail->Port = 25;
     $mail->Username = "";
     $mail->Password = "";
-    $mail->SetFrom('admin@boincproject.com', 'John Doe');
-    $mail->AddReplyTo("admin@boincproject.com", "John Doe");
+    $mail->SetFrom('admin@cosmologyathome.org', 'Cosmologyathome');
+    $mail->AddReplyTo("admin@cosmologyathome.org", "Cosmologyathome");
+
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        )
+    );
 
     return $mail;
 }
