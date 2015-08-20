@@ -1,7 +1,7 @@
 <?php
 
 require_once("../inc/util.inc");
-require_once("../inc/phpmailer/class.phpmailer.php");
+require_once("../inc/phpmailer/PHPMailerAutoload.php");
 
 $master_url = parse_config(get_config(), "<master_url>");
 define("PROJECT", "Cosmology@Home");
@@ -291,21 +291,13 @@ function make_php_mailer() {
     $mail->IsSMTP();
     $mail->SMTPAuth = true;
     $mail->SMTPSecure = "tls";
-    $mail->Host = "smtp.gmail.com";
-    $mail->Port = 587;
-    $mail->Username = "john.doe@gmail.com";
-    $mail->Password = "xxx";
+    $mail->Host = "darkenergy.astro.illinois.edu";
+    $mail->Port = 25;
+    $mail->Username = "";
+    $mail->Password = "";
     $mail->SetFrom('admin@boincproject.com', 'John Doe');
     $mail->AddReplyTo("admin@boincproject.com", "John Doe");
 
-    #original cosmohome:
-    global $PHPMAILER_HOST;
-    global $PHPMAILER_MAILER;
-    $mail->From = EMAIL_FROM;
-    $mail->FromName = EMAIL_FROM_NAME;
-    $mail->Host = $PHPMAILER_HOST;
-    $mail->Mailer = $PHPMAILER_MAILER;
-    
     return $mail;
 }
 
