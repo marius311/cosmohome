@@ -67,9 +67,9 @@ function page_head($title, $java_onload=null, $title_plain=null, $prefix="") {
 //        if ($_GET['changewidth'] == true){
 //          echo "<META HTTP-EQUIV=\"Refresh\" content=\"0;url=".$_SERVER["PHP_SELF"]."\">";
 //        }
-        if ($_COOKIE['wide'] == "true") {
-          #echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"wide.css\"/>";
-        }
+        // if ($_COOKIE['wide'] == "true") {
+        //   #echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"wide.css\"/>";
+        // }
     } else {
         echo "
 <html>
