@@ -102,10 +102,11 @@ END;
 
 function project_banner($title, $prefix) {
     // Put your project title and logo here
+    $master_url = parse_config(get_config(), "<master_url>");
     echo "<div id='container'>	
    <!-- Navigation -->
    <div id='topmatter'>
-    <a href='http://www.cosmologyathome.org'><img src='/img/banner.jpg' border='0' height='200px' width='800px' padding='0px'/></a>
+    <a href='$master_url'><img src='/img/banner.jpg' border='0' height='200px' width='800px' padding='0px'/></a>
       <div id='navmenu'>
         <ul id='nav_ul'>
           <li><a href='#'>JOIN</a>
