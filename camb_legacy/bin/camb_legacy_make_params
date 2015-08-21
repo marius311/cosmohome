@@ -1,6 +1,6 @@
 #! /bin/bash
 
-NUM_WUS=2
+NUM_WUS=1
 
 cd /root/projects/cosmohome
 
@@ -53,7 +53,7 @@ do
     for ((k = 0; k < $NUM_WUS; k++))
     do
       WU_NAME_2="${WU_NAME}_$k"
-      bin/create_work -appname camb -wu_name $WU_NAME_2 -wu_template $WU_TEMPLATE -result_template $RS_TEMPLATE $OUTPUT_NAME
+      bin/create_work -appname camb -wu_name $WU_NAME_2 -wu_template $WU_TEMPLATE -result_template $RS_TEMPLATE --target_nresults 1 --min_quorum 1 $OUTPUT_NAME
     done
 done
 
