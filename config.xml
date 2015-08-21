@@ -115,6 +115,9 @@
     <daemon>
         <cmd>script_assimilator --app camb --script "camb_legacy_assimilator files"</cmd>
     </daemon>
+    <daemon>
+        <cmd>camb_legacy_work_generator --cushion 100</cmd>
+    </daemon>
 
 
   </daemons>

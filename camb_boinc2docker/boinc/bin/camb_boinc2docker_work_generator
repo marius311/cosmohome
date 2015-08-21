@@ -3,95 +3,51 @@
 import sys
 sys.path.append('../bin')
 import boinc_path_config
-import os, os.path as osp
-from Boinc import database
-from Boinc.boinc_db import *
-from Boinc.sched_messages import SchedMessages, CRITICAL, NORMAL, DEBUG
+from Boinc.work_generator import WorkGenerator, check_output
+import os.path as osp
 from ConfigParser import RawConfigParser
 from cStringIO import StringIO
-from subprocess import check_output
 from hashlib import md5
-from time import sleep
-from subprocess import CalledProcessError, check_output as _check_output, STDOUT
-import cPickle as pickle
-import traceback
-import argparse
 import tarfile
+import cPickle as pickle
 from numpy import cov, dot
 from numpy.random import randint, randn
 from numpy.linalg import cholesky
 
 
-appname = 'camb_boinc2docker'
-
-def gen_new_params():
-    params = read_ini(osp.join(args['params_dir'][0],'params_base.ini'))
-    while True:
-        s = (samp_dat[randint(0,samp_dat.shape[0])] + 
-             dot(randn(len(samp_names))*args['fuzz_factor'][0],cholesky(cov(samp_dat.T)).T))
-        if all(s>samp_dat.min(axis=0)) and all(s<samp_dat.max(axis=0)): break
-    return dict(params,**dict(zip(samp_names,s)))
-
-def read_ini(inifile):
-    config = RawConfigParser()
-    config.optionxform=str
-    ini=open(inifile).read()
-    config.readfp(StringIO('[root]\n'+ini))
-    return dict(config.items('root'))
-
-def check_output(cmd,*args,**kwargs):
-    try:
-        return _check_output(cmd,stderr=STDOUT,*args,**kwargs)
-    except CalledProcessError as e:
-        log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),e.output)
-        raise CheckOutputError
-    except Exception as e:
-        log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),str(e))
-        raise CheckOutputError
-
-class CheckOutputError(Exception): pass
-
-
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(prog='camb_boinc2docker_work_generator')
-    parser.add_argument('--cushion',nargs=1,default=[2000],type=int,help='number of unsent jobs to keep')
-    parser.add_argument('--sleep_interval',nargs=1,default=[5],type=int,help='how many seconds to sleep between passes')
-    parser.add_argument('--params_dir',nargs=1,default=['params'],type=str,help='directory which has base parameter files')
-    parser.add_argument('--debug',action='store_true',default=False,help='print out debug messages')
-    parser.add_argument('--fuzz_factor',nargs=1,default=[0.1],type=float,help='how much to fuzz random samples by')
-    parser.add_argument('--create_work_args',nargs=1,default=[''],type=str,help='args to send to bin/create_work')
-    args = vars(parser.parse_args())
 
-    database.connect()
-    dbconnection = database.get_dbconnection()
-    log = SchedMessages()
-    log.set_debug_level(DEBUG if args['debug'] else NORMAL)
+    def read_ini(inifile):
+        config = RawConfigParser()
+        config.optionxform=str
+        ini=open(inifile).read()
+        config.readfp(StringIO('[root]\n'+ini))
+        return dict(config.items('root'))
 
-    samp_names, samp_dat = pickle.load(open(osp.join(args['params_dir'][0],'params_samples.dat')))
 
-    while True:
+    class MyWorkGenerator(WorkGenerator):
 
-        if osp.exists('../stop_daemons'): 
-            log.printf(NORMAL,"Stop deamons file found.\n")
-            sys.exit()
+        def __init__(self,*args,**kwargs):
+            super(MyWorkGenerator,self).__init__(*args,**kwargs)
+            self.samp_names, self.samp_dat = pickle.load(open(osp.join(self.args['params_dir'][0],'params_samples.dat')))
 
-        try:
 
-            dbconnection.commit()
-            app = database.Apps.find1(name=appname)
-            num_unsent = database.Results.count(app=app, server_state=RESULT_SERVER_STATE_UNSENT)
+        def add_args(self,parser):
+            parser.add_argument('--params_dir',nargs=1,default=['params'],type=str,help='directory which has base parameter files')
+            parser.add_argument('--fuzz_factor',nargs=1,default=[0.1],type=float,help='how much to fuzz random samples by')
+            parser.add_argument('--create_work_args',nargs=1,default=[''],type=str,help='args to send to bin/create_work')
 
-            if num_unsent<args['cushion'][0]:
-
-                params = gen_new_params()
-                param_file_name = '%s__%s.tgz'%(appname,md5(str(params)).hexdigest())
+        def make_jobs(self,num=1):
+            for _ in range(num):
+                params = self.gen_new_params()
+                param_file_name = '%s__%s.tgz'%(self.appname,md5(str(params)).hexdigest())
 
                 download_path = check_output(['../bin/dir_hier_path',param_file_name]).strip()
 
                 with tarfile.open(download_path,"w:gz") as tgz:
                     #add progress_template
-                    tgz.add(osp.join(args['params_dir'][0],'progress_template'),arcname='progress_template')
+                    tgz.add(osp.join(self.args['params_dir'][0],'progress_template'),arcname='progress_template')
                     #add params.ini
                     data = '\n'.join(['%s = %s'%(k,v) for k,v in params.items()])
                     tarinfo = tarfile.TarInfo('params.ini')
@@ -101,30 +57,18 @@ if __name__ == '__main__':
                 check_output(['bin/stage_file', '--copy',
                               'apps_boinc2docker/camb/camb_boinc2docker_boinc_app'],cwd='..')
 
-                wu = check_output((['bin/create_work','--appname',appname]+
-                                   args['create_work_args'][0].split()+
-                                   ['camb_boinc2docker_boinc_app',param_file_name]),cwd='..').strip()
+                check_output((['bin/create_work','--appname',self.appname]+
+                               self.args['create_work_args'][0].split()+
+                               ['camb_boinc2docker_boinc_app',param_file_name]),cwd='..')
 
-                # wait for transitioner to create jobs
-                while True:
-                    log.printf(DEBUG,"Waiting for transitioner...\n")
-                    dbconnection.commit()
-                    if database.Results.find(workunit=database.Workunits.find1(name=wu.split()[-1])): break
-                    sleep(1)
+        def gen_new_params(self):
+            params = read_ini(osp.join(self.args['params_dir'][0],'params_base.ini'))
+            while True:
+                s = (self.samp_dat[randint(0,self.samp_dat.shape[0])] + 
+                     dot(randn(len(self.samp_names))*self.args['fuzz_factor'][0],cholesky(cov(self.samp_dat.T)).T))
+                if all(s>self.samp_dat.min(axis=0)) and all(s<self.samp_dat.max(axis=0)): break
+            return dict(params,**dict(zip(self.samp_names,s)))
 
-                log.printf(NORMAL,"Created work: %s\n",wu)
-                continue
+            return dict(config.items('root'))
 
-            else:
-                log.printf(DEBUG,"Enough work exists.\n")
-
-
-        except CheckOutputError:
-            pass
-        except Exception as e:
-            log.printf(CRITICAL,"Error: %s\n",str(e))
-            traceback.print_exception(type(e), e, sys.exc_info()[2], None, sys.stderr)
-
-        sleep(int(args['sleep_interval'][0]))
-
-
+    MyWorkGenerator(appname='camb_boinc2docker').run()

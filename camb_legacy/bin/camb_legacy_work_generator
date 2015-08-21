@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import sys
+sys.path.append('../bin')
+import boinc_path_config
+from Boinc.work_generator import WorkGenerator, check_output
+
+if __name__ == '__main__':
+
+    class MyWorkGenerator(WorkGenerator):
+
+        def make_jobs(self,num=1):
+            check_output(['../bin/camb_legacy_make_params',str(num)])
+
+    MyWorkGenerator(appname='camb').run()

@@ -29,6 +29,7 @@ COPY camb_legacy/ $PROJHOME
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
 COPY html $PROJHOME/html
 COPY keys $PROJHOME/keys
+COPY py $PROJHOME/py
 
 
 # repare for running cosmohome_init
