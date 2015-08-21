@@ -4,6 +4,7 @@ default:
 # -- cosmohome ---
 
 build-cosmohome: 
+	mkdir -p keys
 	docker build -t cosmohome .
 
 run-cosmohome:
@@ -20,6 +21,9 @@ run-cosmohome:
 
 rm-cosmohome:
 	-docker rm -f cosmohome
+
+download-private-data:
+	git archive --remote=ssh://git@bitbucket.org/marius311/cosmohome_private.git --format=tar master | tar xvf -
 
 # --- cosmohome data-only containers ---
 
