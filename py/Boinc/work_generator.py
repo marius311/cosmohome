@@ -38,18 +38,6 @@ from boinc_db import *
 from sched_messages import SchedMessages, CRITICAL, NORMAL, DEBUG
 
 
-def check_output(cmd,*args,**kwargs):
-    """
-    Wraps subprocess.check_output and logs errors to BOINC
-    """
-    try:
-        return _check_output(cmd,stderr=STDOUT,*args,**kwargs)
-    except CalledProcessError as e:
-        log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),e.output)
-        raise CheckOutputError
-    except Exception as e:
-        log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),str(e))
-        raise CheckOutputError
 
 class CheckOutputError(Exception): pass
 
@@ -64,21 +52,36 @@ class WorkGenerator(object):
         self.add_args(parser)
         self.args = vars(parser.parse_args())
         self.appname = appname
+        self.log = SchedMessages()
+        self.log.set_debug_level(DEBUG if self.args['debug'] else NORMAL)
+
 
     def add_args(self,parser):
         pass
+
+    def check_output(self,cmd,*args,**kwargs):
+        """
+        Wraps subprocess.check_output and logs errors to BOINC
+        """
+        try:
+            return _check_output(cmd,stderr=STDOUT,*args,**kwargs)
+        except CalledProcessError as e:
+            self.log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),e.output)
+            raise CheckOutputError
+        except Exception as e:
+            self.log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),str(e))
+            raise CheckOutputError
+
 
     def run(self):
         database.connect()
         dbconnection = database.get_dbconnection()
         cursor = dbconnection.cursor()
-        log = SchedMessages()
-        log.set_debug_level(DEBUG if self.args['debug'] else NORMAL)
 
         while True:
 
             if osp.exists('../stop_daemons'): 
-                log.printf(NORMAL,"Stop deamons file found.\n")
+                self.log.printf(NORMAL,"Stop deamons file found.\n")
                 sys.exit()
 
             try:
@@ -90,30 +93,30 @@ class WorkGenerator(object):
                 if num_unsent<self.args['cushion'][0]:
 
                     num_create = self.args['cushion'][0]-num_unsent
-                    log.printf(NORMAL,"%i unsent results. Creating %i more.\n",num_unsent,num_create)
+                    self.log.printf(NORMAL,"%i unsent results. Creating %i more.\n",num_unsent,num_create)
 
                     self.make_jobs(num=num_create)
 
                     # wait for transitioner to create jobs
                     now = int(time())
                     while True:
-                        log.printf(DEBUG,"Waiting for transitioner...\n")
+                        self.log.printf(DEBUG,"Waiting for transitioner...\n")
                         dbconnection.commit()
                         cursor.execute("select min(transition_time) as t from workunit")
                         if cursor.fetchone()['t']>now: break
                         sleep(1)
 
-                    log.printf(DEBUG,"Created.\n")
+                    self.log.printf(DEBUG,"Created.\n")
                     continue
 
                 else:
-                    log.printf(DEBUG,"%i unsent results.\n",num_unsent)
+                    self.log.printf(DEBUG,"%i unsent results.\n",num_unsent)
 
 
             except CheckOutputError:
                 pass
             except Exception as e:
-                log.printf(CRITICAL,"Error: %s\n",str(e))
+                self.log.printf(CRITICAL,"Error: %s\n",str(e))
                 traceback.print_exception(type(e), e, sys.exc_info()[2], None, sys.stderr)
 
             sleep(int(self.args['sleep_interval'][0]))

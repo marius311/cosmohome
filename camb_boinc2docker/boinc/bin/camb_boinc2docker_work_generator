@@ -3,14 +3,14 @@
 import sys
 sys.path.append('../bin')
 import boinc_path_config
-from Boinc.work_generator import WorkGenerator, check_output
+from Boinc.work_generator import WorkGenerator
 import os.path as osp
 from ConfigParser import RawConfigParser
 from cStringIO import StringIO
 from hashlib import md5
 import tarfile
 import cPickle as pickle
-from numpy import cov, dot
+from numpy import cov, dot, arange, hstack, loadtxt
 from numpy.random import randint, randn
 from numpy.linalg import cholesky
 
@@ -37,32 +37,42 @@ if __name__ == '__main__':
             parser.add_argument('--params_dir',nargs=1,default=['params'],type=str,help='directory which has base parameter files')
             parser.add_argument('--fuzz_factor',nargs=1,default=[0.1],type=float,help='how much to fuzz random samples by')
             parser.add_argument('--create_work_args',nargs=1,default=[''],type=str,help='args to send to bin/create_work')
+            parser.add_argument('--num_per',nargs=1,default=[5],type=int,help='number of jobs per workunit')
 
         def make_jobs(self,num=1):
             for _ in range(num):
-                params = self.gen_new_params()
+                params = [self.gen_new_params(i) for i in range(self.args['num_per'][0])]
+
                 param_file_name = '%s__%s.tgz'%(self.appname,md5(str(params)).hexdigest())
+                download_path = self.check_output(['../bin/dir_hier_path',param_file_name]).strip()
 
-                download_path = check_output(['../bin/dir_hier_path',param_file_name]).strip()
-
-                with tarfile.open(download_path,"w:gz") as tgz:
-                    #add progress_template
-                    tgz.add(osp.join(self.args['params_dir'][0],'progress_template'),arcname='progress_template')
-                    #add params.ini
-                    data = '\n'.join(['%s = %s'%(k,v) for k,v in params.items()])
-                    tarinfo = tarfile.TarInfo('params.ini')
+                def add_file(name,data):
+                    tarinfo = tarfile.TarInfo(name)
                     tarinfo.size = len(data)
                     tgz.addfile(tarinfo,fileobj=StringIO(data))
+                    
+                with tarfile.open(download_path,"w:gz") as tgz:
+                    #add progress_template
+                    progress = loadtxt(osp.join(self.args['params_dir'][0],'progress_template'))
+                    add_file(name='progress_template',
+                             data='\n'.join('%f'%x for x in 
+                                            hstack((arange(self.args['num_per'][0])*progress[-1] + progress.reshape(progress.size,1)).T)))
 
-                check_output(['bin/stage_file', '--copy',
-                              'apps_boinc2docker/camb/camb_boinc2docker_boinc_app'],cwd='..')
+                    #add params files
+                    for i,p in enumerate(params):
+                        add_file(name='params_%.2i.ini'%i,
+                                 data='\n'.join(['%s = %s'%(k,v) for k,v in p.items()]))
 
-                check_output((['bin/create_work','--appname',self.appname]+
-                               self.args['create_work_args'][0].split()+
-                               ['camb_boinc2docker_boinc_app',param_file_name]),cwd='..')
+                self.check_output(['bin/stage_file', '--copy',
+                                   'apps_boinc2docker/camb/camb_boinc2docker_boinc_app'],cwd='..')
 
-        def gen_new_params(self):
+                self.check_output((['bin/create_work','--appname',self.appname]+
+                                    self.args['create_work_args'][0].split()+
+                                    ['camb_boinc2docker_boinc_app',param_file_name]),cwd='..')
+
+        def gen_new_params(self,index):
             params = read_ini(osp.join(self.args['params_dir'][0],'params_base.ini'))
+            params['output_root'] += '_%.2i'%index
             while True:
                 s = (self.samp_dat[randint(0,self.samp_dat.shape[0])] + 
                      dot(randn(len(self.samp_names))*self.args['fuzz_factor'][0],cholesky(cov(self.samp_dat.T)).T))

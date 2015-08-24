@@ -88,7 +88,7 @@
   </tasks>
   <daemons>
     <daemon>
-      <cmd>feeder -d 3 </cmd>
+      <cmd>feeder -d 3 --priority_order_create_time</cmd>
     </daemon>
     <daemon>
       <cmd>transitioner -d 3 </cmd>
@@ -105,7 +105,7 @@
         <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
     </daemon>
     <daemon>
-        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 100 --create_work_args "--target_nresults 1 --min_quorum 1 --priority 1"</cmd>
+        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 200 --create_work_args "--target_nresults 1 --min_quorum 1 --priority 1" --num_per 5</cmd>
     </daemon>
 
     <!-- camb_legacy -->
@@ -116,7 +116,7 @@
         <cmd>script_assimilator --app camb --script "camb_legacy_assimilator files"</cmd>
     </daemon>
     <daemon>
-        <cmd>camb_legacy_work_generator --cushion 100</cmd>
+        <cmd>camb_legacy_work_generator --cushion 200</cmd>
     </daemon>
 
 

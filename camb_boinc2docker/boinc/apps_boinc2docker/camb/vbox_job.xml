@@ -13,8 +13,9 @@
     <enable_scratch_directory/>
     <enable_network/>
     <completion_trigger_file>completion_trigger_file</completion_trigger_file>
-    <fraction_done_filename>results/progress</fraction_done_filename>
     <!--  -->
 
-
+    <fraction_done_filename>results/progress</fraction_done_filename>
+    <minimum_checkpoint_interval>600</minimum_checkpoint_interval>
+    
 </vbox_job>
