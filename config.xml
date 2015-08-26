@@ -100,20 +100,28 @@
     <!-- camb_boinc2docker -->
     <daemon>
         <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator</cmd>
+        <pid_file>camb_boinc2docker_validator.pid</pid_file>
+        <output>camb_boinc2docker_validator.log</output>
     </daemon>
     <daemon>
         <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
+        <pid_file>camb_boinc2docker_assimilator.pid</pid_file>
+        <output>camb_boinc2docker_assimilator.log</output>
     </daemon>
     <daemon>
-        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 200 --create_work_args "--target_nresults 1 --min_quorum 1 --priority 1 --rsc_fpops_est 3.6e13" --num_per 10</cmd>
+        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 200 --create_work_args "--target_nresults 1 --min_quorum 1 --priority 1 --rsc_fpops_est 3.6e13 --rsc_disk_bound 3e9" --num_per 10</cmd>
     </daemon>
 
     <!-- camb_legacy -->
     <daemon>
         <cmd>script_validator --app camb --init_script camb_legacy_validator</cmd>
+        <pid_file>camb_legacy_validator.pid</pid_file>
+        <output>camb_legacy_validator.log</output>
     </daemon>
     <daemon>
         <cmd>script_assimilator --app camb --script "camb_legacy_assimilator files"</cmd>
+        <pid_file>camb_legacy_assimilator.pid</pid_file>
+        <output>camb_legacy_assimilator.log</output>
     </daemon>
     <daemon>
         <cmd>camb_legacy_work_generator --cushion 200</cmd>
