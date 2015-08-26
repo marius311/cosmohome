@@ -1,6 +1,6 @@
 FROM marius311/boincserver_boinc
 
-RUN apt-get install -y wget unzip vim
+RUN apt-get install -y wget unzip vim git
 
 COPY .bashrc /root/
 
@@ -16,11 +16,12 @@ ENV TMP=/tmp
 
 # setup boinc2docker
 COPY boinc2docker $TMP/boinc2docker
+COPY .git $TMP/.git
 RUN cd $TMP/boinc2docker && ./setup_versions 26169 26170 26169
 
 # install boinc2docker_camb
 COPY camb_boinc2docker/boinc/ $PROJHOME
-RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
+RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.02 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # install camb_legacy
 COPY camb_legacy/ $PROJHOME
