@@ -8,7 +8,7 @@ build-cosmohome:
 	(cd boinc2docker && git describe --tags --abbrev=0 > .tag)
 	docker build -t cosmohome .
 
-run-cosmohome:
+postbuild-cosmohome:
 	docker run --link cosmohome_mysql:mysql \
    			   --env-file=db_passwd.env \
    			   --volumes-from=cosmohome_projectdata \
@@ -18,7 +18,7 @@ run-cosmohome:
    			   --rm \
    			   -it \
    			   cosmohome \
-   			   $(CMD)
+   			   sh -c "./cosmohome_postbuild.py ${ARGS}"
 
 rm-cosmohome:
 	-docker rm -f cosmohome

@@ -36,4 +36,4 @@ COPY py $PROJHOME/py
 
 # repare for running cosmohome_init
 RUN rm /root/projects
-COPY cosmohome_init.py /root/
+COPY cosmohome_postbuild.py /root/
