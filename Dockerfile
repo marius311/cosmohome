@@ -1,8 +1,13 @@
 FROM marius311/boincserver_boinc
 
-RUN apt-get install -y wget unzip vim git
+ENV PROJHOME=/root/projects/cosmohome
+ENV TMP=/tmp
+
+RUN apt-get install -y wget unzip vim
 
 COPY .bashrc /root/
+
+RUN mkdir -p /root/projects.build && ln -s /root/projects.build /root/projects
 
 RUN ./make_project --url_base http://beta.cosmologyathome.org \
                    --html_user_url http://beta.cosmologyathome.org \
@@ -11,12 +16,8 @@ RUN ./make_project --url_base http://beta.cosmologyathome.org \
                    --no_query \
                    cosmohome
 
-ENV PROJHOME=/root/projects/cosmohome
-ENV TMP=/tmp
-
 # setup boinc2docker
 COPY boinc2docker $TMP/boinc2docker
-COPY .git $TMP/.git
 RUN cd $TMP/boinc2docker && ./setup_versions 26169 26170 26169
 
 # install boinc2docker_camb
@@ -34,5 +35,5 @@ COPY py $PROJHOME/py
 
 
 # repare for running cosmohome_init
-RUN mv /root/projects /root/projects.build
+RUN rm /root/projects
 COPY cosmohome_init.py /root/
