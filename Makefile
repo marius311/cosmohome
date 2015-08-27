@@ -50,7 +50,7 @@ create-data: create-projectdata create-resultdata
 rm-data: rm-projectdata rm-resultdata
 
 backup-projectdata:
-	docker run --rm --volumes-from=cosmohome_projectdata cosmohome tar cv /root/projects/cosmohome -O > projectdata.tar
+	docker run --rm --volumes-from=cosmohome_projectdata cosmohome tar cvP /root/projects/cosmohome -O > backups/projectdata_$$(date -I).tar
 
 
 #--- apache ---
@@ -98,6 +98,10 @@ run-mysql:
 	# TODO: make work:
 	# docker logs -f cosmohome_mysql 2>&1 | grep -m 1 "port: 3306  MySQL"
  
+backup-mysqldata:
+	docker run --rm --volumes-from=cosmohome_mysqldata cosmohome tar cvP /var/lib/mysql -O > backups/mysqldata_$$(date -I).tar
+
+
 rm-mysql:
 	-docker rm -f cosmohome_mysql
 
