@@ -3,7 +3,7 @@ FROM marius311/boincserver_boinc
 ENV PROJHOME=/root/projects/cosmohome
 ENV TMP=/tmp
 
-RUN apt-get install -y wget unzip vim
+RUN apt-get install -y wget unzip vim git
 
 COPY .bashrc /root/
 
@@ -17,12 +17,13 @@ RUN ./make_project --url_base http://beta.cosmologyathome.org \
                    cosmohome
 
 # setup boinc2docker
-COPY boinc2docker $TMP/boinc2docker
-RUN cd $TMP/boinc2docker && ./setup_versions 26169 26170 26169
+COPY boinc2docker $PROJHOME/boinc2docker
+COPY .git/modules/boinc2docker $PROJHOME/.git/modules/boinc2docker
+RUN cd $PROJHOME/boinc2docker && ./setup_versions 26169 26170 26169
 
 # install boinc2docker_camb
 COPY camb_boinc2docker/boinc/ $PROJHOME
-RUN cd $TMP/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.02 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
+RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.02 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # install camb_legacy
 COPY camb_legacy/ $PROJHOME
@@ -32,7 +33,7 @@ COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.con
 COPY html $PROJHOME/html
 COPY keys $PROJHOME/keys
 COPY py $PROJHOME/py
-
+COPY .git $PROJHOME/.git
 
 # repare for running cosmohome_init
 RUN rm /root/projects

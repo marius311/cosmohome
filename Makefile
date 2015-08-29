@@ -5,7 +5,6 @@ default:
 
 build-cosmohome: 
 	mkdir -p keys
-	(cd boinc2docker && git describe --tags --abbrev=0 > .tag)
 	docker build -t cosmohome .
 
 postbuild-cosmohome:
