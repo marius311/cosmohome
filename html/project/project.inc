@@ -126,6 +126,7 @@ function project_banner($title, $prefix) {
           <li><a href='#'>COMMUNITY</a>
             <ol>
               <li><a href='/wandelt_letter.php'>Ben Wandelt Welcome Letter</a></li>
+	      <li><a href='/blog'>C@H Blog</a></li>
               <li><a href='/forum_index.php'>Message Boards</a></li>
               <li><a href='/downloads.php'>Desktop Backgrounds</a></li>
               <li><a href='/profile_menu.php'>Participant Profiles</a></li>

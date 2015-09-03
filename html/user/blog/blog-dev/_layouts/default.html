@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
+
+    {% include meta.html %}
+    {% include cah_css.html %}
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+   <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/blog/b_style.css" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/blog/b_feed.xml" />
+   
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body bgcolor="#fffff">
+{% include cah_start.html %}
+    <div class="b_wrapper-masthead">
+      <div class="b_container">
+        <div class="b_masthead clearfix">
+		<table class="b_wrapper-masthead" width="100%">
+			<tr> <td>
+          <a href="{{ site.baseurl }}/" class="b_site-avatar"><img src="{{ site.avatar }}" /></a>
+</td>
+     <td>  
+          <div class="site-info">
+            <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
+            <p class="site-description">{{ site.description }}</p>
+          </div>
+</td>
+     <td> 
+          <nav>
+            <a href="{{ site.baseurl }}/blog">Blog</a>
+            <a href="{{ site.baseurl }}/blog/about/index.html">About</a>
+          </nav></td></tr></table>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="b_container">
+      {{ content }}
+    </div>
+
+    <div class="b_wrapper-footer">
+      <div class="b_container">
+        <div class="b_footer" style="text-align: center"> <!--footer class-->
+          {% include svg-icons.html %}
+	  
+  </div> <!--footer-->
+      </div>
+    </div>
+	{% include cah_end.html %}
+    {% include analytics.html %}
+  </body>
+</html>
