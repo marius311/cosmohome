@@ -44,6 +44,7 @@ echo <<<END
 		 <div class="linkbtn"><a href="info.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> how to join</span></a></div>
 		 <div class="linkbtn"><a href="home.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> your account</span></a></div>
 		 <div class="linkbtn"><a href="forum_index.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> message boards</span></a></div>
+		<div class="linkbtn"><a href="blog"><img src="img/navigation/major_links/link_btn.gif"/><span>> blog</span></a></div>
 		 <div class="linkbtn"><a href="downloads.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> goodies</span></a></div>
     <!--[if lte IE 6]>
     </div>
