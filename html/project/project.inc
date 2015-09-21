@@ -312,8 +312,9 @@ function make_php_mailer() {
 function server_status_project_info(){
 
   $short = shell_exec("git rev-parse --short HEAD");
-  $long =shell_exec("git rev-parse HEAD");
-  echo "Cosmohome git commit: <a href='https://github.com/marius311/cosmohome/tree/$long'>$short</a>";
+  $long = shell_exec("git rev-parse HEAD");
+  $date = shell_exec("TZ=UTC git show -s --format=%cd --date=local HEAD");
+  echo "Server version: <a href='https://github.com/marius311/cosmohome/tree/$long'>$short</a> ($date UTC)";
 
 }
 
