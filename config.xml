@@ -109,7 +109,7 @@
         <output>camb_boinc2docker_assimilator.log</output>
     </daemon>
     <daemon>
-        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 200 --create_work_args "--target_nresults 1 --min_quorum 1 --priority 1 --rsc_fpops_est 3.6e13 --rsc_disk_bound 3e9" --num_per 10</cmd>
+        <cmd>camb_boinc2docker_work_generator --params_dir ../apps_boinc2docker/camb/params --cushion 200 --create_work_args "--target_nresults 1 --min_quorum 1 --priority 1 --rsc_fpops_est 3.6e13 rsc_fpops_bound 3.6e15 --rsc_disk_bound 3e9" --num_per 10</cmd>
     </daemon>
 
     <!-- camb_legacy -->
