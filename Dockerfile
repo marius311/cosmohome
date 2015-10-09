@@ -19,11 +19,11 @@ RUN ./make_project --url_base http://beta.cosmologyathome.org \
 # setup boinc2docker
 COPY boinc2docker $PROJHOME/boinc2docker
 COPY .git/modules/boinc2docker $PROJHOME/.git/modules/boinc2docker
-RUN cd $PROJHOME/boinc2docker && ./setup_versions 26169 26170 26169
+RUN cd $PROJHOME/boinc2docker && ./setup_versions
 
 # install boinc2docker_camb
 COPY camb_boinc2docker/boinc/ $PROJHOME
-RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.02 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
+RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.03 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # install camb_legacy
 COPY camb_legacy/ $PROJHOME

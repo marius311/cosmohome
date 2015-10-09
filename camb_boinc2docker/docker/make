@@ -2,8 +2,10 @@
 
 set -e
 
-TAG=marius311/camb_boinc2docker
+TAG=${1:-marius311/camb_boinc2docker:latest}
 
-docker build -t $TAG:dev_latest develop
-docker run -v `readlink -f release`:/release --rm -t $TAG:dev_latest
-docker build -t $TAG:latest release
+DEVTAG=camb_boinc2docker_develop
+
+docker build -t $DEVTAG develop
+docker run -v $(readlink -f release):/release --rm -t $DEVTAG
+docker build -t $TAG release
