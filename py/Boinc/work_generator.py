@@ -31,6 +31,8 @@ from time import sleep, time
 from subprocess import CalledProcessError, check_output as _check_output, STDOUT
 import traceback
 import argparse
+from hashlib import md5
+
 
 import boinc_path_config
 import database
@@ -72,6 +74,22 @@ class WorkGenerator(object):
             self.log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),str(e))
             raise CheckOutputError
 
+    def stage_file(self,name,contents):
+        base,ext = osp.splitext(name)
+        fullname = base + '_' + md5(str(contents)+str(time())).hexdigest() + ext
+        download_path = self.check_output(['../bin/dir_hier_path',fullname]).strip()
+        with open(download_path,'w') as f: f.write(contents)
+        return fullname
+
+    def create_work(self,create_work_args,input_files):
+        """
+        Creates and stages input files based on a list of (name,contents) in input_files,
+        and calls bin/create_work with extra args specified by create_work_args
+        """
+        self.check_output((['bin/create_work','--appname',self.appname]+
+                           self.args['create_work_args'][0].split()+
+                           [self.stage_file(*i) for i in input_files]),
+                          cwd='..')
 
     def run(self):
         database.connect()

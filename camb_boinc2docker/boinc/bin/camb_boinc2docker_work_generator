@@ -7,13 +7,12 @@ from Boinc.work_generator import WorkGenerator
 import os.path as osp
 from ConfigParser import RawConfigParser
 from cStringIO import StringIO
-from hashlib import md5
 import tarfile
 import cPickle as pickle
 from numpy import cov, dot, arange, hstack, loadtxt
 from numpy.random import randint, randn
 from numpy.linalg import cholesky
-
+from shutil import copy
 
 if __name__ == '__main__':
 
@@ -43,15 +42,14 @@ if __name__ == '__main__':
             for _ in range(num):
                 params = [self.gen_new_params(i) for i in range(self.args['num_per'][0])]
 
-                param_file_name = '%s__%s.tgz'%(self.appname,md5(str(params)).hexdigest())
-                download_path = self.check_output(['../bin/dir_hier_path',param_file_name]).strip()
-
                 def add_file(name,data):
                     tarinfo = tarfile.TarInfo(name)
                     tarinfo.size = len(data)
                     tgz.addfile(tarinfo,fileobj=StringIO(data))
                     
-                with tarfile.open(download_path,"w:gz") as tgz:
+                params_tar = StringIO()
+
+                with tarfile.open(fileobj=params_tar,mode="w:gz") as tgz:
                     #add progress_template
                     progress = loadtxt(osp.join(self.args['params_dir'][0],'progress_template'))
                     add_file(name='progress_template',
@@ -63,12 +61,9 @@ if __name__ == '__main__':
                         add_file(name='params_%.2i.ini'%i,
                                  data='\n'.join(['%s = %s'%(k,v) for k,v in p.items()]))
 
-                self.check_output(['bin/stage_file', '--copy',
-                                   'apps_boinc2docker/camb/camb_boinc2docker_boinc_app'],cwd='..')
-
-                self.check_output((['bin/create_work','--appname',self.appname]+
-                                    self.args['create_work_args'][0].split()+
-                                    ['camb_boinc2docker_boinc_app',param_file_name]),cwd='..')
+                self.create_work(self.args['create_work_args'][0].split(),
+                                 [('boinc_app',open("../apps_boinc2docker/camb/boinc_app").read()),
+                                  ('params.tgz',params_tar.getvalue())])
 
         def gen_new_params(self,index):
             params = read_ini(osp.join(self.args['params_dir'][0],'params_base.ini'))
