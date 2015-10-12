@@ -5,4 +5,4 @@ set -e
 tar zxvf /root/shared/params -C /root/shared
 docker pull %image%
 save_docker.sh
-docker run -v /root/shared:/root/shared %image% /root/shared/params*.ini
+docker run --rm -v /root/shared:/root/shared %image% /root/shared/params*.ini
