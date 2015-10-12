@@ -3,7 +3,7 @@ FROM marius311/boincserver_boinc
 ENV PROJHOME=/root/projects/cosmohome
 ENV TMP=/tmp
 
-RUN apt-get install -y wget unzip vim git
+RUN apt-get update && apt-get install -y wget unzip vim git
 
 COPY .bashrc /root/
 
