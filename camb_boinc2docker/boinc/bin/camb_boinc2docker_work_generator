@@ -13,6 +13,8 @@ from numpy import cov, dot, arange, hstack, loadtxt
 from numpy.random import randint, randn
 from numpy.linalg import cholesky
 from shutil import copy
+from subprocess import check_output
+
 
 if __name__ == '__main__':
 
@@ -61,8 +63,12 @@ if __name__ == '__main__':
                         add_file(name='params_%.2i.ini'%i,
                                  data='\n'.join(['%s = %s'%(k,v) for k,v in p.items()]))
 
+                #edit boinc_app so it points to the correct image
+                version = check_output('git describe --match "camb_boinc2docker/*" --abbrev=0 --tags',shell=True).strip().split('/')[1]
+                boinc_app = open("../apps_boinc2docker/camb/boinc_app").read().replace('%image%','marius311/camb_boinc2docker:'+version)
+                
                 self.create_work(self.args['create_work_args'][0].split(),
-                                 [('boinc_app',open("../apps_boinc2docker/camb/boinc_app").read()),
+                                 [('boinc_app',boinc_app),
                                   ('params.tgz',params_tar.getvalue())])
 
         def gen_new_params(self,index):
