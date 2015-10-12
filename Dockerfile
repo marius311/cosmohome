@@ -23,7 +23,7 @@ RUN cd $PROJHOME/boinc2docker && ./setup_versions
 
 # install boinc2docker_camb
 COPY camb_boinc2docker/boinc/ $PROJHOME
-RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.04 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
+RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.05 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # install camb_legacy
 COPY camb_legacy/ $PROJHOME
