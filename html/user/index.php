@@ -36,12 +36,17 @@ echo <<<END
  <div id="maincontent">
    <div id="mainrow">
     <div id="leftcol">
-	  <div id="bigtext"></div>
+	  <div id="bigtext">
+      <p>
+      Cosmology@Home lets you volunteer your spare computer time (like when your screen saver is on) 
+      to help search for the model which best describes our Universe and to find the range of models 
+      that agree with available cosmological and particle physics data. </p>
+    </div>
 	  <div id="majorlinks">
     <!--[if lte IE 6]>
     <div style="display: none">
     <![endif]-->
-		 <div class="linkbtn"><a href="info.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> how to join</span></a></div>
+		 <div class="linkbtn"><a href="join.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> how to join</span></a></div>
 		 <div class="linkbtn"><a href="home.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> your account</span></a></div>
 		 <div class="linkbtn"><a href="forum_index.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> message boards</span></a></div>
 		 <div class="linkbtn"><a href="downloads.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> goodies</span></a></div>

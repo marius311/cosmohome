@@ -592,10 +592,16 @@ form {
 
 #bigtext {
      width: 450px;
-     height: 275px;
-     background-image: url(img/bigtext.png);
      border-bottom: 1px solid /*bb*/#CCCCCC;
      overflow: hidden;
+}
+
+#bigtext p {
+     padding-top: 20px;     
+     font-size: 1.75rem;
+     font-family: Merriweather, serif; 
+     font-weight: bold;
+     line-height: 1.2;
 }
 
 #maintable {
@@ -704,7 +710,7 @@ form {
 }
 
 .linkbtn a:hover {
-     color: #df706b;
+     color: #BB6699;
 }
 
 .linkbtn a:hover img {

@@ -50,7 +50,8 @@ function page_head($title, $java_onload=null, $prefix="") {
     <title>".strip_tags($title)."</title>
     <link rel=\"stylesheet\" type=\"text/css\" href=\"$styleSheet\">
     <link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
-    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>";
+    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:700' rel='stylesheet' type='text/css'>";
     echo <<<END
     <script type="text/javascript" src="drop_down.js"></script>
     <!--[if lte IE 6]>
