@@ -4,7 +4,15 @@
 * TOC
 {:toc}
 
-### What I my computer doesn't meet requirements? ### 
+
+### What science is being done with Cosmology@Home? ###
+{:#science}
+For an introduction to the science we do at Cosmology@Home, see [this](http://cosmicmar.com/posts/tbd) multi-part blog post. 
+
+To summarize, we run the [CAMB](http://camb.info) code, the results from which are used to train the [PICO](https://sites.google.com/a/ucdavis.edu/pico/) code, which in turn is used by various groups in the field to analyze cosmological datasets. Perhaps most notably, PICO is used extensively in the analysis of [Planck](http://www.esa.int/Our_Activities/Space_Science/Planck) data (e.g. this [paper](http://xxx.lanl.gov/abs/1507.02704)). The papers describing PICO itself can be found [here](http://arxiv.org/abs/astro-ph/0606709) and [here](http://arxiv.org/abs/0712.0194). 
+
+
+### What if my computer doesn't meet requirements? ### 
 {:#camb-legacy}
 Cosmology@Home runs multiple "apps." The [requirements list](join.php#requirements) is for the default app (named *camb_boinc2docker*), but if your computer does not meet them, there is an older app available (named *camb_legacy*) which runs on just Windows and Linux but supports 32-bit processors and does not need Virtualbox or VT-x/AMD-v. At this point we only use the results from *camb_legacy* for testing the [PICO](#science) algorithm and not for comparing with data since the app is fairly old. However, the results do serve a limited purpose and allow Cosmology@Home users who do not meet the above requirements to continue to contribute, thus we continue to provide it. We encourage users who can run *camb_boinc2docker* to do so, however. 
 
@@ -22,7 +30,7 @@ However, it may still be that while your processor supports VT-x/AMD-v, these fe
 
 *camb_boinc2docker* is multi-threaded and will use up all available cores which BOINC allows it to. For example, if in the BOINC computing preferences you have set "Use at most 50% CPU time" and you have a 4-core processor, the job will use two of them. 
 
-If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by placing the following in a text in a file called `app_config.xml` in the Cosmology@Home project folder  (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
+If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by placing the following text in a file called `app_config.xml` in the Cosmology@Home project folder  (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
 
 ~~~xml
     <app_config>
@@ -40,12 +48,6 @@ If for whatever reason you wish to limit the number of cores used without changi
     </app_config>
 ~~~
 
-
-### What science is being done with Cosmology@Home? ###
-{:#science}
-For an introduction to the science we do at Cosmology@Home, see [this](http://cosmicmar.com/posts/tbd) multi-part blog post. 
-
-To summarize, we run the [CAMB](http://camb.info) code, the results from which are used to train the [PICO](https://sites.google.com/a/ucdavis.edu/pico/) code, which in turn is used by various groups in the field to analyze cosmological datasets. Perhaps most notably, PICO is used extensively in the analysis of [Planck](http://www.esa.int/Our_Activities/Space_Science/Planck) data (e.g. this [paper](http://xxx.lanl.gov/abs/1507.02704)). The papers describing PICO itself can be found [here](http://arxiv.org/abs/astro-ph/0606709) and [here](http://arxiv.org/abs/0712.0194). 
 
 
 

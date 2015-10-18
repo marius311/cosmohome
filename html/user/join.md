@@ -14,7 +14,7 @@
 * 64-bit processor
 * Virtualbox (versions 4.3.X or 5.X.X) 
 * VT-x or AMD-v enabled in your BIOS (*important! see [here](faq.php#vtx) for more info*)
-* Windows, Linux, or Mac OSX
+* Windows XP or later, Linux, or Mac OSX
 
 
 Please see the [FAQ](faq.php) for more details.
