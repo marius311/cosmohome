@@ -848,16 +848,16 @@ form {
 }
 
 #navmenu ul li:hover a, #navmenu ul li.over a {
-     color: #fefefe;
+     color: #CCCCCC;
 }
 
 #navmenu ul li:hover ol li a, #navmenu ul li.over ol li a {
-     color: #ffffff;
+     color: #fefefe;
 }
 
 #navmenu ul li:hover ol li:hover a, #navmenu ul li.over ol li.over a {
      background: #464952;
-     color: #ffffff;
+     color: #fefefe;
 }
 
 #navmenu li:hover ol, #navmenu li.over ol {
