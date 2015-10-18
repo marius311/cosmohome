@@ -8,7 +8,8 @@ require_once("../project/project.inc");
 page_head("Letter to ".PROJECT." users");
 
 echo("<div id='bodytext'>
-<div class='titlep'> Dear friends, supporters and visitors,</div><br/>
+<br/>
+<p>Dear friends, supporters and visitors,</p>
 
 <p>Cosmology@Home is being developed by my group at the University of
 Illinois to enable participants to contribute actively to front-line
@@ -85,11 +86,11 @@ the <a href=\"forum_index.php\">message boards</a> related to Cosmology@Home.</p
 
 <p>All the best,</p>
 
-<div class='titlep'> Ben Wandelt<br/>
+<p>Ben Wandelt<br/>
 Professor of Physics and Astronomy<br/>
 <a href=\"http://www.illinois.edu\" target=\"_new\">University of Illinois at Urbana-Champaign</a><br/>
 <br/>
-  </div>
+  </p>
   </div>");
 
 page_tail();

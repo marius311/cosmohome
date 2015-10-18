@@ -1,0 +1,83 @@
+<h2 class="no_toc" id="faqtroubleshooting">FAQ/Troubleshooting</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#camb-legacy" id="markdown-toc-camb-legacy">What I my computer doesn’t meet requirements?</a></li>
+  <li><a href="#vtx" id="markdown-toc-vtx">What is VT-x or AMD-v and why do I need it?</a></li>
+  <li><a href="#how-can-i-limit-the-number-of-cpus-used" id="markdown-toc-how-can-i-limit-the-number-of-cpus-used">How can I limit the number of CPUs used?</a></li>
+  <li><a href="#science" id="markdown-toc-science">What science is being done with Cosmology@Home?</a></li>
+  <li><a href="#how-does-the-cambboinc2docker-app-work" id="markdown-toc-how-does-the-cambboinc2docker-app-work">How does the <em>camb_boinc2docker</em> app work?</a></li>
+  <li><a href="#why-is-there-no-32-bit-support" id="markdown-toc-why-is-there-no-32-bit-support">Why is there no 32-bit support?</a></li>
+  <li><a href="#how-does-cosmologyhome-store-docker-containers-between-jobs" id="markdown-toc-how-does-cosmologyhome-store-docker-containers-between-jobs">How does Cosmology@Home store Docker containers between jobs?</a></li>
+  <li><a href="#log" id="markdown-toc-log">How do I see the error log for my jobs?</a></li>
+  <li><a href="#my-cambboinc2docker-jobs-stop-at-0100" id="markdown-toc-my-cambboinc2docker-jobs-stop-at-0100">My <em>camb_boinc2docker</em> jobs stop at 0.100%</a></li>
+  <li><a href="#what-is-boinc2docker" id="markdown-toc-what-is-boinc2docker">What is <em>boinc2docker</em>?</a></li>
+  <li><a href="#can-i-see-the-source-code-of-cosmologyhome" id="markdown-toc-can-i-see-the-source-code-of-cosmologyhome">Can I see the source code of Cosmology@Home?</a></li>
+</ul>
+
+<h3 id="camb-legacy">What I my computer doesn’t meet requirements?</h3>
+<p>Cosmology@Home runs multiple “apps.” The <a href="join.php#requirements">requirements list</a> is for the default app (named <em>camb_boinc2docker</em>), but if your computer does not meet them, there is an older app available (named <em>camb_legacy</em>) which runs on just Windows and Linux but supports 32-bit processors and does not need Virtualbox or VT-x/AMD-v. At this point we only use the results from <em>camb_legacy</em> for testing the <a href="#science">PICO</a> algorithm and not for comparing with data since the app is fairly old. However, the results do serve a limited purpose and allow Cosmology@Home users who do not meet the above requirements to continue to contribute, thus we continue to provide it. We encourage users who can run <em>camb_boinc2docker</em> to do so, however.</p>
+
+<h3 id="vtx">What is VT-x or AMD-v and why do I need it?</h3>
+<p>This is a feature of modern processors (Intel calls theirs “VT-x” and AMD calls theirs “AMD-v”) which Virtualbox needs to be able to run 64-bit virtual machines like the ones uesd by Cosmology@Home.</p>
+
+<p>One way to check if your processor supports VT-x/AMD-v is to look up your processor specifications online. It may be easier however to simply try and run Cosmology@Home. If you receive any <em>camb_boinc2docker</em> jobs it means BOINC has detected that your processor has support.</p>
+
+<p>However, it may still be that while your processor supports VT-x/AMD-v, these features are turned off in your BIOS. If your <em>camb_boinc2docker</em> jobs download but hang for ~5min then die, this may be the case. To enable it, you need to reboot your computer, enter your BIOS, find this option and enable it. Here is an example of what it might look like (although this will vary with BIOS version):</p>
+
+<p><img src="img/vtx.png" alt="test" /></p>
+
+<h3 id="how-can-i-limit-the-number-of-cpus-used">How can I limit the number of CPUs used?</h3>
+
+<p><em>camb_boinc2docker</em> is multi-threaded and will use up all available cores which BOINC allows it to. For example, if in the BOINC computing preferences you have set “Use at most 50% CPU time” and you have a 4-core processor, the job will use two of them.</p>
+
+<p>If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by placing the following in a text in a file called <code>app_config.xml</code> in the Cosmology@Home project folder  (thanks to <a href="http://www.cosmologyathome.org/forum_thread.php?id=7227&amp;nowrap=true#20300">Crystal Pellet</a>):</p>
+
+<pre><code class="language-xml">    &lt;app_config&gt;
+        &lt;project_max_concurrent&gt;1&lt;/project_max_concurrent&gt;
+        &lt;app&gt;
+            &lt;name&gt;camb_boinc2docker&lt;/name&gt;
+            &lt;max_concurrent&gt;1&lt;/max_concurrent&gt;
+        &lt;/app&gt;
+        &lt;app_version&gt;
+            &lt;app_name&gt;camb_boinc2docker&lt;/app_name&gt;
+            &lt;plan_class&gt;vbox64_mt&lt;/plan_class&gt;
+            &lt;avg_ncpus&gt;7&lt;/avg_ncpus&gt;
+            &lt;max_ncpus&gt;7&lt;/max_ncpus&gt;
+        &lt;/app_version&gt;
+    &lt;/app_config&gt;
+</code></pre>
+
+<h3 id="science">What science is being done with Cosmology@Home?</h3>
+<p>For an introduction to the science we do at Cosmology@Home, see <a href="http://cosmicmar.com/posts/tbd">this</a> multi-part blog post.</p>
+
+<p>To summarize, we run the <a href="http://camb.info">CAMB</a> code, the results from which are used to train the <a href="https://sites.google.com/a/ucdavis.edu/pico/">PICO</a> code, which in turn is used by various groups in the field to analyze cosmological datasets. Perhaps most notably, PICO is used extensively in the analysis of <a href="http://www.esa.int/Our_Activities/Space_Science/Planck">Planck</a> data (e.g. this <a href="http://xxx.lanl.gov/abs/1507.02704">paper</a>). The papers describing PICO itself can be found <a href="http://arxiv.org/abs/astro-ph/0606709">here</a> and <a href="http://arxiv.org/abs/0712.0194">here</a>.</p>
+
+<h3 id="how-does-the-cambboinc2docker-app-work">How does the <em>camb_boinc2docker</em> app work?</h3>
+<ul>
+  <li>These jobs run inside of a <a href="https://en.wikipedia.org/wiki/VirtualBox">Virtualbox</a> virtual machine.</li>
+  <li>Within the virtual machine, the code itself is packaged within a so called “<a href="https://www.docker.com/whatisdocker">Docker</a> container”.</li>
+  <li>The first thing the jobs do is download the necessary Docker container from the Docker servers. During this download, you will see the job progress frozen at 0.100%. Once the download is complete, the progress bar should continue normally and your CPU usage will jump up as the computation begins.</li>
+  <li>After you run your first camb_boinc2docker job, the Docker container which was downloaded will be saved to your computer, so it will not need to be downloaded again unless you remove or reset the Cosmology@Home project.</li>
+  <li>When we update the app in the future, parts of the Docker container will be redownloaded, however, Docker is smart about only downloading the parts which have actually changed  (that’s why we use it!).</li>
+</ul>
+
+<h3 id="why-is-there-no-32-bit-support">Why is there no 32-bit support?</h3>
+<p>Docker only supports 64-bit processors. For those with 32-bit computers wishing to contribute to Cosmology@Home, you might still be able to run the <a href="#camb-legacy">legacy application</a>.</p>
+
+<h3 id="how-does-cosmologyhome-store-docker-containers-between-jobs">How does Cosmology@Home store Docker containers between jobs?</h3>
+<p>Docker containers which are downloaded by Cosmology@Home are saved to the file <code>scratch/boinc2docker_persist.tar</code> in the project folder.</p>
+
+<h3 id="log">How do I see the error log for my jobs?</h3>
+
+<p>Find the log by going to Community-&gt;Your Account-&gt;Tasks and searching for the task which failed. You’ll see the log at the bottom of the page.</p>
+
+<h3 id="my-cambboinc2docker-jobs-stop-at-0100">My <em>camb_boinc2docker</em> jobs stop at 0.100%</h3>
+<p>When <em>camb_boinc2docker</em> first starts, it downloads the Docker container needed to run the job. During this download (which will not show up in BOINC’s “Download” tab), the progress bar will be pinned to 0.100%.</p>
+
+<p>The very first time you run a <em>camb_boinc2docker</em> job the download may take a while, the container is about 35Mb. After that it is saved for all future jobs. Any time we update the app there may be smaller incremental downloads as well.</p>
+
+<h3 id="what-is-boinc2docker">What is <em>boinc2docker</em>?</h3>
+<p>This is the name for the software which allows us to run Docker containers with BOINC. It can be used to run any code, <em>camb_boinc2docker</em> being one of them. You can follow development of boinc2docker on <a href="https://github.com/marius311/boinc2docker">github</a>.</p>
+
+<h3 id="can-i-see-the-source-code-of-cosmologyhome">Can I see the source code of Cosmology@Home?</h3>
+<p>Absolutely! All of the code, including the <em>camb_boinc2docker</em> code itself as well as the server code is publicly available on the <a href="https://github.com/marius311/cosmohome">github page</a>. In fact, the <em>exact</em> commmit the server is currently running can be seen on the <a href="server_status.php">server status</a> page. We run our server from a Docker container, so its super easy for anyone run a copy of our server too, and play around with modifying or seeing how it works.</p>

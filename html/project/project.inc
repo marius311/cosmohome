@@ -61,8 +61,9 @@ function page_head($title, $java_onload=null, $title_plain=null, $prefix="") {
     <link rel=\"stylesheet\" type=\"text/css\" href=\"$styleSheet\">
     <link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
     <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"newstyles.css\"/>";
-
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"newstyles.css\"/>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>";
+    // <link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Tangerine\">";
 // TODO: Figure out why I had to comment this out
 //        if ($_GET['changewidth'] == true){
 //          echo "<META HTTP-EQUIV=\"Refresh\" content=\"0;url=".$_SERVER["PHP_SELF"]."\">";
@@ -106,32 +107,27 @@ function project_banner($title, $prefix) {
     echo "<div id='container'>	
    <!-- Navigation -->
    <div id='topmatter'>
-    <a href='$master_url'><img src='/img/banner.jpg' border='0' height='200px' width='800px' padding='0px'/></a>
+    <a href='$master_url'><img src='/img/banner.jpg' border='0' height='200px' width='960px' padding='0px'/></a>
       <div id='navmenu'>
         <ul id='nav_ul'>
-          <li><a href='#'>JOIN</a>
-            <ol>
-              <li><a href='/info.php'>How To Join</a></li>
-              <li><a href='http://boinc.berkeley.edu/download.php' target='_new'>Download BOINC</a></li>
-            </ol>
-          </li>
-          <li><a href='#'>RETURNING PARTICIPANTS</a>
+          <li><a href='/join.php'>JOIN</a></li>
+          <li><a href='/faq.php'>FAQ</a></li>
+          <li><a href='/forum_index.php'>FORUMS</a></li>
+          <li><a href='#'>COMMUNITY</a>
             <ol>
               <li><a href='/home.php'>Your Account</a></li>
               <li><a href='/team.php'>Teams</a></li>
+              <li><a href='/downloads.php'>Desktop Backgrounds</a></li>
+              <li><a href='/profile_menu.php'>Participant Profiles</a></li>
+              <li><a href='/wandelt_letter.php'>Ben's Welcome Letter</a></li>
+            </ol>
+          <li><a href='#'>SERVER</a>
+            <ol>
               <li><a href='/apps.php'>Applications</a></li>
               <li><a href='/server_status.php'>Server Status</a></li>
             </ol>
-          </li>
-          <li><a href='#'>COMMUNITY</a>
-            <ol>
-              <li><a href='/wandelt_letter.php'>Ben Wandelt Welcome Letter</a></li>
-              <li><a href='/forum_index.php'>Message Boards</a></li>
-              <li><a href='/downloads.php'>Desktop Backgrounds</a></li>
-              <li><a href='/profile_menu.php'>Participant Profiles</a></li>
-            </ol>
-          </li>
-          <li><a href='#'>STATISTICS</a>
+
+          <li><a href='#'>STATS</a>
             <ol>
               <li><a href='/top_users.php'>Top Participants</a></li>
               <li><a href='/top_hosts.php'>Top Computers</a></li>
@@ -139,7 +135,6 @@ function project_banner($title, $prefix) {
               <li><a href='/stats.php'>Other Statistics</a></li>
             </ol>
           </li>
-          <li><a href='http://cosmos.astro.illinois.edu'>BEN WANDELT</a></li>
         </ul>
       </div>
    </div>
@@ -157,7 +152,7 @@ function project_footer($show_return, $show_date) {
     
 	echo <<<END
    
-If you have any questions or comments regarding the content of this site, please contact the <a href='http://cosmos.astro.illinois.edu/pBen.php?style=explore' target='_new'>Ben Wandelt</a><br/>
+If you have any questions or comments regarding the content of this site, please contact <a href='http://www.cosmicmar.com'>Marius Millea</a><br/>
 This material is based upon work supported by the National Science Foundation under Grant No. AST0507676.<br/>
 Links to external sites are provided as a convenience to our users. The Department of Astronomy does not control or endorse the content of external sites.<br\>
 Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.<br/>

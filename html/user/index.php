@@ -84,9 +84,9 @@ if (!$stopped) {
     if ($profile) {
         echo "
             <div id='uotd'>
-            <img src='img/user_icon.png' alt='user' /><span class='h2'>USER OF THE DAY</span><br/><br/>";
+            <h2 class=headline>User of the Day</h2><br/><p>";
         show_uotd($profile);
-        echo "</div>"; /*END USER OF THE DAY*/
+        echo "</p></div>"; /*END USER OF THE DAY*/
     }
 }
 
