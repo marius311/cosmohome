@@ -46,10 +46,10 @@ echo <<<END
     <!--[if lte IE 6]>
     <div style="display: none">
     <![endif]-->
-		 <div class="linkbtn"><a href="join.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> how to join</span></a></div>
-		 <div class="linkbtn"><a href="home.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> your account</span></a></div>
-		 <div class="linkbtn"><a href="forum_index.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> message boards</span></a></div>
-		 <div class="linkbtn"><a href="downloads.php"><img src="img/navigation/major_links/link_btn.gif"/><span>> goodies</span></a></div>
+		 <div class="linkbtn"><a href="join.php"><img src="img/navigation/major_links/link_btn.png"/><span>> how to join</span></a></div>
+		 <div class="linkbtn"><a href="home.php"><img src="img/navigation/major_links/link_btn.png"/><span>> your account</span></a></div>
+		 <div class="linkbtn"><a href="forum_index.php"><img src="img/navigation/major_links/link_btn.png"/><span>> forums</span></a></div>
+		 <div class="linkbtn"><a href="downloads.php"><img src="img/navigation/major_links/link_btn.png"/><span>> goodies</span></a></div>
     <!--[if lte IE 6]>
     </div>
     <![endif]-->

@@ -599,7 +599,7 @@ form {
 #bigtext p {
      padding-top: 20px;     
      font-size: 1.75rem;
-     font-family: Merriweather, serif; 
+     /*font-family: Merriweather, serif; */
      font-weight: bold;
      line-height: 1.2;
 }
@@ -687,10 +687,10 @@ form {
 }
 
 .linkbtn {
-     background: url(img/navigation/major_links/link_btn2.gif) no-repeat;
+     background: url(img/navigation/major_links/link_btn2.png) no-repeat;
      position: relative;
      width: 224px;
-     height: 20px;
+     height: 30px;
      font-size: 9px;
      color: #FFFFFF;
      white-space: nowrap;
@@ -720,6 +720,8 @@ form {
 .linkbtn span {
      position: absolute;
      right: 10px;
+     font-size: 15px;
+     text-shadow: 2px 2px 5px #000;
      padding-top: 4px;
 }
 
