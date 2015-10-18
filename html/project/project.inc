@@ -11,7 +11,7 @@ define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
 define("PROFILE_URL", "user_profile/");
 define("LANGUAGE_FILE", "languages.txt");
-define("STYLESHEET", "cosmologyathome.css");
+define("STYLESHEET", "cosmohome.css");
 define("FORUM_QA_MERGED_MODE", true);
 define("COPYRIGHT_HOLDER", "Department of Astronomy at the <a href=\"http://www.illinois.edu\">University of Illinois at Urbana-Champaign</a>");
 define("SYS_ADMIN_EMAIL", "kpointer@illinois.edu");
@@ -22,7 +22,7 @@ define("UOTD_ADMIN_EMAIL", "bwandelt@illinois.edu"); # who gets user of the day 
 // offensive forum posts.
 define("POST_REPORT_EMAILS", "bwandelt@illinois.edu|kpointer@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
 
-function page_head($title, $java_onload=null, $title_plain=null, $prefix="") {
+function page_head($title, $java_onload=null, $prefix="") {
     global $caching;
     global $cache_control_extra;
 
@@ -30,15 +30,6 @@ function page_head($title, $java_onload=null, $title_plain=null, $prefix="") {
     $rssname = PROJECT . " RSS 2.0";
     $rsslink = URL_BASE . "rss_main.php";
     
-    if (!isset($_COOKIE['wide'])) {
-      setcookie("wide", "false", time() + 3600*24*365);
-    }
-
-    if (isset($_GET['changewidth']) && ($_GET['changewidth'] == true)) {
-      if ($_COOKIE['wide'] == "false") setcookie("wide", "true", time() + 3600*24*365);
-      else setcookie("wide", "false", time() + 3600*24*365);
-    }
-
     $charset = tra("CHARSET");
     if ($charset != "CHARSET") {
         header("Content-type: text/html; charset=$charset");
@@ -53,39 +44,13 @@ function page_head($title, $java_onload=null, $title_plain=null, $prefix="") {
     echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
     ";
 
-    if (!$title_plain) {
         echo "
 <html>
   <head>
     <title>".strip_tags($title)."</title>
     <link rel=\"stylesheet\" type=\"text/css\" href=\"$styleSheet\">
     <link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"newstyles.css\"/>
     <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>";
-    // <link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Tangerine\">";
-// TODO: Figure out why I had to comment this out
-//        if ($_GET['changewidth'] == true){
-//          echo "<META HTTP-EQUIV=\"Refresh\" content=\"0;url=".$_SERVER["PHP_SELF"]."\">";
-//        }
-        // if ($_COOKIE['wide'] == "true") {
-        //   #echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"wide.css\"/>";
-        // }
-    } else {
-        echo "
-<html>
-  <head>
-    <title>".strip_tags($title_plain)."</title>
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"$styleSheet\">
-    <link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"newstyles.css\"/>";
-
-        if ($_SESSION['wide']) {
-          #echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"wide.css\"/>";
-        }
-
-    }
     echo <<<END
     <script type="text/javascript" src="drop_down.js"></script>
     <!--[if lte IE 6]>
