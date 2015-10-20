@@ -2,19 +2,22 @@
 
 ### Instructions ###
 
-* Download and install the [BOINC](http://boinc.berkeley.edu/download.php) software
-    * *Windows/Mac:* Choose the "with Virtualbox" option
-    * *Linux:* You will need to download Virtualbox separately from [here](https://www.virtualbox.org/wiki/Linux_Downloads)
-* Run BOINC and select "Add New Project". When prompted enter "cosmologyathome.org" and set your account password. 
+* Download and install [BOINC](http://boinc.berkeley.edu/download.php)
+* Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+    * *Note:* On Windows use the "+Virtualbox" link when downloading BOINC and it will do this step for you.
+* Run BOINC and select "Add New Project". When prompted enter "cosmologyathome.org" and create your account. 
 * That's it! Your computer will now automatically download and run jobs. 
 
 
 ### Requirements ###
 
 * 64-bit processor
-* Virtualbox (versions 4.3.X or 5.X.X) 
+* Virtualbox version 4.3 or later
 * VT-x or AMD-v enabled in your BIOS (*important! see [here](faq.php#vtx) for more info*)
-* Windows XP or later, Linux, or Mac OSX
+* Operating System
+    * Windows XP or later
+    * Mac OSX 10.8 or later
+    * Linux (many recent versions work)
 
 
 Please see the [FAQ](faq.php) for more details.
