@@ -101,3 +101,7 @@ This is the name for the software which allows us to run Docker containers with 
 
 ### Can I see the source code of Cosmology@Home? ###
 Absolutely! All of the code, including the *camb_boinc2docker* code itself as well as the server code is publicly available on the [github page](https://github.com/marius311/cosmohome). In fact, the *exact* commit the server is currently running can be seen on the [server status](server_status.php) page. We run our server from a Docker container, so its super easy for anyone run a copy of our server too, and play around with modifying or seeing how it works. 
+
+
+### Does it hinder Cosmology@Home if I abort jobs? ###
+No, feel free to abort jobs if you need to. Our results are built up by the aggregate of all jobs, and losing any one particular result is fine. 
