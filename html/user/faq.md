@@ -5,11 +5,6 @@
 {:toc}
 
 
-### What science is being done with Cosmology@Home? ###
-{:#science}
-For an introduction to the science we do at Cosmology@Home, see [this](http://cosmicmar.com/posts/tbd) multi-part blog post. 
-
-To summarize, we run the [CAMB](http://camb.info) code, the results from which are used to train the [PICO](https://sites.google.com/a/ucdavis.edu/pico/) code, which in turn is used by various groups in the field to analyze cosmological datasets. Perhaps most notably, PICO is used extensively in the analysis of [Planck](http://www.esa.int/Our_Activities/Space_Science/Planck) data (e.g. this [paper](http://xxx.lanl.gov/abs/1507.02704)). The papers describing PICO itself can be found [here](http://arxiv.org/abs/astro-ph/0606709) and [here](http://arxiv.org/abs/0712.0194). 
 
 
 ### What if my computer doesn't meet requirements? ### 
@@ -26,15 +21,26 @@ However, it may still be that while your processor supports VT-x/AMD-v, these fe
 
 ![test](img/vtx.png)
 
+
+### I enabled VT-x/AMD-v but jobs say "Scheduler wait: Please upgrade BOINC" ###
+
+If you attempted to run a *camb_boinc2docker* job before enabling VT-x/AMD-v, it is possible your client is stuck in a state where it still thinks this feature is disabled. It will give you a message "Scheduler wait: Please upgrade BOINC to the latest version" and the log files will show "ERROR: Invalid configuration.  VM type requires acceleration but the current configuration cannot support it." To fix this:
+
+* Remove the Cosmology@Home project
+* Shut down the BOINC client (from Advanced View choose the menu option *Advanced->Shutdown Connected Client*)
+* Go to the your BOINC folder and edit the file `client_state.xml`
+* Remove the line which contains `<p_vm_extensions_disabled>`
+* Restart your BOINC client and readd the project
+
+
 ### How can I limit the number of CPUs used? ###
 
 *camb_boinc2docker* is multi-threaded and will use up all available cores which BOINC allows it to. For example, if in the BOINC computing preferences you have set "Use at most 50% CPU time" and you have a 4-core processor, the job will use two of them. 
 
-If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by placing the following text in a file called `app_config.xml` in the Cosmology@Home project folder  (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
+If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called `"app_config.xml"` in the Cosmology@Home project folder and adding the following text, with `<max_ncpus>2</max_ncpus>` replaced by however many CPUs you want to use (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
 
 ~~~xml
     <app_config>
-        <project_max_concurrent>1</project_max_concurrent>
         <app>
             <name>camb_boinc2docker</name>
             <max_concurrent>1</max_concurrent>
@@ -42,12 +48,22 @@ If for whatever reason you wish to limit the number of cores used without changi
         <app_version>
             <app_name>camb_boinc2docker</app_name>
             <plan_class>vbox64_mt</plan_class>
-            <avg_ncpus>7</avg_ncpus>
-            <max_ncpus>7</max_ncpus>
+            <max_ncpus>2</max_ncpus>
         </app_version>
     </app_config>
 ~~~
 
+*Notes:* 
+
+* You will need to restart your BOINC client for this take effect
+* This will only affect jobs started after you created the file (jobs started before will show "X CPUs" but still run using all of them, you can just abort these) 
+* Reseting or removing/readding the project will delete this file so you will have to remake it
+
+### What science is being done with Cosmology@Home? ###
+{:#science}
+For an introduction to the science we do at Cosmology@Home, see [this](http://cosmicmar.com/posts/tbd) (link will be posted shortly) multi-part blog post. 
+
+To summarize, we run the [CAMB](http://camb.info) code, the results from which are used to train the [PICO](https://sites.google.com/a/ucdavis.edu/pico/) code, which in turn is used by various groups in the field to analyze cosmological datasets. Most notably, PICO is used extensively in the analysis of [Planck](http://www.esa.int/Our_Activities/Space_Science/Planck) data (e.g. this [paper](http://xxx.lanl.gov/abs/1507.02704)). The papers describing PICO itself can be found [here](http://arxiv.org/abs/astro-ph/0606709) and [here](http://arxiv.org/abs/0712.0194) (click "PDF" on the right to view the papers for free). Citations to these papers can be found [here](http://adsabs.harvard.edu/cgi-bin/nph-ref_query?bibcode=2007ApJ...654....2F&amp;refs=CITATIONS&amp;db_key=AST) and [here](http://adsabs.harvard.edu/cgi-bin/nph-ref_query?bibcode=2007arXiv0712.0194F&amp;refs=CITATIONS&amp;db_key=PRE) and represent work which has referenced PICO and hence benefited from Cosmology@Home in some way. 
 
 
 

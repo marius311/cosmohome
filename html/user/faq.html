@@ -1,10 +1,11 @@
 <h2 class="no_toc" id="faqtroubleshooting">FAQ/Troubleshooting</h2>
 
 <ul id="markdown-toc">
-  <li><a href="#science" id="markdown-toc-science">What science is being done with Cosmology@Home?</a></li>
   <li><a href="#camb-legacy" id="markdown-toc-camb-legacy">What if my computer doesn’t meet requirements?</a></li>
   <li><a href="#vtx" id="markdown-toc-vtx">What is VT-x or AMD-v and why do I need it?</a></li>
+  <li><a href="#i-enabled-vt-xamd-v-but-jobs-say-scheduler-wait-please-upgrade-boinc" id="markdown-toc-i-enabled-vt-xamd-v-but-jobs-say-scheduler-wait-please-upgrade-boinc">I enabled VT-x/AMD-v but jobs say “Scheduler wait: Please upgrade BOINC”</a></li>
   <li><a href="#how-can-i-limit-the-number-of-cpus-used" id="markdown-toc-how-can-i-limit-the-number-of-cpus-used">How can I limit the number of CPUs used?</a></li>
+  <li><a href="#science" id="markdown-toc-science">What science is being done with Cosmology@Home?</a></li>
   <li><a href="#how-does-the-cambboinc2docker-app-work" id="markdown-toc-how-does-the-cambboinc2docker-app-work">How does the <em>camb_boinc2docker</em> app work?</a></li>
   <li><a href="#why-is-there-no-32-bit-support" id="markdown-toc-why-is-there-no-32-bit-support">Why is there no 32-bit support?</a></li>
   <li><a href="#how-does-cosmologyhome-store-docker-containers-between-jobs" id="markdown-toc-how-does-cosmologyhome-store-docker-containers-between-jobs">How does Cosmology@Home store Docker containers between jobs?</a></li>
@@ -13,11 +14,6 @@
   <li><a href="#what-is-boinc2docker" id="markdown-toc-what-is-boinc2docker">What is <em>boinc2docker</em>?</a></li>
   <li><a href="#can-i-see-the-source-code-of-cosmologyhome" id="markdown-toc-can-i-see-the-source-code-of-cosmologyhome">Can I see the source code of Cosmology@Home?</a></li>
 </ul>
-
-<h3 id="science">What science is being done with Cosmology@Home?</h3>
-<p>For an introduction to the science we do at Cosmology@Home, see <a href="http://cosmicmar.com/posts/tbd">this</a> multi-part blog post.</p>
-
-<p>To summarize, we run the <a href="http://camb.info">CAMB</a> code, the results from which are used to train the <a href="https://sites.google.com/a/ucdavis.edu/pico/">PICO</a> code, which in turn is used by various groups in the field to analyze cosmological datasets. Perhaps most notably, PICO is used extensively in the analysis of <a href="http://www.esa.int/Our_Activities/Space_Science/Planck">Planck</a> data (e.g. this <a href="http://xxx.lanl.gov/abs/1507.02704">paper</a>). The papers describing PICO itself can be found <a href="http://arxiv.org/abs/astro-ph/0606709">here</a> and <a href="http://arxiv.org/abs/0712.0194">here</a>.</p>
 
 <h3 id="camb-legacy">What if my computer doesn’t meet requirements?</h3>
 <p>Cosmology@Home runs multiple “apps.” The <a href="join.php#requirements">requirements list</a> is for the default app (named <em>camb_boinc2docker</em>), but if your computer does not meet them, there is an older app available (named <em>camb_legacy</em>) which runs on just Windows and Linux but supports 32-bit processors and does not need Virtualbox or VT-x/AMD-v. At this point we only use the results from <em>camb_legacy</em> for testing the <a href="#science">PICO</a> algorithm and not for comparing with data since the app is fairly old. However, the results do serve a limited purpose and allow Cosmology@Home users who do not meet the above requirements to continue to contribute, thus we continue to provide it. We encourage users who can run <em>camb_boinc2docker</em> to do so, however.</p>
@@ -31,14 +27,25 @@
 
 <p><img src="img/vtx.png" alt="test" /></p>
 
+<h3 id="i-enabled-vt-xamd-v-but-jobs-say-scheduler-wait-please-upgrade-boinc">I enabled VT-x/AMD-v but jobs say “Scheduler wait: Please upgrade BOINC”</h3>
+
+<p>If you attempted to run a <em>camb_boinc2docker</em> job before enabling VT-x/AMD-v, it is possible your client is stuck in a state where it still thinks this feature is disabled. It will give you a message “Scheduler wait: Please upgrade BOINC to the latest version” and the log files will show “ERROR: Invalid configuration.  VM type requires acceleration but the current configuration cannot support it.” To fix this:</p>
+
+<ul>
+  <li>Remove the Cosmology@Home project</li>
+  <li>Shut down the BOINC client (from Advanced View choose the menu option <em>Advanced-&gt;Shutdown Connected Client</em>)</li>
+  <li>Go to the your BOINC folder and edit the file <code>client_state.xml</code></li>
+  <li>Remove the line which contains <code>&lt;p_vm_extensions_disabled&gt;</code></li>
+  <li>Restart your BOINC client and readd the project</li>
+</ul>
+
 <h3 id="how-can-i-limit-the-number-of-cpus-used">How can I limit the number of CPUs used?</h3>
 
 <p><em>camb_boinc2docker</em> is multi-threaded and will use up all available cores which BOINC allows it to. For example, if in the BOINC computing preferences you have set “Use at most 50% CPU time” and you have a 4-core processor, the job will use two of them.</p>
 
-<p>If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by placing the following text in a file called <code>app_config.xml</code> in the Cosmology@Home project folder  (thanks to <a href="http://www.cosmologyathome.org/forum_thread.php?id=7227&amp;nowrap=true#20300">Crystal Pellet</a>):</p>
+<p>If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called <code>"app_config.xml"</code> in the Cosmology@Home project folder and adding the following text, with <code>&lt;max_ncpus&gt;2&lt;/max_ncpus&gt;</code> replaced by however many CPUs you want to use (thanks to <a href="http://www.cosmologyathome.org/forum_thread.php?id=7227&amp;nowrap=true#20300">Crystal Pellet</a>):</p>
 
 <pre><code class="language-xml">    &lt;app_config&gt;
-        &lt;project_max_concurrent&gt;1&lt;/project_max_concurrent&gt;
         &lt;app&gt;
             &lt;name&gt;camb_boinc2docker&lt;/name&gt;
             &lt;max_concurrent&gt;1&lt;/max_concurrent&gt;
@@ -46,11 +53,23 @@
         &lt;app_version&gt;
             &lt;app_name&gt;camb_boinc2docker&lt;/app_name&gt;
             &lt;plan_class&gt;vbox64_mt&lt;/plan_class&gt;
-            &lt;avg_ncpus&gt;7&lt;/avg_ncpus&gt;
-            &lt;max_ncpus&gt;7&lt;/max_ncpus&gt;
+            &lt;max_ncpus&gt;2&lt;/max_ncpus&gt;
         &lt;/app_version&gt;
     &lt;/app_config&gt;
 </code></pre>
+
+<p><em>Notes:</em></p>
+
+<ul>
+  <li>You will need to restart your BOINC client for this take effect</li>
+  <li>This will only affect jobs started after you created the file (jobs started before will show “X CPUs” but still run using all of them, you can just abort these)</li>
+  <li>Reseting or removing/readding the project will delete this file so you will have to remake it</li>
+</ul>
+
+<h3 id="science">What science is being done with Cosmology@Home?</h3>
+<p>For an introduction to the science we do at Cosmology@Home, see <a href="http://cosmicmar.com/posts/tbd">this</a> (link will be posted shortly) multi-part blog post.</p>
+
+<p>To summarize, we run the <a href="http://camb.info">CAMB</a> code, the results from which are used to train the <a href="https://sites.google.com/a/ucdavis.edu/pico/">PICO</a> code, which in turn is used by various groups in the field to analyze cosmological datasets. Most notably, PICO is used extensively in the analysis of <a href="http://www.esa.int/Our_Activities/Space_Science/Planck">Planck</a> data (e.g. this <a href="http://xxx.lanl.gov/abs/1507.02704">paper</a>). The papers describing PICO itself can be found <a href="http://arxiv.org/abs/astro-ph/0606709">here</a> and <a href="http://arxiv.org/abs/0712.0194">here</a> (click “PDF” on the right to view the papers for free). Citations to these papers can be found <a href="http://adsabs.harvard.edu/cgi-bin/nph-ref_query?bibcode=2007ApJ...654....2F&amp;refs=CITATIONS&amp;db_key=AST">here</a> and <a href="http://adsabs.harvard.edu/cgi-bin/nph-ref_query?bibcode=2007arXiv0712.0194F&amp;refs=CITATIONS&amp;db_key=PRE">here</a> and represent work which has referenced PICO and hence benefited from Cosmology@Home in some way.</p>
 
 <h3 id="how-does-the-cambboinc2docker-app-work">How does the <em>camb_boinc2docker</em> app work?</h3>
 <ul>
