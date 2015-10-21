@@ -28,7 +28,7 @@ If you attempted to run a *camb_boinc2docker* job before enabling VT-x/AMD-v, it
 
 * Remove the Cosmology@Home project
 * Shut down the BOINC client (from Advanced View choose the menu option *Advanced->Shutdown Connected Client*)
-* Go to the your BOINC folder and edit the file `client_state.xml`
+* Go to your BOINC folder and edit the file `client_state.xml`
 * Remove the line which contains `<p_vm_extensions_disabled>`
 * Restart your BOINC client and readd the project
 
