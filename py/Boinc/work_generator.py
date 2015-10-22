@@ -74,11 +74,12 @@ class WorkGenerator(object):
             self.log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),str(e))
             raise CheckOutputError
 
-    def stage_file(self,name,contents):
+    def stage_file(self,name,contents,perm=None):
         base,ext = osp.splitext(name)
         fullname = base + '_' + md5(str(contents)+str(time())).hexdigest() + ext
         download_path = self.check_output(['../bin/dir_hier_path',fullname]).strip()
         with open(download_path,'w') as f: f.write(contents)
+        if perm: os.chmod(download_path,perm)
         return fullname
 
     def create_work(self,create_work_args,input_files):

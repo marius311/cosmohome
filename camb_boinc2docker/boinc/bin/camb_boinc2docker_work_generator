@@ -68,7 +68,7 @@ if __name__ == '__main__':
                 boinc_app = open("../apps_boinc2docker/camb/boinc_app").read().replace('%image%','marius311/camb_boinc2docker:'+version)
                 
                 self.create_work(self.args['create_work_args'][0].split(),
-                                 [('boinc_app',boinc_app),
+                                 [('boinc_app',boinc_app,0777),
                                   ('params.tgz',params_tar.getvalue())])
 
         def gen_new_params(self,index):
