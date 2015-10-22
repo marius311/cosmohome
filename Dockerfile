@@ -29,11 +29,12 @@ RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.06 $
 COPY camb_legacy/ $PROJHOME
 
 # project files
-COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf $PROJHOME/
+COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf db_dump_spec.xml $PROJHOME/
 COPY html $PROJHOME/html
 COPY keys $PROJHOME/keys
 COPY py $PROJHOME/py
 COPY .git $PROJHOME/.git
+RUN mkdir $PROJHOME/html/stats_archive
 
 # repare for running cosmohome_init
 RUN rm /root/projects
