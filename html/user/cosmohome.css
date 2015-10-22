@@ -266,6 +266,10 @@ td.postbody, td.heading2 {
      background-color: transparent;
 }
 
+td.postbody p {
+     padding-left: 0px;
+}
+
 td.postfooter {
      background: transparent;
      border-top: 1px thin white;
