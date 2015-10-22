@@ -3,7 +3,7 @@
   <config>
     <upload_dir>/root/projects/cosmohome/upload</upload_dir>
     <send_result_abort>1</send_result_abort>
-    <long_name>cosmohome</long_name>
+    <long_name>Cosmology@Home</long_name>
     <sched_debug_level>3</sched_debug_level>
     <cache_md5_info>1</cache_md5_info>
     <upload_url>http://www.cosmologyathome.org/cosmohome_cgi/file_upload_handler</upload_url>
