@@ -270,6 +270,11 @@ td.postbody p {
      padding-left: 0px;
 }
 
+td.postbody img {
+     max-width: 100%;
+}
+
+
 td.postfooter {
      background: transparent;
      border-top: 1px thin white;
