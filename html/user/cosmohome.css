@@ -217,9 +217,9 @@ th.authorcol {
 }
 
 blockquote {
-     border-left: 1px thin white;
+     border-left: 4px solid #58555e;
      background: transparent;
-     padding-left: 3px;
+     padding-left: 10px;
      padding-bottom: 0;
      margin-bottom: 0;
      margin-left: 10px;
@@ -260,6 +260,7 @@ td.postheader {
      color: #58555e;
      border-left: none;
      border-right: none;
+     font-size: 0.8rem;
 }
 
 td.postbody, td.heading2 {
@@ -280,6 +281,7 @@ td.postfooter {
      border-top: 1px thin white;
      border-right: none;
      color: #58555e;
+     font-size: 0.8rem;
 }
 
 tr.helpdeskseperator {
@@ -329,12 +331,11 @@ span. {
 .code {
      font-family: "Consolas", "Courier New", courier, monospace;
      display: block;
-     margin-left: 5em;
-     border-left: 3px solid #ccaaaa;
-     padding-left: 1em;
-     white-space: nowrap;
+     margin-left: 10px;
+     border-left: 4px solid #58555e;
+     padding-left: 10px;
+     white-space: pre;
      overflow: auto;
-     color: yellow;
 }
 
 * html body .code {
