@@ -37,7 +37,7 @@ If you attempted to run a *camb_boinc2docker* job before enabling VT-x/AMD-v, it
 
 *camb_boinc2docker* is multi-threaded and will use up all available cores which BOINC allows it to. For example, if in the BOINC computing preferences you have set "Use at most 50% CPU time" and you have a 4-core processor, the job will use two of them. 
 
-If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called `"app_config.xml"` in the Cosmology@Home project folder and adding the following text, with `<max_ncpus>2</max_ncpus>` replaced by however many CPUs you want to use (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
+If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called `"app_config.xml"` in the Cosmology@Home project folder and adding the following text, with "2" replaced by however many CPUs you want to use (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
 
 ~~~xml
     <app_config>
@@ -48,6 +48,7 @@ If for whatever reason you wish to limit the number of cores used without changi
         <app_version>
             <app_name>camb_boinc2docker</app_name>
             <plan_class>vbox64_mt</plan_class>
+            <avg_ncpus>2</avg_ncpus>
             <max_ncpus>2</max_ncpus>
         </app_version>
     </app_config>

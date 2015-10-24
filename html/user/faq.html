@@ -44,7 +44,7 @@
 
 <p><em>camb_boinc2docker</em> is multi-threaded and will use up all available cores which BOINC allows it to. For example, if in the BOINC computing preferences you have set “Use at most 50% CPU time” and you have a 4-core processor, the job will use two of them.</p>
 
-<p>If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called <code>"app_config.xml"</code> in the Cosmology@Home project folder and adding the following text, with <code>&lt;max_ncpus&gt;2&lt;/max_ncpus&gt;</code> replaced by however many CPUs you want to use (thanks to <a href="http://www.cosmologyathome.org/forum_thread.php?id=7227&amp;nowrap=true#20300">Crystal Pellet</a>):</p>
+<p>If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called <code>"app_config.xml"</code> in the Cosmology@Home project folder and adding the following text, with “2” replaced by however many CPUs you want to use (thanks to <a href="http://www.cosmologyathome.org/forum_thread.php?id=7227&amp;nowrap=true#20300">Crystal Pellet</a>):</p>
 
 <pre><code class="language-xml">    &lt;app_config&gt;
         &lt;app&gt;
@@ -54,6 +54,7 @@
         &lt;app_version&gt;
             &lt;app_name&gt;camb_boinc2docker&lt;/app_name&gt;
             &lt;plan_class&gt;vbox64_mt&lt;/plan_class&gt;
+            &lt;avg_ncpus&gt;2&lt;/avg_ncpus&gt;
             &lt;max_ncpus&gt;2&lt;/max_ncpus&gt;
         &lt;/app_version&gt;
     &lt;/app_config&gt;
