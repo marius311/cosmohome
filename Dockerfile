@@ -3,6 +3,7 @@ MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
 #install necessary packages
 RUN apt-get update && apt-get install -y \
+        curl \
         dh-autoreconf \
         git \
         libcurl4-gnutls-dev \
