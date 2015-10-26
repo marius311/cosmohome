@@ -10,3 +10,6 @@
 	url = https://github.com/marius311/CAMB.git
 	branch = progress
     ignore = dirty
+[submodule "boinc"]
+	path = boinc
+	url = https://github.com/marius311/boinc.git

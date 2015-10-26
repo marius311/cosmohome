@@ -1,14 +1,47 @@
-FROM marius311/boincserver_boinc
+FROM debian:jessie
+MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
+#install necessary packages
+RUN apt-get update && apt-get install -y \
+        dh-autoreconf \
+        git \
+        libcurl4-gnutls-dev \
+        libmysqlclient-dev \
+        libssl-dev \
+        m4 \
+        make \
+        php5-cli \
+        php5-gd \
+        php5-mysql \
+        pkg-config \
+        python \
+        python-mysqldb \
+        unzip \
+        vim \
+        wget
+
+#get source and compile server
+COPY boinc /root/boinc
+WORKDIR /root/boinc
+RUN ./_autosetup && ./configure --disable-client --disable-manager && make
+
+ENV HOME=/root
+ENV USER=root
+
+#prettier shell when exec-ing in
+COPY .bashrc /root/
+
+#needed for boinc
+RUN echo "umask 0002" >> /root/.bashrc
+
+
+WORKDIR /root
 ENV PROJHOME=/root/projects/cosmohome
 ENV TMP=/tmp
 
-RUN apt-get update && apt-get install -y wget unzip vim git
-
-COPY .bashrc /root/
-
+#make project
 RUN mkdir -p /root/projects.build && ln -s /root/projects.build /root/projects
-
+COPY make_project /root/
 RUN ./make_project --url_base http://www.cosmologyathome.org \
                    --html_user_url http://www.cosmologyathome.org \
                    --project_host cosmohome \
