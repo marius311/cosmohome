@@ -1,4 +1,5 @@
 FROM debian:jessie
+
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
 #install necessary packages
@@ -36,19 +37,22 @@ COPY .bashrc /root/
 RUN echo "umask 0002" >> /root/.bashrc
 
 
-WORKDIR /root
 ENV PROJHOME=/root/projects/cosmohome
 ENV TMP=/tmp
 
 #make project
 RUN mkdir -p /root/projects.build && ln -s /root/projects.build /root/projects
-COPY make_project /root/
+WORKDIR /root/boinc/tools
 RUN ./make_project --url_base http://www.cosmologyathome.org \
                    --html_user_url http://www.cosmologyathome.org \
                    --project_host cosmohome \
+                   --db_host mysql \
+                   --db_user root \
                    --no_db \
                    --no_query \
                    cosmohome
+
+WORKDIR /root
 
 # setup boinc2docker
 COPY boinc2docker $PROJHOME/boinc2docker
