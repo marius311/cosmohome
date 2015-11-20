@@ -8,7 +8,7 @@ mysql:
    - MYSQL_ROOT_PASSWORD=
    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
-boinc:
+cosmohome:
   build: .
   hostname: cosmohome
   volumes:
@@ -23,5 +23,6 @@ apache:
    - "cosmohome_project:/root/projects"
    - "cosmohome_results:/root/results"
    - ./cosmohome.httpd.conf:/etc/apache2/sites-enabled/cosmohome.httpd.conf
+   - ./.bashrc:/root/.bashrc
   ports: 
    - "80:80"

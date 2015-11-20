@@ -1,3 +1,36 @@
-FROM marius311/boincserver_apache
+FROM php:5.6.10-apache
 
-RUN apt-get update && apt-get install -y vim python-numpy git
+MAINTAINER Marius Millea <mariusmillea@gmail.com>
+
+#install packages 
+RUN apt-get update && apt-get install -y \
+        cron \
+        git \
+        mysql-client \
+        python \
+        python-mysqldb \
+        python-numpy \
+        rsyslog \
+        supervisor \
+        vim
+
+#configure server
+RUN docker-php-ext-install mysqli 
+RUN a2enmod cgi
+
+#see https://github.com/docker/docker/issues/14651
+RUN rm -rf /root && mkdir /root && chmod 755 /root
+
+#so that www-data can read/write boinc server files (boinc server runs as root)
+RUN adduser www-data root
+
+# #for convenience debugging and/or logging in to www-data
+# RUN chsh -s /bin/bash www-data
+# COPY .bashrc /root/
+# COPY .bashrc /var/www/
+
+RUN echo "umask 0002" >> /etc/apache2/envvars
+
+#set up supervisor to run
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+CMD ["/usr/bin/supervisord"]
