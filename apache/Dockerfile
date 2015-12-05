@@ -23,13 +23,11 @@ RUN rm -rf /root && mkdir /root && chmod 755 /root
 
 #so that www-data can read/write boinc server files (boinc server runs as root)
 RUN adduser www-data root
-
-# #for convenience debugging and/or logging in to www-data
-# RUN chsh -s /bin/bash www-data
-# COPY .bashrc /root/
-# COPY .bashrc /var/www/
-
+COPY .bashrc /root/.bashrc
 RUN echo "umask 0002" >> /etc/apache2/envvars
+
+#for exec'ing in
+WORKDIR /root/projects/cosmohome
 
 #set up supervisor to run
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
