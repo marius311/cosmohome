@@ -26,3 +26,4 @@ apache:
    - ./.bashrc:/root/.bashrc
   ports: 
    - "80:80"
+  tty: true
