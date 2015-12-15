@@ -300,6 +300,14 @@ td.threadline {
      text-align: left;
      padding: 0;
      background: transparent;
+     white-space: nowrap;
+     max-width: 450px;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+
+td.lastpost {
+     white-space: nowrap;
 }
 
 span.note {
