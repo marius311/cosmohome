@@ -68,12 +68,12 @@ RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.08 $
 COPY camb_legacy/ $PROJHOME
 
 # project files
-COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf db_dump_spec.xml $PROJHOME/
-COPY html $PROJHOME/html
 COPY keys $PROJHOME/keys
+RUN mkdir $PROJHOME/html/stats_archive
 COPY py $PROJHOME/py
 COPY .git $PROJHOME/.git
-RUN mkdir $PROJHOME/html/stats_archive
+COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf db_dump_spec.xml $PROJHOME/
+COPY html $PROJHOME/html
 
 # compile markdown files
 RUN cd /root/projects.build/cosmohome/html/user && ./compile_md.py
