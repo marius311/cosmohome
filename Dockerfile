@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
         pkg-config \
         python \
         python-mysqldb \
+        ruby-kramdown \
         unzip \
         vim \
         wget
@@ -73,6 +74,9 @@ COPY keys $PROJHOME/keys
 COPY py $PROJHOME/py
 COPY .git $PROJHOME/.git
 RUN mkdir $PROJHOME/html/stats_archive
+
+# compile markdown files
+RUN cd /root/projects.build/cosmohome/html/user && ./compile_md.py
 
 # repare for running cosmohome_init
 RUN rm /root/projects
