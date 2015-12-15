@@ -1,7 +1,7 @@
 default:
 
-DC=docker-compose --x-networking
-
+# DC=docker-compose --x-networking
+DC=docker-compose
 
 download-private-data:
 	git archive --remote=ssh://git@bitbucket.org/marius311/cosmohome_private.git --format=tar master | tar xvf -
