@@ -1,5 +1,6 @@
 mysql:
   image: mysql:5.6.25
+  container_name: cosmohome_mysql
   volumes:
    - "./my.cnf:/etc/mysql/conf.d/my.cnf"
    - "cosmohome_mysql:/var/lib/mysql"
