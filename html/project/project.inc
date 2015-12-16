@@ -103,6 +103,7 @@ function project_banner($title, $prefix) {
             <ol>
               <li><a href='/apps.php'>Applications</a></li>
               <li><a href='/server_status.php'>Server Status</a></li>
+              <li><a href='https://github.com/marius311/cosmohome'>Development</a></li> 
             </ol>
 
           <li><a href='#'>STATS</a>
