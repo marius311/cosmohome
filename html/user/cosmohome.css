@@ -125,6 +125,11 @@ td.fieldname, fieldname_error {
      text-align: right;
      vertical-align: top;
      border: none;
+     white-space:nowrap;
+}
+
+td.fieldname table {
+     white-space:normal;
 }
 
 td.fieldvalue, fieldvalue_error {
@@ -271,7 +276,7 @@ td.postbody p {
      padding-left: 0px;
 }
 
-td.postbody img {
+img {
      max-width: 100%;
 }
 
@@ -344,6 +349,10 @@ span. {
      padding-left: 10px;
      white-space: pre;
      overflow: auto;
+}
+
+pre {
+     overflow:auto;
 }
 
 * html body .code {
