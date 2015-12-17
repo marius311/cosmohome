@@ -33,12 +33,18 @@ If you attempted to run a *camb_boinc2docker* job before enabling VT-x/AMD-v, it
 * Remove the line which contains `<p_vm_extensions_disabled>`
 * Restart your BOINC client and readd the project
 
+### My computer gets very slow while Cosmology@Home is running in the background ###
+
+Some users prefer to have Cosmology@Home running at all times in the background, even while they're using their computer. Unfortunately, due to a [regression](https://www.virtualbox.org/ticket/13500) in VirtualBox, on Windows the priority of VirtualBox cannot be set to low, so it may interfere with your usage. As a workaround until VirtualBox is fixed, you can either lower your BOINC global CPU usage, or you can [limit](#limit-cpu) the number of CPUs that Cosmology@Home uses (leaving your other CPUs for native BOINC applications from other projects which *can* be set to low priority). 
+
+
 
 ### How can I limit the number of CPUs used? ###
+{:#limit-cpu}
 
 *camb_boinc2docker* is multi-threaded and will use up all available cores which BOINC allows it to. For example, if in the BOINC computing preferences you have set "Use at most 50% CPU time" and you have a 4-core processor, the job will use two of them. 
 
-If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called `"app_config.xml"` in the Cosmology@Home project folder and adding the following text, with "2" replaced by however many CPUs you want to use (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
+If for whatever reason you wish to limit the number of cores used without changing the global BOINC CPU usage, you can do so by creating a file called `"app_config.xml"` in the Cosmology@Home project folder and adding the following text, with the "2" under `avg_ncpus` replaced by however many CPUs you want to use (thanks to [Crystal Pellet](http://www.cosmologyathome.org/forum_thread.php?id=7227&nowrap=true#20300)):
 
 ~~~xml
 <app_config>
@@ -56,6 +62,7 @@ If for whatever reason you wish to limit the number of cores used without changi
 
 *Notes:* 
 
+* If after this BOINC gives an error reading your `app_config.xml` file, make sure you saved the file with a character encoding apropriate for your system (options to do so may vary by text editor).
 * You will need to restart your BOINC client for this take effect
 * This will only affect jobs started after you created the file (jobs started before will show "X CPUs" but still run using all of them, you can just abort these) 
 * Reseting or removing/readding the project will delete this file so you will have to remake it
