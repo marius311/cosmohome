@@ -86,6 +86,15 @@
       <disabled>0</disabled>
       <output>badge_assign.out</output>
     </task>
+
+    <!-- camb_boinc2docker -->
+    <task>
+      <cmd>camb_boinc2docker_reducer</cmd>
+      <period>1 days</period>
+      <disabled>0</disabled>
+      <output>camb_boinc2docker_reducer.out</output>
+    </task>
+
   </tasks>
   <daemons>
     <daemon>
