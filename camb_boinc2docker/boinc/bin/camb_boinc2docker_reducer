@@ -65,7 +65,7 @@ lvals = np.array(
    4466, 4483, 4500, 4517, 4534, 4551, 4568, 4585, 4602, 4619, 4636,
    4653, 4670, 4687, 4704, 4721, 4738, 4755, 4772, 4789, 4806, 4823,
    4840, 4857, 4874, 4891, 4908, 4925, 4942, 4959, 4976, 4993, 5126,
-   5326, 5626, 6000])
+   5326, 5626])
 
 
 
@@ -74,8 +74,10 @@ def reduce(folder,delete=True):
     reduced = {}
     succesful = []
 
+    print 'Reducing %s...'%folder
+
     for tname in glob(osp.join(folder,'*')):
-        print tname
+        if '--debug' in sys.argv: print tname
         try:
             with tarfile.open(tname) as tfile:
                 for name in tfile.getnames():
@@ -86,8 +88,8 @@ def reduce(folder,delete=True):
                         f = tfile.extractfile(name)
                         r[k] = read_ini(f) if t=='ini' else np.loadtxt(f,dtype=dtype)[lvals-2]
             succesful.append(tname)
-        except: 
-            pass
+        except Exception as e: 
+            print e
 
     output = folder.rstrip('/')+'.dat.gz'
     pickle.dump(reduced,gzip.open(output,'wb'),protocol=2)
