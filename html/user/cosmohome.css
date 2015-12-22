@@ -280,6 +280,9 @@ img {
      max-width: 100%;
 }
 
+td.threadicon img {
+     max-width:none;
+}
 
 td.postfooter {
      background: transparent;
