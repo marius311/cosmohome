@@ -73,6 +73,9 @@ For an introduction to the science we do at Cosmology@Home, see [this](http://co
 
 To summarize, we run the [CAMB](http://camb.info) code, the results from which are used to train the [PICO](https://sites.google.com/a/ucdavis.edu/pico/) code, which in turn is used by various groups in the field to analyze cosmological datasets. Most notably, PICO is used extensively in the analysis of [Planck](http://www.esa.int/Our_Activities/Space_Science/Planck) data (e.g. this [paper](http://xxx.lanl.gov/abs/1507.02704)). The papers describing PICO itself can be found [here](http://arxiv.org/abs/astro-ph/0606709) and [here](http://arxiv.org/abs/0712.0194) (click "PDF" on the right to view the papers for free). Citations to these papers can be found [here](http://adsabs.harvard.edu/cgi-bin/nph-ref_query?bibcode=2007ApJ...654....2F&amp;refs=CITATIONS&amp;db_key=AST) and [here](http://adsabs.harvard.edu/cgi-bin/nph-ref_query?bibcode=2007arXiv0712.0194F&amp;refs=CITATIONS&amp;db_key=PRE) and represent work which has referenced PICO and hence benefited from Cosmology@Home in some way. 
 
+### How do I only run the legacy application? ###
+
+If you wish to use only the old Cosmology@Home application, *camb_legacy*, you can edit your [preferences](http://www.cosmologyathome.org/prefs.php?subset=project) and unselect all other applications. The results from this application are not as useful so please consider doing so only if you are having technical problems running the other applications. Note *camb_legacy* only supports Windows and Linux.  
 
 
 
