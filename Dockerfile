@@ -79,5 +79,5 @@ COPY html $PROJHOME/html
 RUN cd /root/projects.build/cosmohome/html/user && ./compile_md.py
 
 # repare for running cosmohome_init
-RUN rm /root/projects
+RUN rm $PROJHOME/keys/*private /root/projects
 COPY cosmohome_postbuild.py /root/
