@@ -4,82 +4,120 @@ import sys
 sys.path.append('../bin')
 import boinc_path_config
 from Boinc.work_generator import WorkGenerator
-import os.path as osp
+import os, os.path as osp
 from ConfigParser import RawConfigParser
 from cStringIO import StringIO
 import tarfile
 import cPickle as pickle
-from numpy import cov, dot, arange, hstack, loadtxt
-from numpy.random import randint, randn
+from numpy import cov, dot, arange, hstack, loadtxt, array
+from numpy.random import randint, randn, choice
 from numpy.linalg import cholesky
 from shutil import copy
 from subprocess import check_output
+import yaml
+from copy import deepcopy
+
+
+def read_ini(inifile):
+    config = RawConfigParser()
+    config.optionxform=str
+    ini=open(inifile).read()
+    config.readfp(StringIO('[root]\n'+ini))
+    return dict(config.items('root'))
+
+
+def tarfile_open(*args,**kwargs):
+    """
+    Replaces tarfile.open to give you an object which has the add_file function
+    to add a file containing arbitrary data, and a getvalue function
+    which returns the tarfile as a string
+    """
+    params_tar = StringIO()
+    tgz = tarfile.open(*args,fileobj=params_tar,mode="w:gz",**kwargs)
+    def add_file(name,data):
+        tarinfo = tarfile.TarInfo(name)
+        tarinfo.size = len(data)
+        tgz.addfile(tarinfo,fileobj=StringIO(data))
+    def getvalue():
+        return params_tar.getvalue()
+    tgz.add_file = add_file
+    tgz.getvalue = getvalue
+    return tgz
+
+
+class MyWorkGenerator(WorkGenerator):
+
+    def __init__(self,*args,**kwargs):
+        super(MyWorkGenerator,self).__init__(*args,**kwargs)
+        self.app_dir = '/root/projects/cosmohome/apps_boinc2docker/camb'
+        self.param_sets_dir = osp.join(self.app_dir,'params')
+
+    def make_jobs(self,num=1):
+
+        script = open(osp.join(self.app_dir,'boinc_app')).read()
+        default_params = yaml.load(open(osp.join(self.param_sets_dir,'default.yaml')))['default']
+
+        for _ in range(num):
+            #pick random parameter set
+            p = dict(deepcopy(default_params),**self.draw_param_set())
+
+            #generate parameter files
+            params_dir = osp.join(self.param_sets_dir,p['name'])
+            params = [self.gen_new_params(params_dir,i,p['fuzz_factor']) for i in range(p['num_per'])]
+
+            with tarfile_open() as tgz:
+                # add progress_template
+                progress = loadtxt(osp.join(params_dir,'progress_template'))
+                tgz.add_file(name='progress_template',
+                             data='\n'.join('%f'%x for x in 
+                                            hstack((arange(p['num_per'])*progress[-1] + progress.reshape(progress.size,1)).T)))
+
+                #add params files
+                for i,ps in enumerate(params):
+                    tgz.add_file(name='params_%.2i.ini'%i,
+                                 data='\n'.join(['%s = %s'%(k,v) for k,v in ps.items()]))
+
+            #automatically scale flops
+            if 'rsc_fpops_est_per' in p:
+                p['create_work_args']['rsc_fpops_est'] = '%.2g'%(p['rsc_fpops_est_per']*p['num_per'])
+
+            #create work
+            self.create_work(p['create_work_args'],
+                             [('boinc_app',script.format(image=p['image']),0777),
+                              ('params.tgz',tgz.getvalue())])
+
+    def draw_param_set(self):
+        """
+        Draw a random subdirectory of param_sets_dir according to the weights 
+        given in the param_sets_dir/weights file
+        """
+        param_sets_file = osp.join(self.param_sets_dir,"params.yaml")
+        if osp.exists(param_sets_file):
+            param_sets = yaml.load(open(param_sets_file).read())
+            for k in param_sets: param_sets[k]['name']=k
+            p = array([float(param_sets[k]['weight']) for k in param_sets])
+            p /= p.sum()
+            return param_sets[choice(param_sets.keys(),p=p)]
+        else:
+            return {'name':choice(next(os.walk(self.param_sets_dir))[0])}
+
+
+    def gen_new_params(self,params_dir,index,fuzz_factor):
+        """
+        Generate a new random set of parameters from params_dir with an output_root indexed by index
+        """
+        samp_names, samp_dat = pickle.load(open(osp.join(params_dir,'params_samples.dat')))
+        p = read_ini(osp.join(params_dir,'params_base.ini'))
+
+        p['output_root'] = osp.join('/root/shared/results/','%s_%.2i'%(osp.basename(params_dir),index))
+
+        while True:
+            s = (samp_dat[randint(0,samp_dat.shape[0])] + 
+                 dot(randn(len(samp_names))*fuzz_factor,cholesky(cov(samp_dat.T)).T))
+            if all(s>samp_dat.min(axis=0)) and all(s<samp_dat.max(axis=0)): break
+        return dict(p,**dict(zip(samp_names,s)))
 
 
 if __name__ == '__main__':
-
-
-    def read_ini(inifile):
-        config = RawConfigParser()
-        config.optionxform=str
-        ini=open(inifile).read()
-        config.readfp(StringIO('[root]\n'+ini))
-        return dict(config.items('root'))
-
-
-    class MyWorkGenerator(WorkGenerator):
-
-        def __init__(self,*args,**kwargs):
-            super(MyWorkGenerator,self).__init__(*args,**kwargs)
-            self.samp_names, self.samp_dat = pickle.load(open(osp.join(self.args['params_dir'][0],'params_samples.dat')))
-
-
-        def add_args(self,parser):
-            parser.add_argument('--params_dir',nargs=1,default=['params'],type=str,help='directory which has base parameter files')
-            parser.add_argument('--fuzz_factor',nargs=1,default=[0.1],type=float,help='how much to fuzz random samples by')
-            parser.add_argument('--create_work_args',nargs=1,default=[''],type=str,help='args to send to bin/create_work')
-            parser.add_argument('--num_per',nargs=1,default=[5],type=int,help='number of jobs per workunit')
-
-        def make_jobs(self,num=1):
-            for _ in range(num):
-                params = [self.gen_new_params(i) for i in range(self.args['num_per'][0])]
-
-                def add_file(name,data):
-                    tarinfo = tarfile.TarInfo(name)
-                    tarinfo.size = len(data)
-                    tgz.addfile(tarinfo,fileobj=StringIO(data))
-                    
-                params_tar = StringIO()
-
-                with tarfile.open(fileobj=params_tar,mode="w:gz") as tgz:
-                    #add progress_template
-                    progress = loadtxt(osp.join(self.args['params_dir'][0],'progress_template'))
-                    add_file(name='progress_template',
-                             data='\n'.join('%f'%x for x in 
-                                            hstack((arange(self.args['num_per'][0])*progress[-1] + progress.reshape(progress.size,1)).T)))
-
-                    #add params files
-                    for i,p in enumerate(params):
-                        add_file(name='params_%.2i.ini'%i,
-                                 data='\n'.join(['%s = %s'%(k,v) for k,v in p.items()]))
-
-                #edit boinc_app so it points to the correct image
-                version = check_output('git describe --match "camb_boinc2docker/*" --abbrev=0 --tags',shell=True).strip().split('/')[1]
-                boinc_app = open("../apps_boinc2docker/camb/boinc_app").read().replace('%image%','marius311/camb_boinc2docker:'+version)
-                
-                self.create_work(self.args['create_work_args'][0].split(),
-                                 [('boinc_app',boinc_app,0777),
-                                  ('params.tgz',params_tar.getvalue())])
-
-        def gen_new_params(self,index):
-            params = read_ini(osp.join(self.args['params_dir'][0],'params_base.ini'))
-            params['output_root'] += '_%.2i'%index
-            while True:
-                s = (self.samp_dat[randint(0,self.samp_dat.shape[0])] + 
-                     dot(randn(len(self.samp_names))*self.args['fuzz_factor'][0],cholesky(cov(self.samp_dat.T)).T))
-                if all(s>self.samp_dat.min(axis=0)) and all(s<self.samp_dat.max(axis=0)): break
-            return dict(params,**dict(zip(self.samp_names,s)))
-
-            return dict(config.items('root'))
 
     MyWorkGenerator(appname='camb_boinc2docker').run()

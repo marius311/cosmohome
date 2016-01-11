@@ -1,0 +1,15 @@
+default:
+  weight: 1
+  num_per: 5
+  fuzz_factor: 0.1
+  rsc_fpops_est_per: 3.6e+12
+  image: marius311/camb_boinc2docker:0.02
+  create_work_args:
+    target_nresults: 1
+    max_error_results: 1
+    max_success_results: 1
+    max_total_results: 1
+    min_quorum: 1
+    priority: 1
+    min_quorum: 1
+    rsc_disk_bound: 5e8

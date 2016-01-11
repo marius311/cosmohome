@@ -32,7 +32,7 @@ from subprocess import CalledProcessError, check_output as _check_output, STDOUT
 import traceback
 import argparse
 from hashlib import md5
-
+from itertools import chain
 
 import boinc_path_config
 import database
@@ -87,8 +87,9 @@ class WorkGenerator(object):
         Creates and stages input files based on a list of (name,contents) in input_files,
         and calls bin/create_work with extra args specified by create_work_args
         """
+        
         self.check_output((['bin/create_work','--appname',self.appname]+
-                           self.args['create_work_args'][0].split()+
+                           list(chain(*(['--%s'%k,'%s'%v] for k,v in create_work_args.items())))+
                            [self.stage_file(*i) for i in input_files]),
                           cwd='..')
 

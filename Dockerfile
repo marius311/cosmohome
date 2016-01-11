@@ -57,8 +57,8 @@ WORKDIR /root
 
 # setup boinc2docker
 COPY boinc2docker $PROJHOME/boinc2docker
-COPY .git/modules/boinc2docker $PROJHOME/.git/modules/boinc2docker
-RUN cd $PROJHOME/boinc2docker && ./setup_versions
+RUN cd $PROJHOME/boinc2docker \
+    && ISOTAG=v0.42 VBOXTAG=v0.5 ./setup_versions
 
 # install boinc2docker_camb
 COPY camb_boinc2docker/boinc/ $PROJHOME
@@ -71,7 +71,6 @@ COPY camb_legacy/ $PROJHOME
 COPY keys $PROJHOME/keys
 RUN mkdir $PROJHOME/html/stats_archive
 COPY py $PROJHOME/py
-COPY .git $PROJHOME/.git
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf db_dump_spec.xml $PROJHOME/
 COPY html $PROJHOME/html
 

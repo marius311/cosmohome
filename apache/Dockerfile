@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
         python \
         python-mysqldb \
         python-numpy \
+        python-yaml \
         rsyslog \
         supervisor \
         vim
