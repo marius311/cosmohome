@@ -4,12 +4,7 @@ boinc2docker/apps/boinc2docker/1.0/example/vboxwrapper*
 backups
 test
 
-.git/objects
-.git/modules/boinc
-.git/modules/html
-.git/modules/*/lfs
-.git/modules/boinc2docker/objects/71
-.git/modules/boinc2docker/objects/a0
+.git/modules/
 
 boinc/clientgui/
 boinc/drupal

@@ -67,21 +67,23 @@ RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.08 $
 # install camb_legacy
 COPY camb_legacy/ $PROJHOME
 
-# project files
+# sign executables
 COPY keys $PROJHOME/keys
+RUN for f in `find $PROJHOME/apps/ -type f -not -name "version.xml"`; do \
+      /root/boinc/tools/sign_executable $f $PROJHOME/keys/code_sign_private > ${f}.sig; \
+    done \
+    && rm $PROJHOME/keys/code_sign_private
+
+# project files
 RUN mkdir $PROJHOME/html/stats_archive
 COPY py $PROJHOME/py
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf db_dump_spec.xml $PROJHOME/
 COPY html $PROJHOME/html
-
-# sign executables
-RUN for f in `find $PROJHOME/apps/ -type f -not -name "version.xml"`; do \
-      /root/boinc/tools/sign_executable $f $PROJHOME/keys/code_sign_private > ${f}.sig; \
-    done
+COPY .git $PROJHOME/.git
 
 # compile markdown files
 RUN cd /root/projects.build/cosmohome/html/user && ./compile_md.py
 
 # repare for running cosmohome_init
-RUN rm $PROJHOME/keys/code_sign_private /root/projects
+RUN rm /root/projects
 COPY cosmohome_postbuild.py /root/
