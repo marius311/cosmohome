@@ -74,9 +74,14 @@ COPY py $PROJHOME/py
 COPY project.xml config.xml boinc2docker/plan_class_spec.xml cosmohome.httpd.conf db_dump_spec.xml $PROJHOME/
 COPY html $PROJHOME/html
 
+# sign executables
+RUN for f in `find $PROJHOME/apps/ -type f -not -name "version.xml"`; do \
+      /root/boinc/tools/sign_executable $f $PROJHOME/keys/code_sign_private > ${f}.sig; \
+    done
+
 # compile markdown files
 RUN cd /root/projects.build/cosmohome/html/user && ./compile_md.py
 
 # repare for running cosmohome_init
-RUN rm /root/projects
+RUN rm $PROJHOME/keys/code_sign_private /root/projects
 COPY cosmohome_postbuild.py /root/
