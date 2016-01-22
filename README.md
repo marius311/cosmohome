@@ -22,3 +22,5 @@ make run-mysql build-apache build-cosmohome postbuild-cosmohome run-apache
 *Note: the first time you run this it may take a while as many dependencies are downloaded and images are built from scratch.*
 
 At this point, you should be able to connect your browser to [localhost](http://localhost:80) to see the server webpage. To connect a BOINC client to the server, you need to reroute [www.cosmologyathome.org](http://www.cosmologyathome.org) to [localhost](http://localhost:80) (b/c the server code has it's URL hardcoded). On Linux, this can be done by adding the line `127.0.0.1 www.cosmologyathome.org` to your `/etc/hosts` file. Then connect BOINC to [www.cosmologyathome.org](http://www.cosmologyathome.org) as usual. 
+
+For more detailed documentation on how the server works, see the [Design Overview](docs/overview.md).
