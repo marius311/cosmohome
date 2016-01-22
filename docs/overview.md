@@ -6,7 +6,7 @@ The Cosmology@Home server is a [BOINC](https://github.com/BOINC/boinc) server ru
 Three separate containers do the job:
 
 * `cosmohome_mysql` - An official Docker mysql image which runs the database storing users, hosts, jobs, etc...
-* `cosmohome_cosmohome` - A debian container (built from [/Dockefile](/Dockefile)) which serves to build the project directory and initialize the database
+* `cosmohome_cosmohome` - A debian container (built from [/Dockerfile](/Dockerfile)) which serves to build the project directory and initialize the database
 * `cosmohome_apache` - A slightly modified official Docker Apache-PHP image (built from [/apache/Dockerfile](/apache/Dockerfile)) which takes the project directory which was previously built and actually runs the server. 
 
 Three named volumes store server files, 
