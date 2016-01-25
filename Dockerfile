@@ -61,11 +61,11 @@ RUN cd $PROJHOME/boinc2docker \
     && ISOTAG=v0.42 VBOXTAG=v0.5 ./setup_versions
 
 # install boinc2docker_camb
-COPY camb_boinc2docker/boinc/ $PROJHOME
+COPY apps/camb_boinc2docker/boinc/ $PROJHOME
 RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.08 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # install camb_legacy
-COPY camb_legacy/ $PROJHOME
+COPY apps/camb_legacy/ $PROJHOME
 
 # sign executables
 COPY keys $PROJHOME/keys
