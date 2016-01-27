@@ -60,4 +60,10 @@
         <user_friendly_name>camb_legacy</user_friendly_name>
     </app>
 
+    <app>
+        <name>lsplitsims</name>
+        <user_friendly_name>planck_param_sims</user_friendly_name>
+    </app>
+
+
 </boinc>

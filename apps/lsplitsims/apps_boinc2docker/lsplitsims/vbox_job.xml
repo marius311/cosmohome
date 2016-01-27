@@ -1,0 +1,20 @@
+<vbox_job>
+
+    <!-- Set as desired -->
+    <memory_size_mb>2048</memory_size_mb>
+
+    <!-- This is the VBox guest OS, not the host OS, so it stays this for all app_versions. -->
+    <os_name>Linux26_64</os_name>
+
+    <!-- These are all needed for boinc2docker  -->
+    <enable_isocontextualization>1</enable_isocontextualization>
+    <enable_shared_directory/>
+    <enable_scratch_directory/>
+    <enable_network/>
+    <completion_trigger_file>completion_trigger_file</completion_trigger_file>
+    <!--  -->
+
+    <fraction_done_filename>progress</fraction_done_filename>
+    <disable_automatic_checkpoints/>
+
+</vbox_job>

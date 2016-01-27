@@ -107,6 +107,14 @@
       <cmd>file_deleter -d 3 </cmd>
     </daemon>
 
+    <!-- lsplitsims -->
+    <daemon>
+        <cmd>script_assimilator --app lsplitsims --script "lsplitsims_assimilator files"</cmd>
+        <pid_file>lsplitsims_assimilator.pid</pid_file>
+        <output>lsplitsims_assimilator.log</output>
+    </daemon>
+
+
     <!-- camb_boinc2docker -->
     <daemon>
         <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator</cmd>
