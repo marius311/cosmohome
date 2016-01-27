@@ -4,12 +4,13 @@ import sys
 sys.path.append('../bin')
 import boinc_path_config
 from Boinc.work_generator import WorkGenerator
+from Boinc.create_work import check_output
 
 if __name__ == '__main__':
 
     class MyWorkGenerator(WorkGenerator):
 
         def make_jobs(self,num=1):
-            self.check_output(['../bin/camb_legacy_make_params',str(num)])
+            check_output(['../bin/camb_legacy_make_params',str(num)])
 
     MyWorkGenerator(appname='camb').run()

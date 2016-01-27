@@ -27,21 +27,18 @@ Example usage:
 
 import sys
 import os, os.path as osp
-from time import sleep, time
-from subprocess import CalledProcessError, check_output as _check_output, STDOUT
 import traceback
 import argparse
-from hashlib import md5
 from itertools import chain
+from time import time, sleep
 
 import boinc_path_config
 import database
 from boinc_db import *
 from sched_messages import SchedMessages, CRITICAL, NORMAL, DEBUG
+from Boinc.create_work import create_work, CheckOutputError
 
 
-
-class CheckOutputError(Exception): pass
 
 
 class WorkGenerator(object):
@@ -57,41 +54,14 @@ class WorkGenerator(object):
         self.log = SchedMessages()
         self.log.set_debug_level(DEBUG if self.args['debug'] else NORMAL)
 
-
     def add_args(self,parser):
+        """
+        Override to add own custom arguments.
+        """
         pass
 
-    def check_output(self,cmd,*args,**kwargs):
-        """
-        Wraps subprocess.check_output and logs errors to BOINC
-        """
-        try:
-            return _check_output(cmd,stderr=STDOUT,*args,**kwargs)
-        except CalledProcessError as e:
-            self.log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),e.output)
-            raise CheckOutputError
-        except Exception as e:
-            self.log.printf(CRITICAL,"Error calling %s:\n%s\n",str(cmd),str(e))
-            raise CheckOutputError
-
-    def stage_file(self,name,contents,perm=None):
-        base,ext = osp.splitext(name)
-        fullname = base + '_' + md5(str(contents)+str(time())).hexdigest() + ext
-        download_path = self.check_output(['../bin/dir_hier_path',fullname]).strip()
-        with open(download_path,'w') as f: f.write(contents)
-        if perm: os.chmod(download_path,perm)
-        return fullname
-
     def create_work(self,create_work_args,input_files):
-        """
-        Creates and stages input files based on a list of (name,contents) in input_files,
-        and calls bin/create_work with extra args specified by create_work_args
-        """
-        
-        self.check_output((['bin/create_work','--appname',self.appname]+
-                           list(chain(*(['--%s'%k,'%s'%v] for k,v in create_work_args.items())))+
-                           [self.stage_file(*i) for i in input_files]),
-                          cwd='..')
+        return create_work(self.appname,create_work_args,input_files)
 
     def run(self):
         database.connect()

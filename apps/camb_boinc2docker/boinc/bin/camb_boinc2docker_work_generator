@@ -17,7 +17,6 @@ from subprocess import check_output
 import yaml
 from copy import deepcopy
 
-
 def read_ini(inifile):
     config = RawConfigParser()
     config.optionxform=str
