@@ -1,6 +1,8 @@
 default:
 
-# DC=docker-compose --x-networking
+up: run-mysql build-cosmohome postbuild-cosmohome build-apache run-apache
+
+
 DC=docker-compose
 
 download-private-data:
