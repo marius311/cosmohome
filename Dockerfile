@@ -58,14 +58,14 @@ WORKDIR /root
 # setup boinc2docker
 COPY boinc2docker $PROJHOME/boinc2docker
 RUN cd $PROJHOME/boinc2docker \
-    && ISOTAG=v0.42 VBOXTAG=v0.5 ./setup_versions
+    && ISOTAG=v0.43 VBOXTAG=v0.5 ./setup_versions
 
 # install camb_legacy
 COPY apps/camb_legacy/ $PROJHOME
 
 # install boinc2docker_camb
 COPY apps/camb_boinc2docker/boinc/ $PROJHOME
-RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 0.08 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
+RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.00 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # install lsplitsims
 COPY apps/lsplitsims/ $PROJHOME
