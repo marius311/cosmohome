@@ -16,7 +16,7 @@ To download, build, and start the server on a fresh environment:
 ```bash
 git clone --recursive https://github.com/marius311/cosmohome.git
 cd cosmohome
-make run-mysql build-apache build-cosmohome postbuild-cosmohome run-apache
+make up
 ```
 
 *Note: the first time you run this it may take a while as many dependencies are downloaded and images are built from scratch.*
