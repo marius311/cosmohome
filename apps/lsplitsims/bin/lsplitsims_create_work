@@ -24,16 +24,21 @@ create_work_args['rsc_fpops_bound'] = create_work_args['rsc_fpops_est']*20
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(prog='lsplitsims_create_work')
+    parser.add_argument('--lslices', help='list of lslices')
     parser.add_argument('image', help='image to run')
-    parser.add_argument('lslices', help='list of lslices')
     parser.add_argument('seeds', help='list of seeds')
     add_create_work_args(parser)
     args = parser.parse_args()
 
     seeds = eval(args.seeds)
-    lslices=eval(args.lslices)
-    if lslices is None:
-        pass #defaults
+    if args.lslices is None:
+        lslices = []
+        for lsplit in range(100,2500,50)+[2509]:
+            if lsplit<1700: lslices.append((lsplit,2509))
+            for lmin in (2,30):
+                if lsplit>=650: lslices.append((lmin,lsplit))
+    else:
+        lslices = eval(args.lslices)
     create_work_args.update(read_create_work_args(args))
 
     for seed in seeds:
