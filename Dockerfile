@@ -58,7 +58,7 @@ WORKDIR /root
 # setup boinc2docker
 COPY boinc2docker $PROJHOME/boinc2docker
 RUN cd $PROJHOME/boinc2docker \
-    && ISOTAG=v0.43 VBOXTAG=v0.5 ./setup_versions
+    && ISOTAG=v0.43 VBOXTAG=v0.6 ./setup_versions
 
 # install camb_legacy
 COPY apps/camb_legacy/ $PROJHOME
