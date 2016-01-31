@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
         pkg-config \
         python \
         python-mysqldb \
+        python-scipy \
         ruby-kramdown \
         unzip \
         vim \
