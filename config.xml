@@ -113,6 +113,11 @@
         <pid_file>lsplitsims_assimilator.pid</pid_file>
         <output>lsplitsims_assimilator.log</output>
     </daemon>
+    <daemon>
+        <cmd>script_validator --credit_from_wu --app lsplitsims --init_script lsplitsims_validator</cmd>
+        <pid_file>lsplitsims_validator.pid</pid_file>
+        <output>lsplitsims_validator.log</output>
+    </daemon>
 
 
     <!-- camb_boinc2docker -->
