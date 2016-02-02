@@ -915,3 +915,9 @@ div#container {
      border-right: 1px solid /*bb*/#CCCCCC;
      border-left: 1px solid /*bb*/#CCCCCC;
 }
+
+/*   Server Status Page   */
+
+td.running { color: rgb(51, 204, 51); }
+td.notrunning { color:  rgb(204, 51, 51); }
+td.disabled { color: #bbb; }
