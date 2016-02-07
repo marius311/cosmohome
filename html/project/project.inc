@@ -108,6 +108,7 @@ function project_banner($title, $prefix) {
 
           <li><a href='#'>STATS</a>
             <ol>
+              <li><a href='/lsplitsims_stats.php'>Planck Sims Stats</a></li>
               <li><a href='/top_users.php'>Top Participants</a></li>
               <li><a href='/top_hosts.php'>Top Computers</a></li>
               <li><a href='/top_teams.php'>Top Teams</a></li>

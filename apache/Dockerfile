@@ -8,13 +8,15 @@ RUN apt-get update && apt-get install -y \
         git \
         mysql-client \
         python \
+        python-matplotlib \
         python-mysqldb \
         python-numpy \
         python-scipy \
         python-yaml \
         rsyslog \
         supervisor \
-        vim
+        vim \
+    && curl -L http://antiyawn.com/uploads/Humor-Sans-1.0.ttf > /usr/share/matplotlib/mpl-data/fonts/ttf/Humor-Sans.ttf
 
 #configure server
 RUN docker-php-ext-install mysqli 
