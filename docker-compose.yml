@@ -1,31 +1,45 @@
-mysql:
-  image: mysql:5.6.25
-  container_name: cosmohome_mysql
-  volumes:
-   - "./my.cnf:/etc/mysql/conf.d/my.cnf"
-   - "cosmohome_mysql:/var/lib/mysql"
-  environment: 
-   - MYSQL_ROOT_PASSWORD=
-   - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+version: "2"
 
-cosmohome:
-  build: .
-  hostname: cosmohome
-  links: 
-   - mysql
-  volumes:
-   - "cosmohome_project:/root/projects"
-  command: sh -c "./cosmohome_postbuild.py"
+volumes:
+  mysql:
+  project:
+  results:
 
-apache:
-  build: apache
-  container_name: cosmohome_apache
-  hostname: cosmohome
-  links:
-   - mysql
-  volumes: 
-   - "cosmohome_project:/root/projects"
-   - "cosmohome_results:/root/results"
-  ports: 
-   - "80:80"
-  tty: true
+services:
+  mysql:
+    image: mysql:5.6.25
+    container_name: cosmohome_mysql
+    network_mode: bridge
+    hostname: boincserver
+    volumes:
+     - "./my.cnf:/etc/mysql/conf.d/my.cnf"
+     - "mysql:/var/lib/mysql"
+    environment: 
+     - MYSQL_ROOT_PASSWORD=
+     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+
+  makeproject:
+    build: 
+      context: .
+      args: 
+        GITTAG: 
+    network_mode: bridge
+    links: 
+     - mysql
+    volumes:
+     - "project:/root/projects"
+    command: "/root/postbuild.py"
+
+  apache:
+    build: apache
+    container_name: cosmohome_apache
+    network_mode: bridge
+    hostname: boincserver
+    links:
+     - mysql
+    volumes: 
+     - "project:/root/projects"
+     - "results:/root/results"
+    ports: 
+     - "80:80"
+    tty: true

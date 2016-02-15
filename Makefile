@@ -1,29 +1,32 @@
 default:
 
-up: run-mysql build-cosmohome postbuild-cosmohome build-apache run-apache
-
-
 DC=docker-compose
 
-download-private-data:
-	git archive --remote=ssh://git@bitbucket.org/marius311/cosmohome_private.git --format=tar master | tar xvf -
+up: up-mysql post-makeproject up-apache
+
+build: 
+	$(DC) build
+
+pull: 
+	$(DC) pull
 
 
-# -- cosmohome ---
+#--- project ---
 
-build-cosmohome: 
-	mkdir -p keys
-	$(DC) build cosmohome
+makeproject: 
+	GITTAG="$$(git rev-parse --short HEAD),$$(TZ=UTC git show -s --format=%cd --date=local HEAD)" \
+	$(DC) build makeproject
 
-postbuild-cosmohome:
-	$(DC) run --rm cosmohome
+post-makeproject:
+	$(DC) run --rm makeproject
+
 
 #--- apache ---
 
 build-apache:
 	$(DC) build apache
 
-run-apache:
+up-apache:
 	$(DC) up -d apache
 
 rm-apache:
@@ -35,7 +38,10 @@ exec-apache:
 
 # --- mysql ---
 
-run-mysql:
+build-mysql: 
+	$(DC) build mysql
+
+up-mysql:
 	$(DC) up -d mysql
 
 rm-mysql:

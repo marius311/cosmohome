@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <boinc>
   <config>
-    <upload_dir>/root/projects/cosmohome/upload</upload_dir>
+    <upload_dir>/root/projects/boincserver/upload</upload_dir>
     <send_result_abort>1</send_result_abort>
     <long_name>Cosmology@Home</long_name>
     <cache_md5_info>1</cache_md5_info>
@@ -10,15 +10,15 @@
     <uldl_dir_fanout>1024</uldl_dir_fanout>
     <download_url>http://www.cosmologyathome.org/download</download_url>
     <db_user>root</db_user>
-    <log_dir>/root/projects/cosmohome/log_cosmohome</log_dir>
-    <app_dir>/root/projects/cosmohome/apps</app_dir>
-    <download_dir>/root/projects/cosmohome/download</download_dir>
+    <log_dir>/root/projects/boincserver/log_cosmohome</log_dir>
+    <app_dir>/root/projects/boincserver/apps</app_dir>
+    <download_dir>/root/projects/boincserver/download</download_dir>
     <master_url>http://www.cosmologyathome.org/</master_url>
-    <host>cosmohome</host>
+    <host>boincserver</host>
     <db_name>cosmohome</db_name>
     <shmem_key>0x1111394d</shmem_key>
     <show_results>1</show_results>
-    <key_dir>/root/projects/cosmohome/keys/</key_dir>
+    <key_dir>/root/projects/boincserver/keys/</key_dir>
     <dont_generate_upload_certificates>1</dont_generate_upload_certificates>
     <ignore_upload_certificates>1</ignore_upload_certificates>
     <db_passwd></db_passwd>

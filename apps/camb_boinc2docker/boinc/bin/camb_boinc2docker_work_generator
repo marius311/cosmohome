@@ -4,6 +4,7 @@ import sys
 sys.path.append('../bin')
 import boinc_path_config
 from Boinc.work_generator import WorkGenerator
+from Boinc.create_work import projdir
 import os, os.path as osp
 from ConfigParser import RawConfigParser
 from cStringIO import StringIO
@@ -48,7 +49,7 @@ class MyWorkGenerator(WorkGenerator):
 
     def __init__(self,*args,**kwargs):
         super(MyWorkGenerator,self).__init__(*args,**kwargs)
-        self.app_dir = '/root/projects/cosmohome/apps_boinc2docker/camb'
+        self.app_dir = osp.join(projdir,'apps_boinc2docker/camb')
         self.param_sets_dir = osp.join(self.app_dir,'params')
 
     def make_jobs(self,num=1):

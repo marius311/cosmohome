@@ -2,7 +2,7 @@
 
 NUM_WUS=1
 
-cd /root/projects/cosmohome
+cd ..
 
 if [[ $# = 0 ]]
 then
