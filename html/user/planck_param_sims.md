@@ -12,7 +12,7 @@ p.date{margin-top:-20px; margin-bottom:30px;}
 <script type="text/javascript" src="http://test.gfycat.com/gfycat_test_june25.js"></script>
 
 #Is our best description of the cosmos, the $$\Lambda$$CDM model, right?
-Feb 10, 2016 - [Marius Millea](http://www.cosmologyathome.org/view_profile.php?userid=990172)
+Feb 16, 2016 - [Marius Millea](http://www.cosmologyathome.org/view_profile.php?userid=990172)
 {: .date}
 
 Today we are excited to officially release a new app at Cosmology@Home (called `planck_param_sims`), allowing anyone to contribute to current analysis of data from the [Planck](https://en.wikipedia.org/wiki/Planck_(spacecraft)) satellite and to help better understand our cosmos! The one sentence summary of this app is that its sort of like turning your computer into a mixer board and playing DJ with the echoes of the Big Bang! So what exactly does that mean, and how these results contribute to science? Find out in this post, with some help from our main collaborators on this project. 
