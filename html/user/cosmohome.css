@@ -280,6 +280,12 @@ img {
      max-width: 100%;
 }
 
+img.logo {
+     width:80px;
+     vertical-align: middle;
+     border-radius: 5px;
+}
+
 img.rounded {
      border-radius: 10px
 }
@@ -569,8 +575,7 @@ table#topnav {
 }
 
 #sponsors {
-     width: 500;
-     float: left;
+     float: right;
 }
 
 #navmenu ul, #navmenu ol {

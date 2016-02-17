@@ -143,13 +143,13 @@ END;
     }
 	echo " 
 	<div id='sponsors'>
-<a href='http://www.nsf.gov' target='_blank'><img src='/img/nsf_watermark.png' alt='nsf' align='left' border='0'></a>
-<a href='http://www.nasa.gov' target='_blank'><img src='img/nasa-logo.gif' alt='nasa' border='0'></a>
-<a href='http://planck.caltech.edu' target='_blank'><img src='/img/planck-logo.gif' alt='planck' border='0'></a>
-<a href='http://www.jpl.nasa.gov' target='_blank'><img src='/img/JPLLogo.gif' alt='JPL' border='0'></a>
-<a href='http://boinc.berkeley.edu' target='_blank'><img src='/img/boinc_watermark.png' alt='boinc' border='0'></a>
-<a href='http://www.esa.int' target='_blank'><img src='/img/esa.gif' alt='esa' border='0'></a></div></div>";
-
+<a href='http://boinc.berkeley.edu' target='_blank'><img class='logo' src='/img/logos/boinc.png' alt='boinc'></a>
+<a href='http://www.esa.int' target='_blank'><img class='logo' src='/img/logos/esa.png' alt='esa'></a>
+<a href='http://www.jpl.nasa.gov' target='_blank'><img class='logo' src='/img/logos/jpl.png' alt='JPL'></a>
+<a href='http://www.nsf.gov' target='_blank'><img class='logo' src='/img/logos/nsf.jpg' alt='nsf'></a>
+<a href='http://www.nasa.gov' target='_blank'><img class='logo' src='img/logos/nasa.png' alt='nasa'></a>
+<a href='http://planck.caltech.edu' target='_blank'><img class='logo' src='/img/logos/planck-logo.gif' alt='planck'></a>
+</div></div>";
 }
 
 function show_profile_heading1() {
