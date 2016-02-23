@@ -14,7 +14,7 @@ where w.appid=5 and r.outcome%s"""%i)
     return set([tuple(map(int,x[0].split('_')[-3:])) for x in cur.fetchall()])
 
 def maskmat(jobs):
-    return array([[(1. if (lslice[0],lslice[1],seed) in jobs else 0) for lslice in lslices] for seed in range(1000)]).T
+    return array([[(1. if (lslice[0],lslice[1],seed) in jobs else 0) for lslice in lslices] for seed in range(10000)]).T
 
 
 con = mdb.connect('mysql', 'root', '', 'cosmohome')
@@ -38,5 +38,6 @@ matshow(maskmat(success_jobs)*3+maskmat(error_jobs)*2+maskmat(inprogress_jobs)*1
         cmap=cm.jet.from_list(None,clrs,N=4))
 
 gca().set_yticks([0,50,100])
-gcf().set_size_inches(15,15)
+gca().set_xticks(range(0,10001,500))
+gcf().set_size_inches(150,150)
 savefig(osp.join(osp.dirname(__file__),'../html/user/img/lsplitsims_jobplot.png'),bbox_inches='tight',dpi=74)

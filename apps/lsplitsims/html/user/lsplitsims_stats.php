@@ -33,20 +33,20 @@ from the Planck satellite to help us build up a distribution of how actual
 results should differ when we analyze only certain parts of them at a time. It
 can help us search for problems with our understanding of the universe,
 possibly even pointing to new discoveries! For each simulated realization of
-the data, we look at 108 different ways of breaking it up into parts. For the
-first phase of this application, we would like to look at 1000 simulations.
-The graphic represents these 1000x108 jobs, and shows a blue dot everywhere a
+the data, we look at 108 different ways of breaking it up into parts. We began
+looking at 1000 simulations, and now would like to run a full 10000. The
+graphic represents these 10000x108 jobs, and shows a blue dot everywhere a
 result has been calculated (in red are errors, grey are ongoing workunits,
-white are to-be-created workunits).
+white are to-be-created workunits).</p>
 ";
 
-echo "<p><img class='rounded' src='img/lsplitsims_jobplot.png'>";
+echo "<div style='margin:0 20px 0 20px; overflow-x:scroll;'><img class='rounded' style='max-width:none;' src='img/lsplitsims_jobplot.png'></div><p/>";
 
 echo "<p>These results will be used in a forthcoming paper from the Planck
 collaboration. In the paper, we will thank by name the top 3 users and top
 team who have crunched the most on the planck_param_sims application. Below
 are the current standings. We will give a two week notice before picking the
-winners.";
+winners.</p>";
 
 start_table_noborder();
 echo "
