@@ -30,6 +30,7 @@
     <no_forum_rating/>    
     <fuh_debug_level>1</fuh_debug_level>
     <sched_debug_level>1</sched_debug_level>
+    <max_wus_in_progress>5</max_wus_in_progress>
   </config>
   <tasks>
     <task>
