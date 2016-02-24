@@ -33,10 +33,10 @@ from the Planck satellite to help us build up a distribution of how actual
 results should differ when we analyze only certain parts of them at a time. It
 can help us search for problems with our understanding of the universe,
 possibly even pointing to new discoveries! For each simulated realization of
-the data, we look at 108 different ways of splitting it up into parts. We
+the data, we look about 100 different ways of splitting it up into parts. We
 began by looking at 1000 simulations, and now would like to run a full 10000.
-The graphic below represents these 10000x108 jobs, each vertical slice slice
-get darker as the 108 splits for that simulation are done.</p>
+The graphic below represents these 10000x100 jobs, each vertical slice will
+get darker as the 100 splits for that simulation are completed.</p>
 ";
 
 echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot.png'></p>";
