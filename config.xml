@@ -87,6 +87,8 @@
       <output>badge_assign.out</output>
     </task>
 
+
+
     <!-- camb_boinc2docker -->
     <task>
       <cmd>camb_boinc2docker_reducer</cmd>
@@ -116,6 +118,7 @@
       <cmd>file_deleter -d 3 </cmd>
     </daemon>
 
+
     <!-- lsplitsims -->
     <daemon>
         <cmd>script_assimilator --app lsplitsims --script "lsplitsims_assimilator files"</cmd>
@@ -143,6 +146,12 @@
     <daemon>
         <cmd>camb_boinc2docker_work_generator --cushion 100</cmd>
     </daemon>
+    <daemon>
+        <cmd>db_purge --app camb_boinc2docker --min_age_days 7 --gzip</cmd>
+        <pid_file>camb_boinc2docker_db_purge.pid</pid_file>
+        <output>camb_boinc2docker_db_purge.log</output>
+    </daemon>
+
 
     <!-- camb_legacy -->
     <daemon>
@@ -157,6 +166,11 @@
     </daemon>
     <daemon>
         <cmd>camb_legacy_work_generator --cushion 100</cmd>
+    </daemon>
+    <daemon>
+        <cmd>db_purge --app camb --min_age_days 7 --gzip</cmd>
+        <pid_file>camb_legacy_db_purge.pid</pid_file>
+        <output>camb_legacy_db_purge.log</output>
     </daemon>
 
 
