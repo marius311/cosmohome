@@ -30,14 +30,10 @@ for lsplit in range(100,2500,50)+[2509]:
 
 
 xkcd()
-clrs=['w',
-      'lightgray',
-      (0.8352941176470589, 0.3686274509803922, 0.0),
-      (0.0, 0.4470588235294118, 0.6980392156862745)]
-matshow(maskmat(success_jobs)*3+maskmat(error_jobs)*2+maskmat(inprogress_jobs)*1,vmin=0,vmax=4,
-        cmap=cm.jet.from_list(None,clrs,N=4))
+matshow([maskmat(success_jobs).sum(axis=0)],aspect=1000,cmap='Blues')
 
-gca().set_yticks([0,50,100])
-gca().set_xticks(range(0,10001,500))
-gcf().set_size_inches(150,150)
+gca().set_yticks([])
+gca().xaxis.set_ticks_position('bottom')
+xlabel('Number of Simulations Completed',size=16)
+gcf().set_size_inches(15,15)
 savefig(osp.join(osp.dirname(__file__),'../html/user/img/lsplitsims_jobplot.png'),bbox_inches='tight',dpi=74)

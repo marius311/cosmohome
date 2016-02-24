@@ -33,14 +33,13 @@ from the Planck satellite to help us build up a distribution of how actual
 results should differ when we analyze only certain parts of them at a time. It
 can help us search for problems with our understanding of the universe,
 possibly even pointing to new discoveries! For each simulated realization of
-the data, we look at 108 different ways of breaking it up into parts. We began
-looking at 1000 simulations, and now would like to run a full 10000. The
-graphic represents these 10000x108 jobs, and shows a blue dot everywhere a
-result has been calculated (in red are errors, grey are ongoing workunits,
-white are to-be-created workunits).</p>
+the data, we look at 108 different ways of splitting it up into parts. We
+began by looking at 1000 simulations, and now would like to run a full 10000.
+The graphic below represents these 10000x108 jobs, each vertical slice slice
+get darker as the 108 splits for that simulation are done.</p>
 ";
 
-echo "<div style='margin:0 20px 0 20px; overflow-x:scroll;'><img class='rounded' style='max-width:none;' src='img/lsplitsims_jobplot.png'></div><p/>";
+echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot.png'></p>";
 
 echo "<p>These results will be used in a forthcoming paper from the Planck
 collaboration. In the paper, we will thank by name the top 3 users and top
