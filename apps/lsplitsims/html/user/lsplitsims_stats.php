@@ -8,7 +8,7 @@ require_once("../inc/boinc_db.inc");
 
 
 if (!defined('TTL')) {
-    define('TTL', 300);
+    define('TTL', 3600);
 }
 
 
