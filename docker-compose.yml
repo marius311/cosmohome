@@ -29,3 +29,24 @@ apache:
   ports: 
    - "80:80"
   tty: true
+
+
+#---------
+# backups
+#---------
+
+mysql-backup:
+  image: debian:jessie
+  volumes:
+    - "cosmohome_mysql:/var/lib/mysql"
+    - "./backups:/backups"
+  command:
+    [sh,-c,"tar cvf /backups/mysql_$$(date -I).tar /var/lib/mysql"]
+
+project-backup:
+  image: debian:jessie
+  volumes:
+    - "cosmohome_project:/root/projects"
+    - "./backups:/backups"
+  command:
+    [sh,-c,'tar cvf /backups/project_$$(date -I).tar /root/projects --exclude="*log*"']

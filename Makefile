@@ -33,6 +33,7 @@ exec-apache:
 	docker exec -it cosmohome_apache bash
 
 
+
 # --- mysql ---
 
 run-mysql:
@@ -40,3 +41,12 @@ run-mysql:
 
 rm-mysql:
 	$(DC) stop mysql && $(DC) rm -f mysql
+
+
+# --- backups ---
+
+backup-mysql: 
+	$(DC) stop mysql && $(DC) run --rm mysql-backup && $(DC) up -d mysql
+
+backup-project: 
+	$(DC) run --rm project-backup
