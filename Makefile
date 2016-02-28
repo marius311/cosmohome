@@ -4,6 +4,7 @@ up: run-mysql build-cosmohome postbuild-cosmohome build-apache run-apache
 
 
 DC=docker-compose
+D=docker
 
 download-private-data:
 	git archive --remote=ssh://git@bitbucket.org/marius311/cosmohome_private.git --format=tar master | tar xvf -
@@ -30,7 +31,7 @@ rm-apache:
 	$(DC) stop apache && $(DC) rm -f apache
 
 exec-apache:
-	docker exec -it cosmohome_apache bash
+	$(D) exec -it cosmohome_apache bash
 
 
 
@@ -46,7 +47,10 @@ rm-mysql:
 # --- backups ---
 
 backup-mysql: 
-	$(DC) stop mysql && $(DC) run --rm mysql-backup && $(DC) up -d mysql
+	$(DC) stop mysql
+	$(DC) run --rm mysql-backup
+	$(DC) start mysql
+	$(D) exec -it cosmohome_apache bin/start
 
 backup-project: 
 	$(DC) run --rm project-backup
