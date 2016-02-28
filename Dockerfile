@@ -9,21 +9,16 @@ RUN apt-get update && apt-get install -y \
         vim \
         wget
 
-# setup boinc2docker
-COPY boinc2docker $PROJHOME/boinc2docker
-RUN cd $PROJHOME/boinc2docker \
-    && ISOTAG=v0.44 VBOXTAG=v0.7 ./setup_versions
-
 # install camb_legacy
 COPY apps/camb_legacy/ $PROJHOME
 
 # install boinc2docker_camb
 COPY apps/camb_boinc2docker/boinc/ $PROJHOME
-RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.02 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
+RUN cd /root/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.02 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
 
 # install lsplitsims
 COPY apps/lsplitsims/ $PROJHOME
-RUN cd $PROJHOME/boinc2docker && ./install_as $PROJHOME lsplitsims 1.02 $PROJHOME/apps_boinc2docker/lsplitsims/vbox_job.xml
+RUN cd /root/boinc2docker && ./install_as $PROJHOME lsplitsims 1.02 $PROJHOME/apps_boinc2docker/lsplitsims/vbox_job.xml
 
 
 # sign executables
@@ -44,6 +39,6 @@ RUN cd $PROJHOME/html/user && ./compile_md.py
 # finish up
 ARG GITTAG
 RUN echo $GITTAG > $PROJHOME/.gittag \
-    && rm /root/projects
+    && unlink $PROJHOME
 
 

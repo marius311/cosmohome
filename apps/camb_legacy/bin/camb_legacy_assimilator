@@ -7,6 +7,6 @@ from datetime import date
 
 if sys.argv[1]!='--error':
 
-    target = osp.join('/root/results/camb_legacy/results',date.today().isoformat())
+    target = osp.join('/results/camb_legacy/results',date.today().isoformat())
     os.system('mkdir -p '+target)
     os.system('mv %s %s'%(' '.join(sys.argv[1:]),target))

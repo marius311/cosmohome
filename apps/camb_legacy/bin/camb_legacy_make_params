@@ -42,7 +42,7 @@ do
    
     OUTPUT_PATH=`bin/dir_hier_path $OUTPUT_NAME`
 
-    P_DIR="/root/results/camb_legacy/params/params_$DAY"
+    P_DIR="/results/camb_legacy/params/params_$DAY"
     if [ ! -d $P_DIR ]
     then
       mkdir -p $P_DIR

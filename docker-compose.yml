@@ -12,7 +12,6 @@ services:
     network_mode: bridge
     hostname: boincserver
     volumes:
-     - "./my.cnf:/etc/mysql/conf.d/my.cnf"
      - "mysql:/var/lib/mysql"
     environment: 
      - MYSQL_ROOT_PASSWORD=
@@ -27,7 +26,7 @@ services:
     links: 
      - mysql
     volumes:
-     - "project:/root/projects"
+     - "project:/project"
     command: "/root/postbuild.py"
 
   apache:
@@ -38,8 +37,8 @@ services:
     links:
      - mysql
     volumes: 
-     - "project:/root/projects"
-     - "results:/root/results"
+     - "project:/project"
+     - "results:/results"
     ports: 
      - "80:80"
     tty: true
