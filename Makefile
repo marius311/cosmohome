@@ -50,7 +50,7 @@ backup-mysql:
 	$(DC) stop mysql
 	$(DC) run --rm mysql-backup
 	$(DC) start mysql
-	$(D) exec -it cosmohome_apache bin/start
+	$(DC) restart apache
 
 backup-project: 
 	$(DC) run --rm project-backup
