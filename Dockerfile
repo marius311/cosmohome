@@ -38,7 +38,4 @@ RUN cd $PROJHOME/html/user && ./compile_md.py
 
 # finish up
 ARG GITTAG
-RUN echo $GITTAG > $PROJHOME/.gittag \
-    && unlink $PROJHOME
-
-
+RUN echo $GITTAG > $PROJHOME/.gittag && unlink $PROJHOME
