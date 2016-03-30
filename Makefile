@@ -4,6 +4,8 @@ DC=docker-compose
 
 up: up-mysql post-makeproject up-apache
 
+down: 
+	$(DC) down
 build: 
 	$(DC) build
 
@@ -33,7 +35,7 @@ rm-apache:
 	$(DC) stop apache && $(DC) rm -f apache
 
 exec-apache:
-	docker exec -it cosmohome_apache bash
+	docker exec -it $(shell $(DC) ps -q apache) bash
 
 
 # --- mysql ---

@@ -14,7 +14,7 @@
     <app_dir>/project/apps</app_dir>
     <download_dir>/project/download</download_dir>
     <master_url>http://www.cosmologyathome.org/</master_url>
-    <host>boincserver</host>
+    <host>cosmohome</host>
     <db_name>cosmohome</db_name>
     <shmem_key>0x1111394d</shmem_key>
     <show_results>1</show_results>

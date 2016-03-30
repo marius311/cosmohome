@@ -8,7 +8,6 @@ volumes:
 services:
   mysql:
     image: mysql:5.6.25
-    container_name: cosmohome_mysql
     network_mode: bridge
     hostname: boincserver
     volumes:
@@ -26,14 +25,12 @@ services:
     links: 
      - mysql
     volumes:
-     - "project:/project"
-    command: "/root/postbuild.py"
+     - "project:/project.dst"
 
   apache:
     build: apache
-    container_name: cosmohome_apache
     network_mode: bridge
-    hostname: boincserver
+    hostname: cosmohome
     links:
      - mysql
     volumes: 

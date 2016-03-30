@@ -1,6 +1,9 @@
-FROM marius311/boincserver_makeproject:latest
+FROM boinc/server_makeproject:latest-b2d
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
+
+#dont need built-in boinc2docker app
+RUN rm -rf $PROJHOME/apps/boinc2docker $PROJHOME/log_boincserver
 
 #install extra packages
 RUN apt-get update && apt-get install -y \
@@ -9,16 +12,17 @@ RUN apt-get update && apt-get install -y \
         vim \
         wget
 
+
 # install camb_legacy
 COPY apps/camb_legacy/ $PROJHOME
 
 # install boinc2docker_camb
 COPY apps/camb_boinc2docker/boinc/ $PROJHOME
-RUN cd /root/boinc2docker && ./install_as $PROJHOME camb_boinc2docker 1.02 $PROJHOME/apps_boinc2docker/camb/vbox_job.xml
+RUN cd /root/boinc2docker && ./boinc2docker_create_app $PROJHOME/apps_boinc2docker/camb/boinc2docker.yml
 
 # install lsplitsims
 COPY apps/lsplitsims/ $PROJHOME
-RUN cd /root/boinc2docker && ./install_as $PROJHOME lsplitsims 1.02 $PROJHOME/apps_boinc2docker/lsplitsims/vbox_job.xml
+RUN cd /root/boinc2docker && ./boinc2docker_create_app $PROJHOME/apps_boinc2docker/lsplitsims/boinc2docker.yml
 
 
 # sign executables
@@ -38,4 +42,4 @@ RUN cd $PROJHOME/html/user && ./compile_md.py
 
 # finish up
 ARG GITTAG
-RUN echo $GITTAG > $PROJHOME/.gittag && unlink $PROJHOME
+RUN echo $GITTAG > $PROJHOME/.gittag
