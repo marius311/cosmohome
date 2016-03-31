@@ -35,7 +35,7 @@ RUN for f in `find $PROJHOME/apps/ -type f -not -name "version.xml"`; do \
 
 # project files
 COPY py $PROJHOME/py
-COPY project.xml config.xml boincserver.httpd.conf db_dump_spec.xml $PROJHOME/
+COPY project.xml config.xml boincserver.httpd.conf $PROJHOME/
 COPY html $PROJHOME/html
 
 # compile markdown files
