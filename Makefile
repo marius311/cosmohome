@@ -15,8 +15,8 @@ pull:
 
 #--- project ---
 
+GITTAG=$(shell git rev-parse --short HEAD),$(shell TZ=UTC git show -s --format=%cd --date=local HEAD)
 makeproject: 
-	GITTAG="$$(git rev-parse --short HEAD),$$(TZ=UTC git show -s --format=%cd --date=local HEAD)" \
 	$(DC) build makeproject
 
 post-makeproject:
