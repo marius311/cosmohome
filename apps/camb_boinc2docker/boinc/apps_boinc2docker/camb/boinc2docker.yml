@@ -1,0 +1,10 @@
+appname: camb_boinc2docker
+appver: "1.02"
+iso: "0.44"
+vboxwrapper: "26182"
+memory: 1024
+vbox_job.xml:
+  - fraction_done_filename: results/progress
+  - disable_automatic_checkpoints
+dont_install:
+  - template_in
