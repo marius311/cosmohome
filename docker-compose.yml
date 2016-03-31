@@ -7,7 +7,7 @@ volumes:
 
 services:
   mysql:
-    image: boinc/server_mysql:1.0.0
+    image: boinc/server_mysql:1.0.1
     network_mode: bridge
     volumes:
      - "mysql:/var/lib/mysql"

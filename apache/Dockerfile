@@ -1,4 +1,4 @@
-FROM boinc/server_apache:1.0.0
+FROM boinc/server_apache:1.0.1
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 

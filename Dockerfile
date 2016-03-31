@@ -1,14 +1,13 @@
-FROM boinc/server_makeproject:1.0.0-b2d
+FROM boinc/server_makeproject:1.0.1-b2d
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
 #dont need built-in boinc2docker app
-RUN rm -rf $PROJHOME/apps/boinc2docker $PROJHOME/log_boincserver
+RUN rm -rf $PROJHOME/apps/boinc2docker
 
 #install extra packages
 RUN apt-get update && apt-get install -y \
         ruby-kramdown \
-        unzip \
         vim \
         wget
 
