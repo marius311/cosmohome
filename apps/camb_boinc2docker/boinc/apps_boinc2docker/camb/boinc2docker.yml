@@ -1,5 +1,5 @@
 appname: camb_boinc2docker
-appver: "1.02"
+appver: "1.03"
 iso: "0.44"
 vboxwrapper: "26182"
 memory: 1024

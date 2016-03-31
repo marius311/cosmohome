@@ -1,16 +1,8 @@
 appname: lsplitsims
-appver: "1.02"
+appver: "1.03"
 iso: "0.44"
 vboxwrapper: "26182"
 memory: 2048
 vbox_job.xml:
   - fraction_done_filename: progress
   - disable_automatic_checkpoints
-
-# or specify by platform
-# vboxwrapper:
-#   x86_64-pc-linux-gnu: "26182"
-#   windows_x86_64: "26182"
-#   x86_64-apple-darwin: "26182"
-
-
