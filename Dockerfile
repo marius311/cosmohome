@@ -1,4 +1,4 @@
-FROM boinc/server_makeproject:latest-b2d
+FROM boinc/server_makeproject:1.0.0-b2d
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
@@ -34,7 +34,7 @@ RUN for f in `find $PROJHOME/apps/ -type f -not -name "version.xml"`; do \
 
 # project files
 COPY py $PROJHOME/py
-COPY project.xml config.xml boinc2docker/plan_class_spec.xml boincserver.httpd.conf db_dump_spec.xml $PROJHOME/
+COPY project.xml config.xml boincserver.httpd.conf db_dump_spec.xml $PROJHOME/
 COPY html $PROJHOME/html
 
 # compile markdown files

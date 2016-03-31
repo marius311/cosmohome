@@ -6,15 +6,14 @@ volumes:
   results:
 
 services:
-mysql:
-  image: mysql:5.6.25
+  mysql:
+    image: mysql:5.6.25
     network_mode: bridge
-    hostname: boincserver
-  volumes:
+    volumes:
      - "mysql:/var/lib/mysql"
-  environment: 
-   - MYSQL_ROOT_PASSWORD=
-   - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    environment: 
+     - MYSQL_ROOT_PASSWORD=
+     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
   makeproject:
     build: 
@@ -22,41 +21,41 @@ mysql:
       args: 
         GITTAG: 
     network_mode: bridge
-  links: 
-   - mysql
-  volumes:
+    links: 
+     - mysql
+    volumes:
      - "project:/project.dst"
 
-apache:
-  build: apache
+  apache:
+    build: apache
     network_mode: bridge
-  hostname: cosmohome
-  links:
-   - mysql
-  volumes: 
+    hostname: cosmohome
+    links:
+     - mysql
+    volumes: 
      - "project:/project"
      - "results:/results"
-  ports: 
-   - "80:80"
-  tty: true
+    ports: 
+     - "80:80"
+    tty: true
 
 
 #---------
 # backups
 #---------
 
-mysql-backup:
-  image: debian:jessie
-  volumes:
-    - "cosmohome_mysql:/var/lib/mysql"
-    - "./backups:/backups"
-  command:
-    [sh,-c,"tar cvf /backups/mysql_$$(date -I).tar /var/lib/mysql"]
+  mysql-backup:
+    image: debian:jessie
+    volumes:
+      - "mysql:/var/lib/mysql"
+      - "./backups:/backups"
+    command:
+      [sh,-c,"tar cvf /backups/mysql_$$(date -I).tar /var/lib/mysql"]
 
-project-backup:
-  image: debian:jessie
-  volumes:
-    - "cosmohome_project:/root/projects"
-    - "./backups:/backups"
-  command:
-    [sh,-c,'tar cvf /backups/project_$$(date -I).tar /root/projects --exclude="*log*"']
+  project-backup:
+    image: debian:jessie
+    volumes:
+      - "project:/project"
+      - "./backups:/backups"
+    command:
+      [sh,-c,'tar cvf /backups/project_$$(date -I).tar /project --exclude="*log*"']
