@@ -7,9 +7,7 @@ up: up-mysql post-makeproject up-apache
 down: 
 	$(DC) down
 
-build:
-	mkdir -p private
-	$(DC) build
+build: makeproject build-mysql build-apache
 
 pull: 
 	$(DC) pull
@@ -17,9 +15,9 @@ pull:
 
 #--- project ---
 
-GITTAG=$(shell git rev-parse --short HEAD),$(shell TZ=UTC git show -s --format=%cd --date=local HEAD)
 makeproject: 
 	mkdir -p private
+	GITTAG="$$(git rev-parse --short HEAD),$$(TZ=UTC git show -s --format=%cd --date=local HEAD)" \
 	$(DC) build makeproject
 
 post-makeproject:
