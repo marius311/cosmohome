@@ -24,9 +24,10 @@ RUN boinc2docker_create_app $PROJHOME/apps_boinc2docker/camb/boinc2docker.yml
 COPY apps/lsplitsims/ $PROJHOME
 RUN boinc2docker_create_app $PROJHOME/apps_boinc2docker/lsplitsims/boinc2docker.yml
 
+# copy private files
+COPY private/ $PROJHOME/
 
 # sign executables
-COPY keys $PROJHOME/keys
 RUN for f in `find $PROJHOME/apps/ -type f -not -name "version.xml"`; do \
       /root/boinc/tools/sign_executable $f $PROJHOME/keys/code_sign_private > ${f}.sig; \
     done \
