@@ -18,11 +18,11 @@ COPY apps/camb_legacy/ $PROJHOME
 
 # install boinc2docker_camb
 COPY apps/camb_boinc2docker/boinc/ $PROJHOME
-RUN cd /root/boinc2docker && ./boinc2docker_create_app $PROJHOME/apps_boinc2docker/camb/boinc2docker.yml
+RUN boinc2docker_create_app $PROJHOME/apps_boinc2docker/camb/boinc2docker.yml
 
 # install lsplitsims
 COPY apps/lsplitsims/ $PROJHOME
-RUN cd /root/boinc2docker && ./boinc2docker_create_app $PROJHOME/apps_boinc2docker/lsplitsims/boinc2docker.yml
+RUN boinc2docker_create_app $PROJHOME/apps_boinc2docker/lsplitsims/boinc2docker.yml
 
 
 # sign executables
