@@ -1,31 +1,41 @@
+version: "2"
+
+volumes:
+  mysql:
+  project:
+  results:
+
+services:
 mysql:
   image: mysql:5.6.25
-  container_name: cosmohome_mysql
+    network_mode: bridge
+    hostname: boincserver
   volumes:
-   - "./my.cnf:/etc/mysql/conf.d/my.cnf"
-   - "cosmohome_mysql:/var/lib/mysql"
+     - "mysql:/var/lib/mysql"
   environment: 
    - MYSQL_ROOT_PASSWORD=
    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
-cosmohome:
-  build: .
-  hostname: cosmohome
+  makeproject:
+    build: 
+      context: .
+      args: 
+        GITTAG: 
+    network_mode: bridge
   links: 
    - mysql
   volumes:
-   - "cosmohome_project:/root/projects"
-  command: sh -c "./cosmohome_postbuild.py"
+     - "project:/project.dst"
 
 apache:
   build: apache
-  container_name: cosmohome_apache
+    network_mode: bridge
   hostname: cosmohome
   links:
    - mysql
   volumes: 
-   - "cosmohome_project:/root/projects"
-   - "cosmohome_results:/root/results"
+     - "project:/project"
+     - "results:/results"
   ports: 
    - "80:80"
   tty: true

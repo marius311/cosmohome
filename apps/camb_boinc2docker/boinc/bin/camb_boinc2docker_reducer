@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """ 
-Goes through the /root/results/camb_boinc2docker/YYYY-MM-DD folder for the
+Goes through the /results/camb_boinc2docker/YYYY-MM-DD folder for the
 previous day and compresses all of the results into a single YYYY-MM-DD.dat.gz
 file which is a gzip of Python pickle where everything is converted to floats
 and only a specific set of l-values are kept. 
@@ -111,4 +111,4 @@ if __name__=='__main__':
     if len(sys.argv)>1:
         for folder in sys.argv[1:]: reduce(folder)
     else:
-        reduce(osp.join('/root/results/camb_boinc2docker',(date.today()-timedelta(1)).isoformat()))
+        reduce(osp.join('/results/camb_boinc2docker',(date.today()-timedelta(1)).isoformat()))
