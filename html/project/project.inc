@@ -23,18 +23,22 @@ define("UOTD_ADMIN_EMAIL", "bwandelt@illinois.edu"); # who gets user of the day 
 define("POST_REPORT_EMAILS", "bwandelt@illinois.edu|kpointer@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
 
 function page_head($title, $java_onload=null, $prefix="") {
-    global $caching;
-    global $cache_control_extra;
 
-    $styleSheet = STYLESHEET;
+    global $caching, $cache_control_extra, $did_page_head;
+
+    $did_page_head = true;
+    $url_base = url_base();
+    $stylesheet = $url_base.STYLESHEET;
     $rssname = PROJECT . " RSS 2.0";
-    $rsslink = URL_BASE . "rss_main.php";
-    
-    $charset = tra("CHARSET");
-    if ($charset != "CHARSET") {
-        header("Content-type: text/html; charset=$charset");
+    $rsslink = $url_base."rss_main.php";
+    if (defined('STYLESHEET2')) {
+        $stylesheet2 = $url_base.STYLESHEET2;
+    } else {
+        $stylesheet2 = null;
     }
+    
     if (!$caching) {
+        header("Content-type: text/html; charset=utf-8");
         header ("Expires: Mon, 26 Jul 1997 05:00:00 UTC");    // Date in the past
         header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " UTC"); // always modified
         header ("Cache-Control: $cache_control_extra no-cache, must-revalidate, post-check=0, pre-check=0");  // HTTP/1.1
@@ -48,7 +52,7 @@ function page_head($title, $java_onload=null, $prefix="") {
 <html>
   <head>
     <title>".strip_tags($title)."</title>
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"$styleSheet\">
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"$stylesheet\">
     <link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
     <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans:700' rel='stylesheet' type='text/css'>";
@@ -73,10 +77,20 @@ function page_head($title, $java_onload=null, $prefix="") {
 
 END;
     if ($java_onload){
-        echo "  <body bgcolor=\"#ffffff\" onload=\"".$java_onload."\">"; } else { echo "  <body bgcolor=\"#ffffff\">";
+        echo "<body onload=\"".$java_onload."\">";
+    } else {
+        echo "<body>";
     }
-    //display_cvs_versions();
+    display_cvs_versions();
     project_banner($title, $prefix);
+    switch($title) {    //kludge
+      case tra("Your account"):
+        show_login_info($prefix);
+      default:
+        break;
+    }
+    
+
 }
 
 function project_banner($title, $prefix) {
