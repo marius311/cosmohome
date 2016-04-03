@@ -7,10 +7,7 @@ RUN rm -rf $PROJHOME/apps/boinc2docker
 
 #install extra packages
 RUN apt-get update && apt-get install -y \
-        ruby-kramdown \
-        vim \
-        wget
-
+        ruby-kramdown
 
 # install camb_legacy
 COPY apps/camb_legacy/ $PROJHOME
