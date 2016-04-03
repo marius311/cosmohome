@@ -1,40 +1,52 @@
 <?xml version="1.0" ?>
 <boinc>
     <config>
-        <upload_dir>/root/project/upload</upload_dir>
-        <send_result_abort>1</send_result_abort>
-        <long_name>Cosmology@Home</long_name>
-        <cache_md5_info>1</cache_md5_info>
-        <upload_url>http://www.cosmologyathome.org/cosmohome_cgi/file_upload_handler</upload_url>
-        <disable_account_creation>0</disable_account_creation>
-        <uldl_dir_fanout>1024</uldl_dir_fanout>
-        <download_url>http://www.cosmologyathome.org/download</download_url>
-        <db_user>root</db_user>
-        <log_dir>/root/project/log_cosmohome</log_dir>
+
+        <!-- names and folders -->
         <app_dir>/root/project/apps</app_dir>
         <download_dir>/root/project/download</download_dir>
-        <master_url>http://www.cosmologyathome.org/</master_url>
+        <download_url>http://www.cosmologyathome.org/download</download_url>
         <host>cosmohome</host>
-        <db_name>cosmohome</db_name>
-        <shmem_key>0x1111394d</shmem_key>
-        <show_results>1</show_results>
         <key_dir>/root/project/keys/</key_dir>
-        <dont_generate_upload_certificates>1</dont_generate_upload_certificates>
-        <ignore_upload_certificates>1</ignore_upload_certificates>
-        <db_passwd></db_passwd>
-        <min_sendwork_interval>6</min_sendwork_interval>
+        <log_dir>/root/project/log_cosmohome</log_dir>
+        <long_name>Cosmology@Home</long_name>
+        <master_url>http://www.cosmologyathome.org/</master_url>
+        <shmem_key>0x1111394d</shmem_key>
+        <upload_dir>/root/project/upload</upload_dir>
+        <upload_url>http://www.cosmologyathome.org/cosmohome_cgi/file_upload_handler</upload_url>
+
+        <!-- database -->
         <db_host>mysql</db_host>
-        <daily_result_quota>500</daily_result_quota>
-        <one_result_per_user_per_wu>0</one_result_per_user_per_wu>
-        <max_wus_to_send>50</max_wus_to_send>
-        <no_forum_rating/>    
-        <fuh_debug_level>1</fuh_debug_level>
-        <sched_debug_level>1</sched_debug_level>
-        <max_wus_in_progress>5</max_wus_in_progress>
-        <prefer_primary_platform>1</prefer_primary_platform>
-        <recaptcha_public_key/>
+        <db_name>cosmohome</db_name>
+        <db_passwd></db_passwd>
+        <db_user>root</db_user>
+
+        <!-- recaptcha -->
         <recaptcha_private_key/>
+        <recaptcha_public_key/>
+        
+        <!-- various other options -->
+        <cache_md5_info>1</cache_md5_info>
+        <daily_result_quota>500</daily_result_quota>
+        <dont_generate_upload_certificates/>
+        <ignore_upload_certificates/>
+        <max_wus_in_progress>5</max_wus_in_progress>
+        <max_wus_to_send>50</max_wus_to_send>
+        <min_sendwork_interval>6</min_sendwork_interval>
+        <no_forum_rating/>    
+        <prefer_primary_platform>1</prefer_primary_platform>
+        <send_result_abort/>
+        <show_results/>
+        <uldl_dir_fanout>1024</uldl_dir_fanout>
+
+        <!-- debug flags -->
+        <fuh_debug_level>2</fuh_debug_level>
+        <sched_debug_level>3</sched_debug_level>
+        <debug_send/>
+        <debug_version_select/>
+
     </config>
+
     <tasks>
         <task>
             <cmd>antique_file_deleter -d 2</cmd>
