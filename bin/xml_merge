@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+import yaml
+import sys
+from os.path import exists
+from os import remove
+import argparse
+
+
+parser = argparse.ArgumentParser(prog='xml_merge')
+parser.add_argument('--cleanup',action='store_true',help='delete replacements file afterwards')
+parser.add_argument('replacements',help='file containing replacements')
+parser.add_argument('xmlfile',help='xml file in which to merge')
+args = parser.parse_args()
+
+if exists(args.replacements):
+
+    with open(args.replacements) as f: 
+        reps = yaml.load(f)['replacements']
+
+    with open(args.xmlfile) as f: 
+        dest=f.read()
+
+    for r in reps: 
+        dest=dest.replace(r['src'],r['dst'])
+
+    with open(args.xmlfile,'w') as f: 
+        f.write(dest)
+
+    if args.cleanup: 
+        remove(args.replacements)

@@ -1,181 +1,183 @@
 <?xml version="1.0" ?>
 <boinc>
-  <config>
-    <upload_dir>/root/project/upload</upload_dir>
-    <send_result_abort>1</send_result_abort>
-    <long_name>Cosmology@Home</long_name>
-    <cache_md5_info>1</cache_md5_info>
-    <upload_url>http://www.cosmologyathome.org/cosmohome_cgi/file_upload_handler</upload_url>
-    <disable_account_creation>0</disable_account_creation>
-    <uldl_dir_fanout>1024</uldl_dir_fanout>
-    <download_url>http://www.cosmologyathome.org/download</download_url>
-    <db_user>root</db_user>
-    <log_dir>/root/project/log_cosmohome</log_dir>
-    <app_dir>/root/project/apps</app_dir>
-    <download_dir>/root/project/download</download_dir>
-    <master_url>http://www.cosmologyathome.org/</master_url>
-    <host>cosmohome</host>
-    <db_name>cosmohome</db_name>
-    <shmem_key>0x1111394d</shmem_key>
-    <show_results>1</show_results>
-    <key_dir>/root/project/keys/</key_dir>
-    <dont_generate_upload_certificates>1</dont_generate_upload_certificates>
-    <ignore_upload_certificates>1</ignore_upload_certificates>
-    <db_passwd></db_passwd>
-    <min_sendwork_interval>6</min_sendwork_interval>
-    <db_host>mysql</db_host>
-    <daily_result_quota>500</daily_result_quota>
-    <one_result_per_user_per_wu>0</one_result_per_user_per_wu>
-    <max_wus_to_send>50</max_wus_to_send>
-    <no_forum_rating/>    
-    <fuh_debug_level>1</fuh_debug_level>
-    <sched_debug_level>1</sched_debug_level>
-    <max_wus_in_progress>5</max_wus_in_progress>
-    <prefer_primary_platform>1</prefer_primary_platform>
-  </config>
-  <tasks>
-    <task>
-      <cmd>antique_file_deleter -d 2</cmd>
-      <period>24 hours</period>
-      <disabled>0</disabled>
-      <output>antique_file_deleter.out</output>
-    </task>
-    <task>
-      <cmd>db_dump -d 2 --dump_spec ../db_dump_spec.xml</cmd>
-      <period>24 hours</period>
-      <disabled>0</disabled>
-      <output>db_dump.out</output>
-    </task>
-    <task>
-      <cmd>run_in_ops ./update_uotd.php</cmd>
-      <period>1 days</period>
-      <disabled>0</disabled>
-      <output>update_uotd.out</output>
-    </task>
-    <task>
-      <cmd>run_in_ops ./update_forum_activities.php</cmd>
-      <period>1 hour</period>
-      <disabled>0</disabled>
-      <output>update_forum_activities.out</output>
-    </task>
-    <task>
-      <cmd>update_stats</cmd>
-      <period>1 days</period>
-      <disabled>0</disabled>
-      <output>update_stats.out</output>
-    </task>
-    <task>
-      <cmd>run_in_ops ./update_profile_pages.php</cmd>
-      <period>24 hours</period>
-      <disabled>0</disabled>
-      <output>update_profile_pages.out</output>
-    </task>
-    <task>
-      <cmd>run_in_ops ./team_import.php</cmd>
-      <period>24 hours</period>
-      <disabled>1</disabled>
-      <output>team_import.out</output>
-    </task>
-    <task>
-      <cmd>run_in_ops ./notify.php</cmd>
-      <period>24 hours</period>
-      <disabled>0</disabled>
-      <output>notify.out</output>
-    </task>
-    <task>
-      <cmd>run_in_ops ./badge_assign.php</cmd>
-      <period>24 hours</period>
-      <disabled>0</disabled>
-      <output>badge_assign.out</output>
-    </task>
+    <config>
+        <upload_dir>/root/project/upload</upload_dir>
+        <send_result_abort>1</send_result_abort>
+        <long_name>Cosmology@Home</long_name>
+        <cache_md5_info>1</cache_md5_info>
+        <upload_url>http://www.cosmologyathome.org/cosmohome_cgi/file_upload_handler</upload_url>
+        <disable_account_creation>0</disable_account_creation>
+        <uldl_dir_fanout>1024</uldl_dir_fanout>
+        <download_url>http://www.cosmologyathome.org/download</download_url>
+        <db_user>root</db_user>
+        <log_dir>/root/project/log_cosmohome</log_dir>
+        <app_dir>/root/project/apps</app_dir>
+        <download_dir>/root/project/download</download_dir>
+        <master_url>http://www.cosmologyathome.org/</master_url>
+        <host>cosmohome</host>
+        <db_name>cosmohome</db_name>
+        <shmem_key>0x1111394d</shmem_key>
+        <show_results>1</show_results>
+        <key_dir>/root/project/keys/</key_dir>
+        <dont_generate_upload_certificates>1</dont_generate_upload_certificates>
+        <ignore_upload_certificates>1</ignore_upload_certificates>
+        <db_passwd></db_passwd>
+        <min_sendwork_interval>6</min_sendwork_interval>
+        <db_host>mysql</db_host>
+        <daily_result_quota>500</daily_result_quota>
+        <one_result_per_user_per_wu>0</one_result_per_user_per_wu>
+        <max_wus_to_send>50</max_wus_to_send>
+        <no_forum_rating/>    
+        <fuh_debug_level>1</fuh_debug_level>
+        <sched_debug_level>1</sched_debug_level>
+        <max_wus_in_progress>5</max_wus_in_progress>
+        <prefer_primary_platform>1</prefer_primary_platform>
+        <recaptcha_public_key/>
+        <recaptcha_private_key/>
+    </config>
+    <tasks>
+        <task>
+            <cmd>antique_file_deleter -d 2</cmd>
+            <period>24 hours</period>
+            <disabled>0</disabled>
+            <output>antique_file_deleter.out</output>
+        </task>
+        <task>
+            <cmd>db_dump -d 2 --dump_spec ../db_dump_spec.xml</cmd>
+            <period>24 hours</period>
+            <disabled>0</disabled>
+            <output>db_dump.out</output>
+        </task>
+        <task>
+            <cmd>run_in_ops ./update_uotd.php</cmd>
+            <period>1 days</period>
+            <disabled>0</disabled>
+            <output>update_uotd.out</output>
+        </task>
+        <task>
+            <cmd>run_in_ops ./update_forum_activities.php</cmd>
+            <period>1 hour</period>
+            <disabled>0</disabled>
+            <output>update_forum_activities.out</output>
+        </task>
+        <task>
+            <cmd>update_stats</cmd>
+            <period>1 days</period>
+            <disabled>0</disabled>
+            <output>update_stats.out</output>
+        </task>
+        <task>
+            <cmd>run_in_ops ./update_profile_pages.php</cmd>
+            <period>24 hours</period>
+            <disabled>0</disabled>
+            <output>update_profile_pages.out</output>
+        </task>
+        <task>
+            <cmd>run_in_ops ./team_import.php</cmd>
+            <period>24 hours</period>
+            <disabled>1</disabled>
+            <output>team_import.out</output>
+        </task>
+        <task>
+            <cmd>run_in_ops ./notify.php</cmd>
+            <period>24 hours</period>
+            <disabled>0</disabled>
+            <output>notify.out</output>
+        </task>
+        <task>
+            <cmd>run_in_ops ./badge_assign.php</cmd>
+            <period>24 hours</period>
+            <disabled>0</disabled>
+            <output>badge_assign.out</output>
+        </task>
 
 
 
-    <!-- camb_boinc2docker -->
-    <task>
-      <cmd>camb_boinc2docker_reducer</cmd>
-      <period>1 days</period>
-      <disabled>0</disabled>
-      <output>camb_boinc2docker_reducer.out</output>
-    </task>
+        <!-- camb_boinc2docker -->
+        <task>
+            <cmd>camb_boinc2docker_reducer</cmd>
+            <period>1 days</period>
+            <disabled>0</disabled>
+            <output>camb_boinc2docker_reducer.out</output>
+        </task>
 
-    <!-- lsplitsims -->
-    <task>
-      <cmd>lsplitsims_jobplot.py</cmd>
-      <period>1 hour</period>
-      <disabled>0</disabled>
-      <output>lsplitsims_jobplot.out</output>
-    </task>
-
-
-  </tasks>
-  <daemons>
-    <daemon>
-      <cmd>feeder -d 3 --allapps --priority_order_create_time</cmd>
-    </daemon>
-    <daemon>
-      <cmd>transitioner -d 3 </cmd>
-    </daemon>
-    <daemon>
-      <cmd>file_deleter -d 3 </cmd>
-    </daemon>
+        <!-- lsplitsims -->
+        <task>
+            <cmd>lsplitsims_jobplot.py</cmd>
+            <period>1 hour</period>
+            <disabled>0</disabled>
+            <output>lsplitsims_jobplot.out</output>
+        </task>
 
 
-    <!-- lsplitsims -->
-    <daemon>
-        <cmd>script_assimilator --app lsplitsims --script "lsplitsims_assimilator files"</cmd>
-        <pid_file>lsplitsims_assimilator.pid</pid_file>
-        <output>lsplitsims_assimilator.log</output>
-    </daemon>
-    <daemon>
-        <cmd>script_validator --credit_from_wu --app lsplitsims --init_script lsplitsims_validator</cmd>
-        <pid_file>lsplitsims_validator.pid</pid_file>
-        <output>lsplitsims_validator.log</output>
-    </daemon>
+    </tasks>
+    <daemons>
+        <daemon>
+            <cmd>feeder -d 3 --allapps --priority_order_create_time</cmd>
+        </daemon>
+        <daemon>
+            <cmd>transitioner -d 3 </cmd>
+        </daemon>
+        <daemon>
+            <cmd>file_deleter -d 3 </cmd>
+        </daemon>
 
 
-    <!-- camb_boinc2docker -->
-    <daemon>
-        <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator</cmd>
-        <pid_file>camb_boinc2docker_validator.pid</pid_file>
-        <output>camb_boinc2docker_validator.log</output>
-    </daemon>
-    <daemon>
-        <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
-        <pid_file>camb_boinc2docker_assimilator.pid</pid_file>
-        <output>camb_boinc2docker_assimilator.log</output>
-    </daemon>
-    <daemon>
-        <cmd>camb_boinc2docker_work_generator --cushion 100</cmd>
-    </daemon>
-    <daemon>
-        <cmd>db_purge --app camb_boinc2docker --min_age_days 7 --gzip</cmd>
-        <pid_file>camb_boinc2docker_db_purge.pid</pid_file>
-        <output>camb_boinc2docker_db_purge.log</output>
-    </daemon>
+        <!-- lsplitsims -->
+        <daemon>
+            <cmd>script_assimilator --app lsplitsims --script "lsplitsims_assimilator files"</cmd>
+            <pid_file>lsplitsims_assimilator.pid</pid_file>
+            <output>lsplitsims_assimilator.log</output>
+        </daemon>
+        <daemon>
+            <cmd>script_validator --credit_from_wu --app lsplitsims --init_script lsplitsims_validator</cmd>
+            <pid_file>lsplitsims_validator.pid</pid_file>
+            <output>lsplitsims_validator.log</output>
+        </daemon>
 
 
-    <!-- camb_legacy -->
-    <daemon>
-        <cmd>script_validator --app camb --init_script camb_legacy_validator</cmd>
-        <pid_file>camb_legacy_validator.pid</pid_file>
-        <output>camb_legacy_validator.log</output>
-    </daemon>
-    <daemon>
-        <cmd>script_assimilator --app camb --script "camb_legacy_assimilator files"</cmd>
-        <pid_file>camb_legacy_assimilator.pid</pid_file>
-        <output>camb_legacy_assimilator.log</output>
-    </daemon>
-    <daemon>
-        <cmd>camb_legacy_work_generator --cushion 100</cmd>
-    </daemon>
-    <daemon>
-        <cmd>db_purge --app camb --min_age_days 7 --gzip</cmd>
-        <pid_file>camb_legacy_db_purge.pid</pid_file>
-        <output>camb_legacy_db_purge.log</output>
-    </daemon>
+        <!-- camb_boinc2docker -->
+        <daemon>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator</cmd>
+            <pid_file>camb_boinc2docker_validator.pid</pid_file>
+            <output>camb_boinc2docker_validator.log</output>
+        </daemon>
+        <daemon>
+            <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
+            <pid_file>camb_boinc2docker_assimilator.pid</pid_file>
+            <output>camb_boinc2docker_assimilator.log</output>
+        </daemon>
+        <daemon>
+            <cmd>camb_boinc2docker_work_generator --cushion 100</cmd>
+        </daemon>
+        <daemon>
+            <cmd>db_purge --app camb_boinc2docker --min_age_days 7 --gzip</cmd>
+            <pid_file>camb_boinc2docker_db_purge.pid</pid_file>
+            <output>camb_boinc2docker_db_purge.log</output>
+        </daemon>
 
 
-  </daemons>
+        <!-- camb_legacy -->
+        <daemon>
+            <cmd>script_validator --app camb --init_script camb_legacy_validator</cmd>
+            <pid_file>camb_legacy_validator.pid</pid_file>
+            <output>camb_legacy_validator.log</output>
+        </daemon>
+        <daemon>
+            <cmd>script_assimilator --app camb --script "camb_legacy_assimilator files"</cmd>
+            <pid_file>camb_legacy_assimilator.pid</pid_file>
+            <output>camb_legacy_assimilator.log</output>
+        </daemon>
+        <daemon>
+            <cmd>camb_legacy_work_generator --cushion 100</cmd>
+        </daemon>
+        <daemon>
+            <cmd>db_purge --app camb --min_age_days 7 --gzip</cmd>
+            <pid_file>camb_legacy_db_purge.pid</pid_file>
+            <output>camb_legacy_db_purge.log</output>
+        </daemon>
+
+
+    </daemons>
 </boinc>
 
