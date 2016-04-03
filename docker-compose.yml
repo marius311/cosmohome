@@ -7,7 +7,7 @@ volumes:
 
 services:
   mysql:
-    image: boinc/server_mysql:1.0.1
+    image: boinc/server_mysql:1.0.2
     network_mode: bridge
     volumes:
      - "mysql:/var/lib/mysql"
@@ -24,7 +24,7 @@ services:
     links: 
      - mysql
     volumes:
-     - "project:/project.dst"
+     - "project:/root/project.dst"
 
   apache:
     build: apache
@@ -33,7 +33,7 @@ services:
     links:
      - mysql
     volumes: 
-     - "project:/project"
+     - "project:/root/project"
      - "results:/results"
     ports: 
      - "80:80"
