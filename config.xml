@@ -51,55 +51,47 @@
         <task>
             <cmd>antique_file_deleter -d 2</cmd>
             <period>24 hours</period>
-            <disabled>0</disabled>
             <output>antique_file_deleter.out</output>
         </task>
         <task>
             <cmd>db_dump -d 2 --dump_spec ../db_dump_spec.xml</cmd>
             <period>24 hours</period>
-            <disabled>0</disabled>
             <output>db_dump.out</output>
         </task>
         <task>
-            <cmd>run_in_ops ./update_uotd.php</cmd>
+            <cmd>run_in_ops update_uotd.php</cmd>
             <period>1 days</period>
-            <disabled>0</disabled>
             <output>update_uotd.out</output>
         </task>
         <task>
-            <cmd>run_in_ops ./update_forum_activities.php</cmd>
+            <cmd>run_in_ops update_forum_activities.php</cmd>
             <period>1 hour</period>
-            <disabled>0</disabled>
             <output>update_forum_activities.out</output>
         </task>
         <task>
             <cmd>update_stats</cmd>
             <period>1 days</period>
-            <disabled>0</disabled>
             <output>update_stats.out</output>
         </task>
         <task>
-            <cmd>run_in_ops ./update_profile_pages.php</cmd>
+            <cmd>run_in_ops update_profile_pages.php</cmd>
             <period>24 hours</period>
-            <disabled>0</disabled>
             <output>update_profile_pages.out</output>
         </task>
         <task>
-            <cmd>run_in_ops ./team_import.php</cmd>
+            <cmd>run_in_ops team_import.php</cmd>
             <period>24 hours</period>
             <disabled>1</disabled>
             <output>team_import.out</output>
         </task>
         <task>
-            <cmd>run_in_ops ./notify.php</cmd>
+            <cmd>run_in_ops notify.php</cmd>
             <period>24 hours</period>
-            <disabled>0</disabled>
             <output>notify.out</output>
         </task>
         <task>
-            <cmd>run_in_ops ./badge_assign.php</cmd>
+            <cmd>run_in_ops badge_assign.php</cmd>
             <period>24 hours</period>
-            <disabled>0</disabled>
             <output>badge_assign.out</output>
         </task>
 
@@ -109,7 +101,6 @@
         <task>
             <cmd>camb_boinc2docker_reducer</cmd>
             <period>1 days</period>
-            <disabled>0</disabled>
             <output>camb_boinc2docker_reducer.out</output>
         </task>
 
@@ -117,7 +108,6 @@
         <task>
             <cmd>lsplitsims_jobplot.py</cmd>
             <period>1 hour</period>
-            <disabled>0</disabled>
             <output>lsplitsims_jobplot.out</output>
         </task>
 
