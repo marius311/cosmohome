@@ -8,23 +8,43 @@ require_once("../inc/boinc_db.inc");
 
 
 if (!defined('TTL')) {
-    define('TTL', 3600);
+    define('TTL', 600);
 }
 
 
 page_head(tra("Status of planck_param_sims app"));
 
-$db = BoincDb::get(true);
 $users = unserialize(get_cached_data(TTL, "users"));
-if (!$users){
-    $users = $db->enum_general("BoincUser","select * from (select u.*, sum(granted_credit) as planck_credit from user u inner join result r on r.userid=u.id where r.appid=5 group by u.id order by planck_credit desc) as res where planck_credit>0;");
-    set_cached_data(TTL, serialize($users), "users");
-}    
 $teams = unserialize(get_cached_data(TTL, "teams"));
-if (!$teams){
-    $teams = $db->enum_general("BoincTeam","select * from (select t.*, sum(granted_credit) as planck_credit from team t inner join result r on r.teamid=t.id where r.appid=5 group by t.id order by planck_credit desc) as res where planck_credit>0;");
-    set_cached_data(TTL, serialize($teams), "teams");
+if (!$users or !$teams){
+    $db = new SQLite3("../../archives/lsplitsims.db");
+    if (!$users){
+        $result = $db->query("select * from top_user_planck order by planck_credit desc");
+        $users = array();
+        while($row = $result->fetchArray()){
+            $user = BoincUser::lookup_id($row["id"]);
+            if ($user){
+                $user->planck_credit = $row["planck_credit"]; 
+                $users[] = $user; 
+            }
+        }
+        set_cached_data(TTL, serialize($users), "users");
+    }
+    if (!$teams){
+        $result = $db->query("select * from top_team_planck order by planck_credit desc");
+        $teams = array();
+        while($row = $result->fetchArray()){
+            $team = BoincTeam::lookup_id($row["id"]);
+            if ($team){ 
+                $team->planck_credit = $row["planck_credit"]; 
+                $teams[] = $team;
+            }
+        }
+        set_cached_data(TTL, serialize($teams), "teams");
+    }
+    $db->close();
 }
+
 
 echo "<h2>Status of the planck_param_sims app</h2>";
 
@@ -39,7 +59,7 @@ The graphic below represents these 10000x100 jobs, each vertical slice will
 get darker as the 100 splits for that simulation are completed.</p>
 ";
 
-echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot_phasea.png'></p>";
+echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot_finished.png'></p>";
 
 echo "<p>Update (Apr 10, 2016): The first phase of simulations was finished as
 we reached 10k successfully completed simulations. Based on what we've learned

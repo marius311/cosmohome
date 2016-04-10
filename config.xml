@@ -107,7 +107,7 @@
         <!-- lsplitsims -->
         <task>
             <cmd>lsplitsims_jobplot.py</cmd>
-            <period>1 hour</period>
+            <period>10 minutes</period>
             <output>lsplitsims_jobplot.out</output>
         </task>
 
