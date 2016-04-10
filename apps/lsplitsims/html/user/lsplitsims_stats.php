@@ -39,6 +39,17 @@ The graphic below represents these 10000x100 jobs, each vertical slice will
 get darker as the 100 splits for that simulation are completed.</p>
 ";
 
+echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot_phasea.png'></p>";
+
+echo "<p>Update (Apr 10, 2016): The first phase of simulations was finished as
+we reached 10k successfully completed simulations. Based on what we've learned
+looking at results throughout this process, there is at least one other set of
+simulations we would like to do with some slight modifications with respect to
+the first batch. Progress on these is shown below. It is possible there is not
+time to finish another full 10k simulations by the time of submission of our
+article, nevertheless the results we do get in time will be useful (and more
+results can be computed during the refereeing process).</p>";
+
 echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot.png'></p>";
 
 echo "<p>These results will be used in a forthcoming paper from the Planck
