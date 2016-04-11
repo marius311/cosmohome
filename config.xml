@@ -136,6 +136,11 @@
             <pid_file>lsplitsims_validator.pid</pid_file>
             <output>lsplitsims_validator.log</output>
         </daemon>
+        <daemon>
+            <cmd>db_purge --app lsplitsims --min_age_days 7 --gzip</cmd>
+            <pid_file>lsplitsims_db_purge.pid</pid_file>
+            <output>lsplitsims_db_purge.log</output>
+        </daemon>
 
 
         <!-- camb_boinc2docker -->
