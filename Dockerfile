@@ -1,4 +1,4 @@
-FROM boinc/server_makeproject:1.1.0-b2d
+FROM boinc/server_makeproject:1.1.2-b2d
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
