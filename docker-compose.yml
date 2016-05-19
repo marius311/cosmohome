@@ -7,7 +7,7 @@ volumes:
 
 services:
   mysql:
-    image: boinc/server_mysql:1.1.2
+    image: boinc/server_mysql:1.2.1
     network_mode: bridge
     volumes:
      - "mysql:/var/lib/mysql"
@@ -35,6 +35,7 @@ services:
     volumes: 
      - "project:/root/project"
      - "results:/results"
+     - "/var/run/docker.sock:/var/run/docker.sock"
     ports: 
      - "80:80"
     tty: true

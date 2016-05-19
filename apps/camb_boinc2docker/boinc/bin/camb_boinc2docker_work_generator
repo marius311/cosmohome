@@ -17,6 +17,7 @@ from shutil import copy
 from subprocess import check_output
 import yaml
 from copy import deepcopy
+from boinc2docker_create_work import boinc2docker_create_work
 
 def read_ini(inifile):
     config = RawConfigParser()
@@ -82,9 +83,13 @@ class MyWorkGenerator(WorkGenerator):
                 p['create_work_args']['rsc_fpops_est'] = '%.2g'%(p['rsc_fpops_est_per']*p['num_per'])
 
             #create work
-            self.create_work(p['create_work_args'],
-                             [('boinc_app',script.format(image=p['image']),0777),
-                              ('params.tgz',tgz.getvalue())])
+            boinc2docker_create_work(appname=self.appname,
+                                     image=p['image'],
+                                     command=["/root/shared/params_%.2i.ini"%i for i in range(len(params))],
+                                     prerun="tar zxvf /root/shared/params.tgz -C /root/shared",
+                                     verbose=False,
+                                     input_files=[('shared/params.tgz',tgz.getvalue(),[])],
+                                     create_work_args=p['create_work_args'])
 
     def draw_param_set(self):
         """
