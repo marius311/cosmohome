@@ -4,7 +4,7 @@ import argparse
 from boinc2docker_create_work import boinc2docker_create_work
 import boinc_path_config
 from Boinc.create_work import add_create_work_args, read_create_work_args
-
+from Boinc import database as db
 
 create_work_args = {
     'target_nresults': 1,
@@ -41,9 +41,17 @@ if __name__ == '__main__':
         lslices = eval(args.lslices)
     create_work_args.update(read_create_work_args(args))
 
+    db.connect()
+    app = db.Apps.find1(name="lsplitsims")
+
     for seed in seeds:
         for lslice in lslices:
-            create_work_args['wu_name'] = 'planck_param_sims_%i_%i_%s'%(lslice[0],lslice[1],seed)
+
+            #pick unique workunit name
+            for i in range(100):
+                name = create_work_args['wu_name'] = 'planck_param_sims_%i_%i_%s_%i'%(lslice[0],lslice[1],seed,i)
+                if not db.Workunits.find(app=app,name=name): break
+
             boinc2docker_create_work(appname='lsplitsims',
                                      image=args.image,
                                      command=['--lslices',"[(%i,%i)]"%lslice,
