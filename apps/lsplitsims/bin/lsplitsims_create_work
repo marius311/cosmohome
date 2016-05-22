@@ -25,6 +25,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(prog='lsplitsims_create_work')
     parser.add_argument('--lslices', help='list of lslices')
+    parser.add_argument('--lowtau', action='store_true', help='use low tau fiducial model and prior')
     parser.add_argument('image', help='image to run')
     parser.add_argument('seeds', help='list of seeds')
     add_create_work_args(parser)
@@ -52,10 +53,14 @@ if __name__ == '__main__':
                 name = create_work_args['wu_name'] = 'planck_param_sims_%i_%i_%s_%i'%(lslice[0],lslice[1],seed,i)
                 if not db.Workunits.find(app=app,name=name): break
 
+            command = ['--lslices',"[(%i,%i)]"%lslice,
+                       '--seeds','[%i]'%seed,
+                       '--progress','1500']
+            if args.lowtau:
+                command += ['--fid','fid_tau0.055.txt',
+                            '--tau','(0.055,0.01)']
             boinc2docker_create_work(appname='lsplitsims',
                                      image=args.image,
-                                     command=['--lslices',"[(%i,%i)]"%lslice,
-                                              '--seeds','[%i]'%seed,
-                                              '--progress','1500'],
+                                     command=command,
                                      create_work_args=create_work_args)
             print (seed,lslice)
