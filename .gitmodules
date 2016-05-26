@@ -1,5 +1,0 @@
-[submodule "apps/camb_boinc2docker/docker/develop/camb"]
-	path = apps/camb_boinc2docker/docker/develop/camb
-	url = https://github.com/marius311/CAMB.git
-	branch = progress
-    ignore = dirty
