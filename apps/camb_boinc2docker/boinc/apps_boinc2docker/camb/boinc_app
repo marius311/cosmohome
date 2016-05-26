@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -e 
-
-tar zxvf /root/shared/params -C /root/shared
-docker inspect {image} || {{ docker pull {image} && save_docker.sh; }}
-docker run --rm -v /root/shared:/root/shared {image} /root/shared/params*.ini

@@ -55,7 +55,6 @@ class MyWorkGenerator(WorkGenerator):
 
     def make_jobs(self,num=1):
 
-        script = open(osp.join(self.app_dir,'boinc_app')).read()
         default_params = yaml.load(open(osp.join(self.param_sets_dir,'default.yaml')))['default']
 
         for _ in range(num):
@@ -104,7 +103,7 @@ class MyWorkGenerator(WorkGenerator):
             p /= p.sum()
             return param_sets[choice(param_sets.keys(),p=p)]
         else:
-            return {'name':choice(next(os.walk(self.param_sets_dir))[0])}
+            return {'name':choice(next(os.walk(self.param_sets_dir))[1])}
 
 
     def gen_new_params(self,params_dir,index,fuzz_factor):
