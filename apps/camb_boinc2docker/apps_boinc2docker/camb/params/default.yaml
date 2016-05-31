@@ -3,7 +3,7 @@ default:
   num_per: 5
   fuzz_factor: 0.1
   rsc_fpops_est_per: 3.6e+12
-  image: marius311/camb_boinc2docker:0.02
+  image: marius311/camb_boinc2docker:1.0.0-slim
   create_work_args:
     target_nresults: 1
     max_error_results: 1
