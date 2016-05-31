@@ -1,6 +1,6 @@
 appname: lsplitsims
-appver: "1.04"
-iso: "0.44"
+appver: "2.00"
+iso: "1.0.0"
 vboxwrapper: "26182"
 memory: 2048
 vbox_job.xml:

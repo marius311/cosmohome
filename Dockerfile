@@ -1,4 +1,4 @@
-FROM boinc/server_makeproject:1.1.2-b2d
+FROM boinc/server_makeproject:1.2.1-b2d
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y ruby-kramdown
 COPY apps/camb_legacy/ $PROJHOME
 
 # install boinc2docker_camb
-COPY apps/camb_boinc2docker/boinc/ $PROJHOME
+COPY apps/camb_boinc2docker/ $PROJHOME
 RUN boinc2docker_create_app $PROJHOME/apps_boinc2docker/camb/boinc2docker.yml
 
 # install lsplitsims
