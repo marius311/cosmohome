@@ -1,7 +1,7 @@
 appname: camb_boinc2docker
-appver: "2.00"
+appver: "2.01"
 iso: "1.0.0"
-vboxwrapper: "26182"
+vboxwrapper: "26186"
 memory: 2048
 vbox_job.xml:
   - fraction_done_filename: results/progress
