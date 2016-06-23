@@ -26,6 +26,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='lsplitsims_create_work')
     parser.add_argument('--lslices', help='list of lslices')
     parser.add_argument('--lowtau', action='store_true', help='use low tau fiducial model and prior')
+    parser.add_argument('--sampletau', action='store_true', help='sample the tau prior')
     parser.add_argument('image', help='image to run')
     parser.add_argument('seeds', help='list of seeds')
     add_create_work_args(parser)
@@ -59,6 +60,8 @@ if __name__ == '__main__':
             if args.lowtau:
                 command += ['--fid','fid_tau0.055.txt',
                             '--tau','(0.055,0.01)']
+            if args.sampletau:
+                command += ['--sampletau']
             boinc2docker_create_work(appname='lsplitsims',
                                      image=args.image,
                                      command=command,
