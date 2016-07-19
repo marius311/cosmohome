@@ -13,3 +13,6 @@ default:
     priority: 1
     min_quorum: 1
     rsc_disk_bound: 5e8
+  vbox_job.xml:
+    - fraction_done_filename: results/progress
+  memory: 2048

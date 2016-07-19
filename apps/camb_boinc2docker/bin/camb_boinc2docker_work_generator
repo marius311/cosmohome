@@ -87,6 +87,8 @@ class MyWorkGenerator(WorkGenerator):
                                      command=["/root/shared/params_%.2i.ini"%i for i in range(len(params))],
                                      prerun="tar zxvf /root/shared/params.tgz -C /root/shared",
                                      verbose=False,
+                                     vbox_job_xml=p['vbox_job.xml'],
+                                     memory=p['memory'],
                                      input_files=[('shared/params.tgz',tgz.getvalue(),[])],
                                      create_work_args=p['create_work_args'])
 

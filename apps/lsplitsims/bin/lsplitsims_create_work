@@ -16,9 +16,15 @@ create_work_args = {
     #                 MIPS/CPU*NCPUS * 3m25s/100 steps * 1500 steps
     'rsc_fpops_est' : 3649e6  * 4    * (3*60+25)/100   * 1500,
     'rsc_disk_bound': 5e8,
-    'additional_xml':'<credit>50</credit>'
+    'additional_xml':'<credit>50</credit>',
 }
 create_work_args['rsc_fpops_bound'] = create_work_args['rsc_fpops_est']*20
+vbox_job_xml = [
+    {'fraction_done_filename': 'progress'},
+    'disable_automatic_checkpoints', 
+]
+memory = 2048
+
 
 
 if __name__ == '__main__':
@@ -65,5 +71,7 @@ if __name__ == '__main__':
             boinc2docker_create_work(appname='lsplitsims',
                                      image=args.image,
                                      command=command,
+                                     memory=memory,
+                                     vbox_job_xml=vbox_job_xml,
                                      create_work_args=create_work_args)
             print (seed,lslice)
