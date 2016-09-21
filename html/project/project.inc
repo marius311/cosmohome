@@ -6,6 +6,7 @@ require_once("../inc/phpmailer/PHPMailerAutoload.php");
 $master_url = parse_config(get_config(), "<master_url>");
 define("PROJECT", "Cosmology@Home");
 define("URL_BASE", $master_url);
+define("SECURE_URL_BASE",str_replace("http","https",$master_url));
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
@@ -97,11 +98,11 @@ END;
 
 function project_banner($title, $prefix) {
     // Put your project title and logo here
-    $master_url = parse_config(get_config(), "<master_url>");
+    $url_base = url_base();
     echo "<div id='container'>	
    <!-- Navigation -->
    <div id='topmatter'>
-    <a href='$master_url'><img src='/img/banner.jpg' border='0' height='200px' width='960px' padding='0px'/></a>
+    <a href='$url_base'><img src='/img/banner.jpg' border='0' height='200px' width='960px' padding='0px'/></a>
       <div id='navmenu'>
         <ul id='nav_ul'>
           <li><a href='/join.php'>JOIN</a></li>
