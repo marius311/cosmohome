@@ -23,8 +23,9 @@ define("UOTD_ADMIN_EMAIL", "bwandelt@illinois.edu"); # who gets user of the day 
 // offensive forum posts.
 define("POST_REPORT_EMAILS", "bwandelt@illinois.edu|kpointer@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
 
-function page_head($title, $java_onload=null, $prefix="") {
-
+function page_head(
+    $title, $java_onload=null, $title_plain=null, $prefix="", $head_extra=null
+) {
     global $caching, $cache_control_extra, $did_page_head;
 
     $did_page_head = true;
@@ -37,6 +38,7 @@ function page_head($title, $java_onload=null, $prefix="") {
     } else {
         $stylesheet2 = null;
     }
+
     
     if (!$caching) {
         header("Content-type: text/html; charset=utf-8");
@@ -49,10 +51,16 @@ function page_head($title, $java_onload=null, $prefix="") {
     echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
     ";
 
-        echo "
-<html>
-  <head>
-    <title>".strip_tags($title)."</title>
+    echo "<html><head>\n";
+    if ($head_extra) {
+        echo "\n$head_extra\n";
+    }
+    if (!$title_plain) {
+        echo "<title>".sanitize_tags($title)."</title>\n";
+    } else {
+        echo "<title>".sanitize_tags($title_plain)."</title>\n";
+    }
+    echo "
     <link rel=\"stylesheet\" type=\"text/css\" href=\"$stylesheet\">
     <link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
     <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
@@ -95,6 +103,7 @@ END;
     
 
 }
+
 
 function project_banner($title, $prefix) {
     // Put your project title and logo here

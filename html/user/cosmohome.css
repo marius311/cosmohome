@@ -125,11 +125,8 @@ td.fieldname, fieldname_error {
      text-align: right;
      vertical-align: top;
      border: none;
-     white-space:nowrap;
-}
-
-td.fieldname table {
-     white-space:normal;
+     white-space: normal;;
+     max-width: 260px;
 }
 
 td.fieldvalue, fieldvalue_error {
@@ -142,10 +139,24 @@ td.category {
      padding: 5px;
 }
 
-textarea {
-     background-color: #000000;
+td.fieldvalue input[type=text], td.fieldvalue textarea {
+    display: table-cell;
+    width: 99%;
+    min-width: 700px;
+}
+
+textarea, input, select, option {
+     background: #060606;
      border: 1px solid #222222;
      color: #fefefe;
+     font-family: "Merriweather Sans";
+     font-size: 15px;
+     vertical-align: middle;
+}
+
+input.btn {
+     width: auto !important;
+     cursor: pointer;
 }
 
 td.nav {
@@ -163,14 +174,6 @@ tr.subtitle {
 
 tr.message {
      background-color: #f1f7f7;
-}
-
-input, select {
-     vertical-align: middle;
-     background: black;
-     border: 1px solid #222222;
-     color: #fefefe;
-     cursor: pointer;
 }
 
 
@@ -277,7 +280,7 @@ td.postbody p {
 }
 
 img {
-     max-width: 100%;
+     max-width: 99%;
 }
 
 img.logo {
@@ -924,6 +927,25 @@ div#container {
      border-right: 1px solid /*bb*/#CCCCCC;
      border-left: 1px solid /*bb*/#CCCCCC;
 }
+
+
+/* Private messages */
+
+form[name=msg_list] td:nth-child(1), form[name=msg_list] td:nth-child(2) {
+    max-width: 125px;
+}
+
+form[name=msg_list] td:nth-child(3) {
+    max-width: 700px;
+}
+
+
+form[name=msg_list] {
+    word-wrap: break-word;
+}
+
+
+
 
 /*   Server Status Page   */
 
