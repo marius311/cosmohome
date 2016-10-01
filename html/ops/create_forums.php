@@ -57,6 +57,7 @@ function create_forum($category, $orderID, $title, $description, $is_dev_blog=0)
 db_init();
 
 $catid = create_category(0, "", 0);
+create_forum($catid, 0, "News", "News from this project");
 
 $catid = create_category(1, "General Discussion", 0);
 create_forum($catid, 0, "Announcements", "Announcements about Cosmology@Home");
