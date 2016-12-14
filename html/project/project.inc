@@ -300,7 +300,7 @@ function make_php_mailer() {
     $mail->SMTPSecure = "ssl";
     $mail->Host = "smtp.iap.fr";
     $mail->Port = 465;
-    $mail->Username = "cosmologyathome";
+    $mail->Username = "millea";
     $mail->Password = MAILPASS;
     $mail->SetFrom('admin@cosmologyathome.org', 'Cosmologyathome');
     $mail->AddReplyTo("admin@cosmologyathome.org", "Cosmologyathome");
