@@ -1,6 +1,7 @@
 default:
 
 DC=docker-compose
+DCA=$(DC) -f docker-compose.yml -f docker-compose-admin.yml 
 
 up: up-mysql post-makeproject up-apache
 
@@ -54,9 +55,9 @@ rm-mysql:
 
 backup-mysql: 
 	$(DC) stop mysql
-	$(DC) run --rm mysql-backup
+	$(DCA) run --rm backup-mysql
 	$(DC) start mysql
 	$(DC) restart apache
 
 backup-project: 
-	$(DC) run --rm project-backup
+	$(DCA) run --rm backup-project
