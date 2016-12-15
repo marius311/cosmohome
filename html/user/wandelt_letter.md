@@ -1,6 +1,6 @@
 ## Welcome Letter
 <br/>
-Dear friends, supporters and visitors,
+Dear friends, supporters, and visitors -
 
 I am excited to be able to welcome you to Cosmology@Home. This participatory computing platform for cosmology enables participants to contribute actively to front-line research in cosmology by donating their CPU time. You might to like to find out about more about how C@H got started and share some news about major changes about to happen and where we are going.
 
