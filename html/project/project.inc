@@ -2,8 +2,8 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/phpmailer/PHPMailerAutoload.php");
-if (file_exists("project.private.inc")) {
-    require_once("project.private.inc");
+if (file_exists("../project/project.private.inc")) {
+    require_once("../project/project.private.inc");
 } else {
     define("MAILPASS","");
 }
