@@ -17,3 +17,5 @@ RUN a2enmod ssl
 
 # get xkcd font
 RUN curl -L http://antiyawn.com/uploads/Humor-Sans-1.0.ttf > /usr/share/matplotlib/mpl-data/fonts/ttf/Humor-Sans.ttf
+
+COPY supervisor.cosmohome.conf /etc/supervisor/conf.d
