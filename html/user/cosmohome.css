@@ -275,6 +275,13 @@ td.postbody, td.heading2 {
      background-color: transparent;
 }
 
+td.postbody {
+     height: 100%;
+     vertical-align: top;
+     padding-top: 10px;
+     padding-bottom: 10px;
+}
+
 td.postbody p {
      padding-left: 0px;
 }
