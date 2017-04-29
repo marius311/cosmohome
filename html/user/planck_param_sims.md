@@ -8,8 +8,17 @@ p.date{margin-top:-20px; margin-bottom:30px;}
 </style>
 </head>
 
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
-<script type="text/javascript" src="http://test.gfycat.com/gfycat_test_june25.js"></script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+<script>
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://assets.gfycat.com/gfycat.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'gfycat-js'));
+</script>
 
 #Is our best description of the cosmos, the $$\Lambda$$CDM model, right?
 Feb 16, 2016 - [Marius Millea](http://www.cosmologyathome.org/view_profile.php?userid=990172)
@@ -66,4 +75,3 @@ So are different regions of the data supposed to give the exact same values of p
 <hr style="width:50%;"/>
 
 We don't really know what result we'll get. A calculation of these expected differences has never been done to this scale nor to this accuracy. Part of the reason is that its a computationally expensive task. Analyzing the Planck data just once is not trivial, and doing so for ~100 different configurations of filters, and simulating *that* process thousands of times, is much less so! That of course is where you as volunteers come in. With your help we will be able to map out this distribution of changes. The first phase of this calculation should take a few weeks to a couple of months. Depending on what we find, we may extend it in various ways. I'm looking forward to seeing what we find!
-
