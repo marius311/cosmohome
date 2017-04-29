@@ -104,12 +104,6 @@
             <output>camb_boinc2docker_reducer.out</output>
         </task>
 
-        <!-- lsplitsims -->
-        <task>
-            <cmd>lsplitsims_jobplot.py</cmd>
-            <period>10 minutes</period>
-            <output>lsplitsims_jobplot.out</output>
-        </task>
 
 
     </tasks>
@@ -187,4 +181,3 @@
 
     </daemons>
 </boinc>
-

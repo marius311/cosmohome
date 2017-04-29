@@ -46,37 +46,15 @@ if (!$users or !$teams){
 }
 
 
-echo "<h2>Status of the planck_param_sims app</h2>";
+echo "<h2>Archive of the 2016 planck_param_sims contest</h2>";
 
-echo "<p>The planck_param_sims application analyzes sets of simulated data
-from the Planck satellite to help us build up a distribution of how actual
-results should differ when we analyze only certain parts of them at a time. It
-can help us search for problems with our understanding of the universe,
-possibly even pointing to new discoveries! For each simulated realization of
-the data, we look about 100 different ways of splitting it up into parts. We
-began by looking at 1000 simulations, and now would like to run a full 10000.
-The graphic below represents these 10000x100 jobs, each vertical slice will
-get darker as the 100 splits for that simulation are completed.</p>
-";
-
-echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot_finished.png'></p>";
-
-echo "<p>Update (Apr 10, 2016): The first phase of simulations was finished as
-we reached 10k successfully completed simulations. Based on what we've learned
-looking at results throughout this process, there is at least one other set of
-simulations we would like to do with some slight modifications with respect to
-the first batch. Progress on these is shown below. It is possible there is not
-time to finish another full 10k simulations by the time of submission of our
-article, nevertheless the results we do get in time will be useful (and more
-results can be computed during the refereeing process).</p>";
-
-echo "<p><img class='rounded' style='display:block; margin:auto;' src='img/lsplitsims_jobplot.png'></p>";
-
-echo "<p>These results will be used in a forthcoming paper from the Planck
-collaboration. In the paper, we will thank by name the top 3 users and top
-team who have crunched the most on the planck_param_sims application. Below
-are the current standings. We will give a two week notice before picking the
-winners.</p>";
+echo "<p>In 2016, we had a contest to see who could contribute the most
+computation power to our Planck application. You can read some about the science
+being done with this application here <a
+href='https://www.cosmologyathome.org/planck_param_sims.php'>here</a>. Below are
+the archived results from the end of the contest. The top three users and top
+below were thanked in the <a href='https://arxiv.org/abs/1608.02487'>paper</a>
+we ultimately published with these results.</p>";
 
 start_table_noborder();
 echo "
