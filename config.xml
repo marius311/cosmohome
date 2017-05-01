@@ -30,8 +30,8 @@
         <daily_result_quota>500</daily_result_quota>
         <dont_generate_upload_certificates/>
         <ignore_upload_certificates/>
-        <max_wus_in_progress>5</max_wus_in_progress>
-        <max_wus_to_send>50</max_wus_to_send>
+        <max_wus_in_progress>100</max_wus_in_progress>
+        <max_wus_to_send>100</max_wus_to_send>
         <min_sendwork_interval>6</min_sendwork_interval>
         <no_forum_rating/>    
         <prefer_primary_platform>1</prefer_primary_platform>
@@ -149,7 +149,7 @@
             <output>camb_boinc2docker_assimilator.log</output>
         </daemon>
         <daemon>
-            <cmd>camb_boinc2docker_work_generator --cushion 100</cmd>
+            <cmd>camb_boinc2docker_work_generator --cushion 500</cmd>
         </daemon>
         <daemon>
             <cmd>db_purge --app camb_boinc2docker --min_age_days 7 --gzip</cmd>
@@ -170,7 +170,7 @@
             <output>camb_legacy_assimilator.log</output>
         </daemon>
         <daemon>
-            <cmd>camb_legacy_work_generator --cushion 100</cmd>
+            <cmd>camb_legacy_work_generator --cushion 500</cmd>
         </daemon>
         <daemon>
             <cmd>db_purge --app camb --min_age_days 7 --gzip</cmd>
