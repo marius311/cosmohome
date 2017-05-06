@@ -84,4 +84,4 @@ if __name__ == '__main__':
                
     pool = Pool(args.nthreads)
     for seed in seeds:
-        pool.map(pool.map(creatework,zip(repeat(seed),lslices)))
+        pool.map(creatework,zip(repeat(seed),lslices))
