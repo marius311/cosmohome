@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 
 import argparse
-from boinc2docker_create_work import boinc2docker_create_work
+import signal
+from itertools import repeat
+from multiprocessing import Pool
+
 import boinc_path_config
-from Boinc.create_work import add_create_work_args, read_create_work_args
 from Boinc import database as db
+from boinc2docker_create_work import boinc2docker_create_work
+from Boinc.create_work import add_create_work_args, read_create_work_args
 
 create_work_args = {
     'target_nresults': 1,
@@ -33,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('--lslices', help='list of lslices')
     parser.add_argument('--lowtau', action='store_true', help='use low tau fiducial model and prior')
     parser.add_argument('--sampletau', action='store_true', help='sample the tau prior')
+    parser.add_argument('--nthreads', default=1, type=int, help='number of threads to use for submitting work')
     parser.add_argument('image', help='image to run')
     parser.add_argument('seeds', help='list of seeds')
     add_create_work_args(parser)
@@ -52,26 +57,31 @@ if __name__ == '__main__':
     db.connect()
     app = db.Apps.find1(name="lsplitsims")
 
+    def creatework((seed,lslice)):
+        signal.signal(signal.SIGINT, lambda: sys.exit())
+        
+        #pick unique workunit name
+        for i in range(100):
+            name = create_work_args['wu_name'] = 'planck_param_sims_%i_%i_%s_%i'%(lslice[0],lslice[1],seed,i)
+            if not db.Workunits.find(app=app,name=name): break
+
+        command = ['--lslices',"[(%i,%i)]"%lslice,
+                   '--seeds','[%i]'%seed,
+                   '--progress','1500']
+        if args.lowtau:
+            command += ['--fid','fid_tau0.055.txt',
+                        '--tau','(0.055,0.01)']
+        if args.sampletau:
+            command += ['--sampletau']
+        boinc2docker_create_work(appname='lsplitsims',
+                                 image=args.image,
+                                 command=command,
+                                 memory=memory,
+                                 vbox_job_xml=vbox_job_xml,
+                                 create_work_args=create_work_args)
+        print (seed,lslice)
+               
+               
+    pool = Pool(args.nthreads)
     for seed in seeds:
-        for lslice in lslices:
-
-            #pick unique workunit name
-            for i in range(100):
-                name = create_work_args['wu_name'] = 'planck_param_sims_%i_%i_%s_%i'%(lslice[0],lslice[1],seed,i)
-                if not db.Workunits.find(app=app,name=name): break
-
-            command = ['--lslices',"[(%i,%i)]"%lslice,
-                       '--seeds','[%i]'%seed,
-                       '--progress','1500']
-            if args.lowtau:
-                command += ['--fid','fid_tau0.055.txt',
-                            '--tau','(0.055,0.01)']
-            if args.sampletau:
-                command += ['--sampletau']
-            boinc2docker_create_work(appname='lsplitsims',
-                                     image=args.image,
-                                     command=command,
-                                     memory=memory,
-                                     vbox_job_xml=vbox_job_xml,
-                                     create_work_args=create_work_args)
-            print (seed,lslice)
+        pool.map(pool.map(creatework,zip(repeat(seed),lslices)))
