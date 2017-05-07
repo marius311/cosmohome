@@ -12,7 +12,7 @@ if (!defined('TTL')) {
 }
 
 
-page_head(tra("Status of planck_param_sims app"));
+page_head(tra("The Planck app 2017 Pentathlon contest"));
 
 $users = unserialize(get_cached_data(TTL, "users"));
 $teams = unserialize(get_cached_data(TTL, "teams"));
@@ -46,15 +46,15 @@ if (!$users or !$teams){
 }
 
 
-echo "<h2>Archive of the 2016 planck_param_sims contest</h2>";
+echo "<h2>The Planck app 2017 Pentathlon contest</h2>";
 
-echo "<p>In 2016, we had a contest to see who could contribute the most
-computation power to our Planck application. You can read some about the science
-being done with this application here <a
-href='https://www.cosmologyathome.org/planck_param_sims.php'>here</a>. Below are
-the archived results from the end of the contest. The top three users and top
-below were thanked in the <a href='https://arxiv.org/abs/1608.02487'>paper</a>
-we ultimately published with these results.</p>";
+echo "<p>In parallel with the 2017 BOINC Pentathlon, we are are running another
+contest for our Planck (planck_param_sims) application! The top three users and the top team
+(excluding the winners from the previous contest, see the old results <a
+href='https://www.cosmologyathome.org/lsplitsims_stats.php'>here</a>) will
+receive thanks in our paper. Only Planck jobs received during the dates of the
+Pentathlon, i.e. May 5 to May 19th at 00:00:00 UTC, will count for this contest.
+Of course, all Cosmology@Home jobs count for the Pentathlon. Good luck to all!</p>";
 
 start_table_noborder();
 echo "

@@ -14,6 +14,7 @@ keys = [('id', 'INTEGER PRIMARY KEY'),
         ('workunitid', 'INTEGER'), 
         ('name', 'TEXT'), 
         ('mod_time', 'TEXT'), 
+        ('received_time', 'TEXT'), 
         ('validate_state', 'INTEGER'), 
         ('outcome', 'INTEGER')]
 
@@ -36,35 +37,11 @@ def calctop(k):
     con.execute("""
     insert into top_{type}_planck
     select distinct({type}id), count(*)*50 as planck_credit from result 
-    where outcome=1 and {type}id!=0 group by {type}id
+    where outcome=1 and {type}id!=0 and received_time>=Datetime('2017-05-05 00:00:00') and received_time<=Datetime('2017-05-19 00:00:00')
+    group by {type}id
     """.format(type=k))
 for k in ['team','user']: calctop(k)
-
-#get completed job names
-names = [n for n, in con.execute('select name from result')]
 
 #finish
 con.commit()
 con.close()
-
-
-#scan job names to get seeds/lslices of completed jobs
-rc=re.compile('planck_param_sims_([0-9]+)_([0-9]+)_([0-9]+)_.*')
-dat=[map(int,rc.match(n).groups()) for n in names]
-jobs={}
-for d in dat:
-    j=jobs[d[2]]=jobs.get(d[2],set())
-    j.add(tuple(d[:2]))
-jdat=array(sorted([len(v) for k,v in jobs.items() if k>20000])[::-1])
-
-#make plot
-xkcd()
-matshow([jdat],aspect=1000,cmap='Blues')
-# plot([sum(jdat==jdat.max())]*2,[-0.5,0.5],'k:',lw=2)
-# ylim(-0.5,0.5)
-xlim(0,10000)
-gca().set_yticks([])
-gca().xaxis.set_ticks_position('bottom')
-xlabel('Number of Simulations Completed',size=16)
-gcf().set_size_inches(15,15)
-savefig(osp.join(osp.dirname(__file__),'../html/user/img/lsplitsims_jobplot.png'),bbox_inches='tight',dpi=74)
