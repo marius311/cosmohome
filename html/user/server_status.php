@@ -137,21 +137,15 @@ function show_status_html($x) {
     echo "<tr><th colspan=5>".tra("Tasks by application")."</th></tr>\n";
     table_header(
         tra("Application"), tra("Unsent"), tra("In progress"),
-        tra("Runtime of last 100 tasks in hours: average, min, max"),
         tra("Users in last 24 hours")
     );
     $i = 0;
     foreach ($j->apps as $app) {
-        $avg = round($app->info->avg, 2);
-        $min = round($app->info->min, 2);
-        $max = round($app->info->max, 2);
-        $x = $max?"$avg ($min - $max)":"---";
         $u = $app->info->users;
         echo "<tr class=row$i>
             <td>$app->user_friendly_name</td>
             <td>$app->unsent</td>
             <td>$app->in_progress</td>
-            <td>$x</td>
             <td>$u</td>
             </tr>
         ";
@@ -232,9 +226,6 @@ function show_status_xml($x) {
         item_xml("name", $app->name);
         item_xml("unsent", $app->unsent);
         item_xml("in_progress", $app->in_progress);
-        item_xml("avg_runtime", $app->info->avg);
-        item_xml("min_runtime", $app->info->min);
-        item_xml("max_runtime", $app->info->max);
         item_xml("users", $app->info->users);
         echo "</app>\n";
     }
@@ -393,10 +384,7 @@ function get_job_status() {
     $apps = BoincApp::enum("deprecated=0");
     foreach ($apps as $app) {
         $info = BoincDB::get()->lookup_fields("result", "stdClass",
-            "ceil(avg(elapsed_time)/3600*100)/100 as avg,
-            ceil(min(elapsed_time)/3600*100)/100 as min,
-            ceil(max(elapsed_time)/3600*100)/100 as max,
-            count(distinct userid) as users",
+            "count(distinct userid) as users",
             "appid = $app->id
             AND validate_state=1
             AND received_time > (unix_timestamp()-86400)
