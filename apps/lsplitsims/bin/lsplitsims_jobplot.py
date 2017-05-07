@@ -37,7 +37,7 @@ def calctop(k):
     con.execute("""
     insert into top_{type}_planck
     select distinct({type}id), count(*)*50 as planck_credit from result 
-    where outcome=1 and {type}id!=0 and received_time>=Datetime('2017-05-05 00:00:00') and received_time<=Datetime('2017-05-19 00:00:00')
+    where outcome=1 and {type}id!=0 and datetime(received_time,'unixepoch')>=Datetime('2017-05-05 00:00:00') and datetime(received_time,'unixepoch')<=Datetime('2017-05-19 00:00:00')
     group by {type}id
     """.format(type=k))
 for k in ['team','user']: calctop(k)

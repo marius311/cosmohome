@@ -51,7 +51,7 @@ echo "<h2>The Planck app 2017 Pentathlon contest</h2>";
 echo "<p>In parallel with the 2017 BOINC Pentathlon, we are are running another
 contest for our Planck (planck_param_sims) application! The top three users and the top team
 (excluding the winners from the previous contest, see the old results <a
-href='https://www.cosmologyathome.org/lsplitsims_stats.php'>here</a>) will
+href='https://www.cosmologyathome.org/lsplitsims_stats_2016.php'>here</a>) will
 receive thanks in our paper. Only Planck jobs received during the dates of the
 Pentathlon, i.e. May 5 to May 19th at 00:00:00 UTC, will count for this contest.
 Of course, all Cosmology@Home jobs count for the Pentathlon. Good luck to all!</p>";
