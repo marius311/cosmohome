@@ -73,12 +73,16 @@ if __name__ == '__main__':
                         '--tau','(0.055,0.01)']
         if args.sampletau:
             command += ['--sampletau']
-        boinc2docker_create_work(appname='lsplitsims',
-                                 image=args.image,
-                                 command=command,
-                                 memory=memory,
-                                 vbox_job_xml=vbox_job_xml,
-                                 create_work_args=create_work_args)
+        try:
+            boinc2docker_create_work(appname='lsplitsims',
+                                     image=args.image,
+                                     command=command,
+                                     memory=memory,
+                                     vbox_job_xml=vbox_job_xml,
+                                     create_work_args=create_work_args)
+        except Exception as e:
+            print(e)
+            pass
         print (seed,lslice)
                
                
