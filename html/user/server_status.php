@@ -136,17 +136,14 @@ function show_status_html($x) {
     start_table();
     echo "<tr><th colspan=5>".tra("Tasks by application")."</th></tr>\n";
     table_header(
-        tra("Application"), tra("Unsent"), tra("In progress"),
-        tra("Users in last 24 hours")
+        tra("Application"), tra("Unsent"), tra("In progress")
     );
     $i = 0;
     foreach ($j->apps as $app) {
-        $u = $app->info->users;
         echo "<tr class=row$i>
             <td>$app->user_friendly_name</td>
             <td>$app->unsent</td>
             <td>$app->in_progress</td>
-            <td>$u</td>
             </tr>
         ";
         $i = 1-$i;
@@ -226,7 +223,6 @@ function show_status_xml($x) {
         item_xml("name", $app->name);
         item_xml("unsent", $app->unsent);
         item_xml("in_progress", $app->in_progress);
-        item_xml("users", $app->info->users);
         echo "</app>\n";
     }
     echo "</tasks_by_app>
@@ -383,14 +379,6 @@ function get_job_status() {
     $s = new StdClass;
     $apps = BoincApp::enum("deprecated=0");
     foreach ($apps as $app) {
-        $info = BoincDB::get()->lookup_fields("result", "stdClass",
-            "count(distinct userid) as users",
-            "appid = $app->id
-            AND validate_state=1
-            AND received_time > (unix_timestamp()-86400)
-            "
-        );
-        $app->info = $info;
         $app->unsent = BoincResult::count("appid=$app->id and server_state=2");
         $app->in_progress = BoincResult::count("appid=$app->id and server_state=4");
     }
