@@ -164,7 +164,7 @@ function project_footer($show_return, $show_date) {
 	echo <<<END
    
 If you have any questions or comments regarding the content of this site, please contact <a href='http://www.cosmicmar.com'>Marius Millea</a><br/>
-This material is based upon work supported by the National Science Foundation under Grant No. AST0507676.<br/>
+This material is based upon work supported by the National Science Foundation under Grant No. AST0507676 and the Labex ILP (reference ANR-10-LABX-63).<br/>
 Links to external sites are provided as a convenience to our users. The Department of Astronomy does not control or endorse the content of external sites.<br\>
 Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.<br/>
 We would like to thank both NASA and the Planck project for their support of Cosmology@Home</br>
