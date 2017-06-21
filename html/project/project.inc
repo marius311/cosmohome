@@ -177,8 +177,9 @@ END;
 <a href='http://boinc.berkeley.edu' target='_blank'><img class='logo' src='/img/logos/boinc.png' alt='boinc'></a>
 <a href='http://www.esa.int' target='_blank'><img class='logo' src='/img/logos/esa.png' alt='esa'></a>
 <a href='http://www.jpl.nasa.gov' target='_blank'><img class='logo' src='/img/logos/jpl.png' alt='JPL'></a>
-<a href='http://www.nsf.gov' target='_blank'><img class='logo' src='/img/logos/nsf.jpg' alt='nsf'></a>
+<a href='http://ilp.upmc.fr' target='_blank'><img class='logo' src='/img/logos/logo-ILP-2.png' alt='ILP'></a>
 <a href='http://www.nasa.gov' target='_blank'><img class='logo' src='img/logos/nasa.png' alt='nasa'></a>
+<a href='http://www.nsf.gov' target='_blank'><img class='logo' src='/img/logos/nsf.jpg' alt='nsf'></a>
 <a href='http://planck.caltech.edu' target='_blank'><img class='logo' src='/img/logos/planck-logo.gif' alt='planck'></a>
 </div></div>";
 }
