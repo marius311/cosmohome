@@ -1,4 +1,4 @@
-FROM boinc/server_apache:1.3.2-b2d
+FROM boinc/server_apache:1.4.2-b2d
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
@@ -17,5 +17,7 @@ RUN a2enmod ssl
 
 # get xkcd font
 RUN curl -L http://antiyawn.com/uploads/Humor-Sans-1.0.ttf > /usr/share/matplotlib/mpl-data/fonts/ttf/Humor-Sans.ttf
+
+RUN rm /etc/apache2/sites-enabled/000-default.conf
 
 COPY supervisor.cosmohome.conf /etc/supervisor/conf.d
