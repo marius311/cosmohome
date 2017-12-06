@@ -24,6 +24,11 @@ makeproject:
 post-makeproject:
 	$(DC) run --rm makeproject
 
+backup-project: 
+	$(DCA) run --rm backup-project
+
+
+
 #--- apache ---
 
 build-apache:
@@ -36,7 +41,7 @@ rm-apache:
 	$(DC) stop apache && $(DC) rm -f apache
 
 exec-apache:
-	docker exec -it $(shell $(DC) ps -q apache) bash
+	$(DC) exec apache bash
 
 
 # --- mysql ---
@@ -50,14 +55,13 @@ up-mysql:
 rm-mysql:
 	$(DC) stop mysql && $(DC) rm -f mysql
 
-
-# --- backups ---
+optimize-mysql: 
+	$(DC) exec apache bin/stop
+	$(DC) run --rm mysql mysqlcheck -h mysql -o cosmohome
+	$(DC) exec apache bin/start
 
 backup-mysql: 
 	$(DC) stop mysql
 	$(DCA) run --rm backup-mysql
 	$(DC) start mysql
 	$(DC) restart apache
-
-backup-project: 
-	$(DCA) run --rm backup-project
