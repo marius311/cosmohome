@@ -139,9 +139,24 @@
 
         <!-- camb_boinc2docker -->
         <daemon>
-            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator</cmd>
-            <pid_file>camb_boinc2docker_validator.pid</pid_file>
-            <output>camb_boinc2docker_validator.log</output>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 0</cmd>
+            <pid_file>camb_boinc2docker_validator_0.pid</pid_file>
+            <output>camb_boinc2docker_validator_0.log</output>
+        </daemon>
+        <daemon>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 1</cmd>
+            <pid_file>camb_boinc2docker_validator_1.pid</pid_file>
+            <output>camb_boinc2docker_validator_1.log</output>
+        </daemon>
+        <daemon>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 2</cmd>
+            <pid_file>camb_boinc2docker_validator_2.pid</pid_file>
+            <output>camb_boinc2docker_validator_2.log</output>
+        </daemon>
+        <daemon>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 3</cmd>
+            <pid_file>camb_boinc2docker_validator_3.pid</pid_file>
+            <output>camb_boinc2docker_validator_3.log</output>
         </daemon>
         <daemon>
             <cmd>script_assimilator --app camb_boinc2docker --script "camb_boinc2docker_assimilator files"</cmd>
