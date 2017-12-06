@@ -20,13 +20,13 @@ define("LANGUAGE_FILE", "languages.txt");
 define("STYLESHEET", "cosmohome.css");
 define("FORUM_QA_MERGED_MODE", true);
 define("COPYRIGHT_HOLDER", "Department of Astronomy at the <a href=\"http://www.illinois.edu\">University of Illinois at Urbana-Champaign</a>");
-define("SYS_ADMIN_EMAIL", "kpointer@illinois.edu");
-define("UOTD_ADMIN_EMAIL", "bwandelt@illinois.edu"); # who gets user of the day pool running low e-mails?
+define("SYS_ADMIN_EMAIL", "mariusmillea@gmail.com");
+define("UOTD_ADMIN_EMAIL", "mariusmillea@gmail.com"); # who gets user of the day pool running low e-mails?
 
 
 // Email addresses separated by pipe ( | ) that will receive user reported 
 // offensive forum posts.
-define("POST_REPORT_EMAILS", "bwandelt@illinois.edu|kpointer@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
+define("POST_REPORT_EMAILS", "mariusmillea@gmail.com|bwandelt@illinois.edu|kpointer@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
 
 function page_head(
     $title, $java_onload=null, $title_plain=null, $prefix="", $head_extra=null
