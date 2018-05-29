@@ -1,0 +1,6 @@
+[submodule "boinc"]
+	path = boinc
+	url = https://github.com/marius311/boinc.git
+[submodule "bootswatch"]
+	path = bootswatch
+	url = https://github.com/marius311/bootswatch.git

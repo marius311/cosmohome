@@ -25,11 +25,14 @@ services:
      - mysql
     volumes:
      - "project:/root/project.dst"
+    environment:
+     - URL_BASE=$URL_BASE
+     - PROJECT=$PROJECT
 
   apache:
     build: apache
     network_mode: bridge
-    hostname: cosmohome
+    hostname: $PROJECT
     links:
      - mysql
     volumes: 
@@ -41,3 +44,6 @@ services:
      - "80:80"
      - "443:443"
     tty: true
+    environment:
+     - URL_BASE=$URL_BASE
+     - PROJECT=$PROJECT

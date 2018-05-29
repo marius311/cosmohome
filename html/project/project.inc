@@ -29,22 +29,34 @@ define("UOTD_ADMIN_EMAIL", "mariusmillea@gmail.com"); # who gets user of the day
 define("POST_REPORT_EMAILS", "mariusmillea@gmail.com|bwandelt@illinois.edu|kpointer@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
 
 function page_head(
-    $title, $java_onload=null, $title_plain=null, $prefix="", $head_extra=null
+    $title,
+        // page title. Put in <title>, used as title for browser tab.
+    $body_attrs=null,
+        // <body XXXX>
+        // e.g. Javascript to put focus in an input field
+        // (onload="document.form.foo.focus()")
+        // or to jump to a particular post (onload="jumpToUnread();")
+    $is_main = false,
+        // if set, include schedulers.txt.
+        // also pass to project_banner() in case you want a different
+        // header for your main page.
+    $url_prefix="",
+        // prepend this to links.
+        // Use for web pages not in the top directory
+    $head_extra=null
+        // extra stuff to put in <head>. E.g.:
+        // reCAPTCHA code (create_profile.php)
+        // bbcode javascript (forums)
 ) {
     global $caching, $cache_control_extra, $did_page_head;
+    global $is_login_page, $fixed_navbar;
 
     $did_page_head = true;
     $url_base = url_base();
-    $stylesheet = $url_base.STYLESHEET;
-    $rssname = PROJECT . " RSS 2.0";
-    $rsslink = $url_base."rss_main.php";
-    if (defined('STYLESHEET2')) {
-        $stylesheet2 = $url_base.STYLESHEET2;
-    } else {
-        $stylesheet2 = null;
-    }
 
-    
+    $rssname = "RSS 2.0";
+    $rsslink = $url_base."rss_main.php";
+
     if (!$caching) {
         header("Content-type: text/html; charset=utf-8");
         header ("Expires: Mon, 26 Jul 1997 05:00:00 UTC");    // Date in the past
@@ -52,60 +64,68 @@ function page_head(
         header ("Cache-Control: $cache_control_extra no-cache, must-revalidate, post-check=0, pre-check=0");  // HTTP/1.1
         header ("Pragma: no-cache");                          // HTTP/1.0
     }
-    
-    echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
-    ";
 
-    echo "<html><head>\n";
+    echo '<!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    ';
     if ($head_extra) {
         echo "\n$head_extra\n";
     }
-    if (!$title_plain) {
-        echo "<title>".sanitize_tags($title)."</title>\n";
-    } else {
-        echo "<title>".sanitize_tags($title_plain)."</title>\n";
+    if ($is_main && (!defined('NO_COMPUTING')||!NO_COMPUTING)) {
+        readfile("schedulers.txt");
     }
+
+    $t = $title?$title:PROJECT;
+    echo "<title>$t</title>\n";
+    echo '
+        <meta charset="utf-8">
+        <link type="text/css" rel="stylesheet" href="'.url_base().'/bootstrap.min.css" media="all">
+    ';
+    if (defined('STYLESHEET')) {
+        $stylesheet = $url_base.STYLESHEET;
+        echo "
+            <link rel=stylesheet type=\"text/css\" href=\"$stylesheet\">
+        ";
+    }
+    if (defined('STYLESHEET2')) {
+        $stylesheet2 = $url_base.STYLESHEET2;
+        echo "
+            <link rel=stylesheet type=\"text/css\" href=\"$stylesheet2\">
+        ";
+    }
+
+    if (defined("SHORTCUT_ICON")) {
+        echo '<link rel="icon" type="image/x-icon" href="'.SHORTCUT_ICON.'"/>
+';
+    }
+
     echo "
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"$stylesheet\">
-    <link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
-    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans:700' rel='stylesheet' type='text/css'>";
-    echo <<<END
-    <script type="text/javascript" src="drop_down.js"></script>
-    <!--[if lte IE 6]>
-      <script type="text/javascript" src="supersleight-min.js"></script>
-    <![endif]-->
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-62011923-2', 'auto');
-      ga('send', 'pageview');
-
-    </script>
-
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    
-  </head>
-
-END;
-    if ($java_onload){
-        echo "<body onload=\"".$java_onload."\">";
-    } else {
-        echo "<body>";
+        <link rel=alternate type=\"application/rss+xml\" title=\"$rssname\" href=\"$rsslink\">
+        
+        </head>
+    ";
+    if ($fixed_navbar) {
+        $body_attrs .= ' style="padding-top:70px"';
     }
+    echo "<body $body_attrs>";
     display_cvs_versions();
-    project_banner($title, $prefix);
+    echo '<div class="container">
+    ';
+
     switch($title) {    //kludge
-      case tra("Your account"):
-        show_login_info($prefix);
-      default:
+    case tra("Log in"):
+    case tra("Create an account"):
+    case tra("Server status page"):
+        $is_login_page = true;
+        break;
+    default:
         break;
     }
+    project_banner($title, $url_prefix, $is_main);
     
+    echo "<div class='content'>";
 
 }
 
@@ -113,56 +133,137 @@ END;
 function project_banner($title, $prefix) {
     // Put your project title and logo here
     $url_base = url_base();
-    echo "<div id='container'>	
+echo <<<EOL
    <!-- Navigation -->
-   <div id='topmatter'>
-    <a href='$url_base'><img src='/img/banner.jpg' border='0' height='200px' width='960px' padding='0px'/></a>
-      <div id='navmenu'>
-        <ul id='nav_ul'>
-          <li><a href='/join.php'>JOIN</a></li>
-          <li><a href='/faq.php'>FAQ</a></li>
-          <li><a href='/forum_index.php'>FORUMS</a></li>
-          <li><a href='#'>COMMUNITY</a>
-            <ol>
-              <li><a href='/home.php'>Your Account</a></li>
-              <li><a href='/team.php'>Teams</a></li>
-              <li><a href='/downloads.php'>Desktop Backgrounds</a></li>
-              <li><a href='/profile_menu.php'>Participant Profiles</a></li>
-              <li><a href='/wandelt_letter.php'>Ben's Welcome Letter</a></li>
-            </ol>
-          <li><a href='#'>SERVER</a>
-            <ol>
-              <li><a href='/apps.php'>Applications</a></li>
-              <li><a href='/server_status.php'>Server Status</a></li>
-              <li><a href='https://github.com/marius311/cosmohome'>Development</a></li> 
-            </ol>
-
-          <li><a href='#'>STATS</a>
-            <ol>
-              <li><a href='/lsplitsims_stats.php'>Planck Sims Stats</a></li>
-              <li><a href='/top_users.php'>Top Participants</a></li>
-              <li><a href='/top_hosts.php'>Top Computers</a></li>
-              <li><a href='/top_teams.php'>Top Teams</a></li>
-              <li><a href='/stats.php'>Other Statistics</a></li>
-            </ol>
-          </li>
-        </ul>
-      </div>
-   </div>
-   ";
+    <a href='$url_base'><img class="banner" src='/img/banner.jpg'/></a>
+    
+    <nav class="navbar navbar-default" id="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#important-id-for-collapsing" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Cosmology@Home</a>
+            </div>
+            <div class="collapse navbar-collapse" id="important-id-for-collapsing">
+                <ul class="nav navbar-nav">
+                      <li class='nav-item'>
+                        <a class='nav-link' href='/join.php'>Join</a>
+                      </li>
+                      <li class='nav-item'>
+                        <a class='nav-link' href='/faq.php'>FAQ</a>
+                      </li>
+                      <li class='nav-item'>
+                        <a class='nav-link' href='/forum_index.php'>Forums</a>
+                      </li>
+                      <li class='dropdown'>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Community
+                        <span class="caret"></span></a>
+                        <ul class='dropdown-menu'>
+                          <li><a class='dropdown-item' href='/home.php'>Your Account</a></li>
+                          <li><a class='dropdown-item' href='/team.php'>Teams</a></li>
+                          <li><a class='dropdown-item' href='/downloads.php'>Desktop Backgrounds</a></li>
+                          <li><a class='dropdown-item' href='/profile_menu.php'>Participant Profiles</a></li>
+                          <li><a class='dropdown-item' href='/wandelt_letter.php'>Ben's Welcome Letter</a></li>
+                        </ul>
+                      </li>
+                      <li class='nav-item dropdown'>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Server
+                        <span class="caret"></span></a>
+                        <ul class='dropdown-menu'>
+                          <li><a class='dropdown-item' href='/apps.php'>Applications</a></li>
+                          <li><a class='dropdown-item' href='/server_status.php'>Server Status</a></li>
+                          <li><a class='dropdown-item' href='https://github.com/marius311/cosmohome'>Development</a></li>
+                        </ul>
+                      </li>
+                      <li class='nav-item dropdown'>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Stats
+                        <span class="caret"></span></a>
+                        <ul class='dropdown-menu'>
+                          <li><a class='dropdown-item' href='/lsplitsims_stats.php'>Planck Sim Stats</a></li>
+                          <li><a class='dropdown-item' href='/top_users.php'>Top Participants</a></li>
+                          <li><a class='dropdown-item' href='/top_hosts.php'>Top Computers</a></li>
+                          <li><a class='dropdown-item' href='/top_teams.php'>Top Teams</a></li>
+                          <li><a class='dropdown-item' href='stats.php'>Other Statistics</a></li>
+                        </ul>
+                      </li>
+                </ul>
+EOL;
+            
+    $user = get_logged_in_user(false);
+    global $is_login_page;
+    echo '
+      <ul class="nav navbar-nav navbar-right">
+    ';
+    if ($user) {
+        echo sprintf('
+            <li><a href=%s%s>%s</a></li>
+            ', url_base(), USER_HOME, $user->name
+        );
+        $url_tokens = url_tokens($user->authenticator);
+        echo sprintf('<li><a href="%slogout.php?%s">Log out</a></li>',
+            url_base(), $url_tokens
+        );
+    } else {
+        echo sprintf('
+            <li><a href="%screate_account_form.php">Sign Up</a></li>
+            <li><a href="%slogin_form.php">Login</a></li>
+            ', url_base(), url_base()
+        );
+    }
+    
+echo <<<EOL
+            </div>
+        </div>
+    </nav>    
+EOL;
+   
 }
 
 function project_footer($show_return, $show_date) {
-    echo " 
-          <div id=\"footer\">";
+    echo "</div>";
     
+    // TODO: enable sticky navbar
+    // echo "
+    // <script>
+    // // When the user scrolls the page, execute myFunction 
+    // window.onscroll = function() {myFunction()};
+    // 
+    // // Get the navbar
+    // var navbar = document.getElementById('navbar');
+    // 
+    // // Get the offset position of the navbar
+    // var sticky = navbar.offsetTop;
+    // 
+    // // Add the sticky class to the navbar when you reach its scroll position. Remove 'sticky' when you leave the scroll position
+    // function myFunction() {
+    //   if (window.pageYOffset >= sticky) {
+    //     navbar.classList.add('sticky')
+    //   } else {
+    //     navbar.classList.remove('sticky');
+    //   }
+    // }
+    // </script>
+    // ";  
+    
+    
+    echo " 
+          <hr>
+          <div id='footer'>";
+
     if ($show_return) {
         echo "<a href=".URL_BASE.">Return to ".PROJECT." main page</a>\n";
     }
     echo "<br><br>Copyright &copy; ".date("Y ").COPYRIGHT_HOLDER."<br/>\n";
-    
+
 	echo <<<END
-   
+
 If you have any questions or comments regarding the content of this site, please contact <a href='http://www.cosmicmar.com'>Marius Millea</a><br/>
 This material is based upon work supported by the National Science Foundation under Grant No. AST0507676 and the Labex ILP (reference ANR-10-LABX-63).<br/>
 Links to external sites are provided as a convenience to our users. The Department of Astronomy does not control or endorse the content of external sites.<br\>

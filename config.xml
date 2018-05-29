@@ -5,15 +5,15 @@
         <!-- names and folders -->
         <app_dir>/root/project/apps</app_dir>
         <download_dir>/root/project/download</download_dir>
-        <download_url>http://www.cosmologyathome.org/download</download_url>
-        <host>cosmohome</host>
+        <download_url>${URL_BASE}/download</download_url>
+        <host>${PROJECT}</host>
         <key_dir>/root/project/keys/</key_dir>
-        <log_dir>/root/project/log_cosmohome</log_dir>
+        <log_dir>/root/project/log_${PROJECT}</log_dir>
         <long_name>Cosmology@Home</long_name>
-        <master_url>http://www.cosmologyathome.org/</master_url>
+        <master_url>${URL_BASE}/</master_url>
         <shmem_key>0x1111394d</shmem_key>
         <upload_dir>/root/project/upload</upload_dir>
-        <upload_url>http://www.cosmologyathome.org/cosmohome_cgi/file_upload_handler</upload_url>
+        <upload_url>${URL_BASE}/${PROJECT}/file_upload_handler</upload_url>
 
         <!-- database -->
         <db_host>mysql</db_host>

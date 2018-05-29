@@ -5,7 +5,6 @@ boinc2docker/apps/boinc2docker/1.0/*/vboxwrapper*
 boinc2docker/boot2docker
 backups
 test
-boinc
 apache
 docs
 html/user/img/banner.xcf

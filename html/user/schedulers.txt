@@ -1,2 +1,0 @@
-<!-- <scheduler>http://www.cosmologyathome.org/cosmohome_cgi/cgi</scheduler> -->
-<link rel="boinc_scheduler" href="http://www.cosmologyathome.org/cosmohome_cgi/cgi">
