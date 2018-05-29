@@ -3,12 +3,12 @@ README.md
 boinc2docker/apps/boinc2docker/1.0/*/vm_isocontext*
 boinc2docker/apps/boinc2docker/1.0/*/vboxwrapper*
 boinc2docker/boot2docker
-backups
+backups*
 test
 apache
 docs
 html/user/img/banner.xcf
-letsencrypt
+letsencrypt*
 nb
 boinc
 !boinc/html
