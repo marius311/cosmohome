@@ -9,3 +9,8 @@ apache
 docs
 html/user/img/banner.xcf
 letsencrypt
+nb
+boinc
+!boinc/html
+bootswatch
+!bootswatch/cyborg
