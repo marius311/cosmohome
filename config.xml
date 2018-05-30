@@ -13,7 +13,7 @@
         <master_url>${URL_BASE}/</master_url>
         <shmem_key>0x1111394d</shmem_key>
         <upload_dir>/root/project/upload</upload_dir>
-        <upload_url>${URL_BASE}/${PROJECT}/file_upload_handler</upload_url>
+        <upload_url>${URL_BASE}/${PROJECT}_cgi/file_upload_handler</upload_url>
 
         <!-- database -->
         <db_host>mysql</db_host>
