@@ -80,34 +80,14 @@ If you wish to use only the old Cosmology@Home application, *camb_legacy*, you c
 
 
 ### How does the *camb_boinc2docker* app work? ###
-* These jobs run inside of a [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) virtual machine. 
-* Within the virtual machine, the code itself is packaged within a so called "[Docker](https://www.docker.com/whatisdocker) container". 
-* The first thing the jobs do is download the necessary Docker container from the Docker servers. During this download, you will see the job progress frozen at 0.100%. Once the download is complete, the progress bar should continue normally and your CPU usage will jump up as the computation begins. 
-* After you run your first *camb_boinc2docker* job, the Docker container which was downloaded will be saved to your computer, so it will not need to be downloaded again unless you remove or reset the Cosmology@Home project. 
-* When we update the app in the future, parts of the Docker container will be redownloaded, however, Docker is smart about only downloading the parts which have actually changed  (that's why we use it!). 
 
+The *camb_boinc2docker* jobs (or any other Cosmology@Home jobs relying on *boinc2docker*) run a [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) "virtual machine" on your computer, inside of which we run a [Docker](https://www.docker.com/whatisdocker) "container" which packages the science application. This nesting of Docker inside of Virtualbox might seem redundant, but is quite powerful. The use of Virtualbox means our applications will always work on Mac OSX, Windows, and Linux. The use of Docker means we can keep our Virtual machine images extremely small (only a few tens of MB), and when updates are needed, your computer will only need to re-download the Docker "layers" which actually changed. 
+
+### What is *boinc2docker*? ###
+This is the name for the software which allows us to run Docker containers with BOINC. It can be used to run any code, *camb_boinc2docker* being one of them. You can follow development of boinc2docker or use it with your own project here: [https://github.com/marius311/boinc2docker](https://github.com/marius311/boinc2docker). 
 
 ### Why is there no 32-bit support? ###
 Docker only supports 64-bit processors. For those with 32-bit computers wishing to contribute to Cosmology@Home, you might still be able to run the [legacy application](#camb-legacy). 
-
-### How does Cosmology@Home store Docker containers between jobs? ###
-Docker containers which are downloaded by Cosmology@Home are saved to the file `scratch/boinc2docker_persist.tar` in the project folder. 
-
-
-### How do I see the error log for my jobs? ###
-{:#log}
-
-Find the log by going to Community->Your Account->Tasks and searching for the task which failed. You'll see the log at the bottom of the page. 
-
-
-### My *camb_boinc2docker* jobs stop at 0.100% ###
-When *camb_boinc2docker* first starts, it downloads the Docker container needed to run the job. During this download (which will not show up in BOINC's "Download" tab), the progress bar will be pinned to 0.100%. 
-
-The very first time you run a *camb_boinc2docker* job the download may take a while, the container is about 35Mb. After that it is saved for all future jobs. Any time we update the app there may be smaller incremental downloads as well. 
-
-
-### What is *boinc2docker*? ###
-This is the name for the software which allows us to run Docker containers with BOINC. It can be used to run any code, *camb_boinc2docker* being one of them. You can follow development of boinc2docker on [github](https://github.com/marius311/boinc2docker). 
 
 
 ### Can I see the source code of Cosmology@Home? ###
