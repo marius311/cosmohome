@@ -14,18 +14,20 @@ Cosmology@Home runs multiple "apps." The [requirements list](join.php#requiremen
 
 ### What is VT-x or AMD-v and why do I need it? ###
 {:#vtx}
-This is a feature of modern processors (Intel calls theirs "VT-x" and AMD calls theirs "AMD-v") which Virtualbox needs to be able to run 64-bit virtual machines like the ones used by Cosmology@Home.
+This is a feature of modern processors which provides hardware support for virtualization (Intel calls theirs "VT-x" and AMD calls theirs "AMD-v"). 
 
-One way to check if your processor supports VT-x/AMD-v is to look up your processor specifications online. It may be easier however to simply try and run Cosmology@Home. If you receive any *camb_boinc2docker* jobs it means BOINC has detected that your processor has support. 
+The default Cosmology@Home apps are 64bit virtual machines, and to run these virtual machines Virtualbox needs your CPU to support VT-x/AMD-v and this feature has to be *enabled* (it often comes disabled by default with new computers). 
 
-However, it may still be that while your processor supports VT-x/AMD-v, these features are turned off in your BIOS. If your *camb_boinc2docker* jobs download but hang for ~5min then die, this may be the case. To enable it, you need to reboot your computer, enter your BIOS, find this option and enable it. Here is an example of what it might look like (although this will vary with BIOS version, it will likely say something about virtualization): 
+After the first time your computer connects to the Cosmology@Home server to request a job, you will be able to see on the "Computer information" page information about your CPU's virtualization support (visit [this page](https://www.cosmologyathome.org/hosts_user.php) while logged in and click "Details" for the computer you are interested in). 
+
+If under virtualization you see "None", it means you need to install Virtualbox. If you see that your CPU does not support hardware virtualization, unfortunately this computer cannot run the default Cosmology@Home apps. If you see that it does have support but it is disabled, then you need to reboot your computer, enter your BIOS, find this option and enable it. Here is an example of what it might look like (although this will vary with BIOS version, it will likely say something about virtualization): 
 
 ![test](img/vtx.png)
 
 
-### I enabled VT-x/AMD-v but jobs say "Scheduler wait: Please upgrade BOINC" ###
+### I enabled VT-x/AMD-v but I still don't receive jobs ###
 
-If you attempted to run a *camb_boinc2docker* job before enabling VT-x/AMD-v, it is possible your client is stuck in a state where it still thinks this feature is disabled. It will give you a message "Scheduler wait: Please upgrade BOINC to the latest version" and the log files will show "ERROR: Invalid configuration.  VM type requires acceleration but the current configuration cannot support it." To fix this:
+Sometimes the client can get stuck in a state where it still thinks this feature is disabled despite that you have enabled it. This can happen sometimes if you attempted to run a *camb_boinc2docker* job before enabling VT-x/AMD-v, it may also be accompanied by a message "Scheduler wait: Please upgrade BOINC to the latest version" and the log files may show "ERROR: Invalid configuration. VM type requires acceleration but the current configuration cannot support it." To fix this:
 
 * Remove the Cosmology@Home project
 * Shut down the BOINC client (from Advanced View choose the menu option *Advanced->Shutdown Connected Client*)
