@@ -17,7 +17,7 @@ pull:
 #--- project ---
 
 makeproject: 
-	mkdir -p private
+	mkdir -p secrets
 	GITTAG="$$(git rev-parse --short HEAD),$$(TZ=UTC git show -s --format=%cd --date=local HEAD)" \
 	$(DC) build makeproject
 
@@ -41,7 +41,7 @@ rm-apache:
 	$(DC) stop apache && $(DC) rm -f apache
 
 exec-apache:
-	$(DC) exec apache bash
+	$(DC) exec -u boincadm apache bash
 
 
 # --- mysql ---

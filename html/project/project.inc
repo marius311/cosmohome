@@ -2,11 +2,6 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/phpmailer/PHPMailerAutoload.php");
-if (file_exists("../project/project.private.inc")) {
-    require_once("../project/project.private.inc");
-} else {
-    define("MAILPASS","");
-}
 
 $master_url = parse_config(get_config(), "<master_url>");
 define("PROJECT", "Cosmology@Home");
@@ -420,7 +415,7 @@ function make_php_mailer() {
     $mail->Host = "smtp.iap.fr";
     $mail->Port = 465;
     $mail->Username = "millea";
-    $mail->Password = MAILPASS;
+    $mail->Password = "${mailpass}";
     $mail->SetFrom('admin@cosmologyathome.org', 'Cosmologyathome');
     $mail->AddReplyTo("admin@cosmologyathome.org", "Cosmologyathome");
 

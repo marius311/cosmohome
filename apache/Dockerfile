@@ -1,17 +1,18 @@
-FROM boinc/server_apache:2.1.0-b2d
+FROM boinc/server_apache:3.0.0-b2d-defaultargs
 
 MAINTAINER Marius Millea <mariusmillea@gmail.com>
 
 # install packages 
-RUN echo "deb http://ftp.debian.org/debian jessie-backports main" >> /etc/apt/sources.list \
-    && apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        python-certbot-apache \
         python-matplotlib \
         python-mysqldb \
         python-numpy \
         python-scipy \
         python-yaml \
         vim \
-    && apt-get install -y --no-install-recommends -t jessie-backports python-certbot-apache
+    && rm -rf /var/lib/apt/lists
 
 RUN a2enmod ssl
 

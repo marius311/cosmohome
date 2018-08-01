@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 volumes:
   mysql:
@@ -7,43 +7,48 @@ volumes:
 
 services:
   mysql:
-    image: boinc/server_mysql:1.4.2
+    image: boinc/server_mysql:3.0.0-defaultargs
     network_mode: bridge
     volumes:
-     - "mysql:/var/lib/mysql"
-    environment: 
-     - MYSQL_ROOT_PASSWORD=
-     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - "mysql:/var/lib/mysql"
+    environment:
+      - BOINC_USER
+      - PROJECT
 
   makeproject:
     build: 
       context: .
       args: 
-        GITTAG: 
+        - GITTAG
     network_mode: bridge
     links: 
-     - mysql
+      - mysql
     volumes:
-     - "project:/root/project.dst"
+      - "project:$PROJECT_ROOT.dst"
+      - "./secrets:/run/secrets"
+    hostname: makeproject
     environment:
-     - URL_BASE=$URL_BASE
-     - PROJECT=$PROJECT
+      - URL_BASE
+      - PROJECT
 
   apache:
     build: apache
-    network_mode: bridge
     hostname: $PROJECT
+    network_mode: bridge
     links:
-     - mysql
+      - mysql
     volumes: 
-     - "project:/root/project"
-     - "results:/results"
-     - "/var/run/docker.sock:/var/run/docker.sock"
-     - "./letsencrypt:/etc/letsencrypt"
+      - "project:/home/boincadm/project"
+      - "results:/results"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./letsencrypt:/etc/letsencrypt"
+      - "./secrets:/run/secrets"
+      - "/dev/null:/run/secrets/keys/code_sign_private"
     ports: 
-     - "80:80"
-     - "443:443"
+      - "80:80"
+      - "443:443"
     tty: true
+    working_dir: $PROJECT_ROOT
     environment:
-     - URL_BASE=$URL_BASE
-     - PROJECT=$PROJECT
+      - PROJECT
+      - URL_BASE
