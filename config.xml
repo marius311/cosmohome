@@ -121,7 +121,7 @@
 
         <!-- lsplitsims -->
         <daemon>
-            <cmd>script_validator --credit_from_wu --app lsplitsims --init_script lsplitsims_validator</cmd>
+            <cmd>script_validator --credit_from_wu --app lsplitsims --init_script lsplitsims_validator --compare_script true</cmd>
             <pid_file>lsplitsims_validator.pid</pid_file>
             <output>lsplitsims_validator.log</output>
         </daemon>
@@ -139,22 +139,22 @@
 
         <!-- camb_boinc2docker -->
         <daemon>
-            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 0</cmd>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 0 --compare_script true</cmd>
             <pid_file>camb_boinc2docker_validator_0.pid</pid_file>
             <output>camb_boinc2docker_validator_0.log</output>
         </daemon>
         <daemon>
-            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 1</cmd>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 1 --compare_script true</cmd>
             <pid_file>camb_boinc2docker_validator_1.pid</pid_file>
             <output>camb_boinc2docker_validator_1.log</output>
         </daemon>
         <daemon>
-            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 2</cmd>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 2 --compare_script true</cmd>
             <pid_file>camb_boinc2docker_validator_2.pid</pid_file>
             <output>camb_boinc2docker_validator_2.log</output>
         </daemon>
         <daemon>
-            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 3</cmd>
+            <cmd>script_validator --app camb_boinc2docker --init_script camb_boinc2docker_validator --mod 4 3 --compare_script true</cmd>
             <pid_file>camb_boinc2docker_validator_3.pid</pid_file>
             <output>camb_boinc2docker_validator_3.log</output>
         </daemon>
@@ -175,7 +175,7 @@
 
         <!-- camb_legacy -->
         <daemon>
-            <cmd>script_validator --app camb --init_script camb_legacy_validator</cmd>
+            <cmd>script_validator --app camb --init_script camb_legacy_validator --compare_script true</cmd>
             <pid_file>camb_legacy_validator.pid</pid_file>
             <output>camb_legacy_validator.log</output>
         </daemon>
