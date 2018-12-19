@@ -46,6 +46,7 @@ class WorkGenerator(object):
     def __init__(self,appname):
         parser = self.parser = argparse.ArgumentParser(prog='work_generator')
         parser.add_argument('--cushion',nargs=1,default=[2000],type=int,help='number of unsent jobs to keep')
+        parser.add_argument('--max_jobs_create',nargs=1,default=[50],type=int,help='maximum number jobs to create in one pass, before waiting for transitioner')
         parser.add_argument('--sleep_interval',nargs=1,default=[5],type=int,help='how many seconds to sleep between passes')
         parser.add_argument('--debug',action='store_true',default=False,help='print out debug messages')
         self.add_args(parser)
@@ -85,7 +86,7 @@ class WorkGenerator(object):
                     num_create = self.args['cushion'][0]-num_unsent
                     self.log.printf(NORMAL,"%i unsent results. Creating %i more.\n",num_unsent,num_create)
 
-                    self.make_jobs(num=num_create)
+                    self.make_jobs(num=min(self.args['max_jobs_create'],num_create))
 
                     # wait for transitioner to create jobs
                     now = int(time())
@@ -108,7 +109,6 @@ class WorkGenerator(object):
             except Exception as e:
                 self.log.printf(CRITICAL,"Error: %s\n",str(e))
                 traceback.print_exception(type(e), e, sys.exc_info()[2], None, sys.stderr)
+                sys.exit()
 
             sleep(int(self.args['sleep_interval'][0]))
-
-
