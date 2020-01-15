@@ -38,7 +38,7 @@ define("MAX_CPUS_PREF", true);
 
 // Email addresses separated by pipe ( | ) that will receive user reported 
 // offensive forum posts.
-define("POST_REPORT_EMAILS", "mariusmillea@gmail.com|bwandelt@illinois.edu|kpointer@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
+define("POST_REPORT_EMAILS", "mariusmillea@gmail.com|bwandelt@illinois.edu|jrenkar@hughes.net|tutta55@boinc.be|elst93@gmail.com");
 
 function page_head(
     $title,
