@@ -5,7 +5,7 @@ MAINTAINER Marius Millea <mariusmillea@gmail.com>
 # install packages 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        python-certbot-apache \
+        python-certbot-apache=0.28.0-1~deb9u1 \
         python-matplotlib \
         python-mysqldb \
         python-numpy \
